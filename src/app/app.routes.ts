@@ -1,12 +1,10 @@
 import { Routes } from '@angular/router';
+import { HomeComponent } from './features/home/home.component';
+import { MenuComponent } from './shared/components/menu/menu.component';
 
 export const routes: Routes = [
-    {
-    path: '', // chemin vide = page principale
-    loadChildren: () => import('./features/home/home.module').then(m => m.HomeModule)
-  },
   {
-    path: '**', // fallback pour toutes les autres routes non définies
-    redirectTo: '' // redirige vers home
+    path: '',
+    component: HomeComponent
   }
 ];

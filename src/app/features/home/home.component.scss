@@ -1,0 +1,20 @@
+
+@import 'styles';
+
+.content{
+    background-color:$bg;
+    padding: 2em 2em 4em; /* 4em en bas pour éviter que le contenu soit masqué par le menu */
+    // min-height: calc(100vh - 60px); /* ajusté selon la hauteur de ton menu */
+    .head{
+        .title{
+            font-family: $font-main;
+            font-weight: 600;
+            font-size: 20px;
+        }
+        .quote{
+            font-family: $font-secondary;
+            font-weight: 400;
+            font-size: 14px;
+        }
+    }
+}

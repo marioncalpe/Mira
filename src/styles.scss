@@ -1,1 +1,71 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===============================
+   FONT IMPORTS (Google ou local)
+=============================== */
+
+/* Exemple Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+/* Exemple font locale */
+@font-face {
+  font-family: 'MyFont';
+  src: url('/assets/fonts/MyFont-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ===============================
+   PALETTE
+=============================== */
+
+$primary: #FF4D6D;
+$secondary: #FFD6A5;
+$accent: #FFD93D;
+
+$bg: #f7f7f7;
+$text: #2b2b2b;
+$text-secondary: #5C5C5C;
+
+/* ===============================
+   TYPOGRAPHIE
+=============================== */
+
+$font-main: 'Poppins', sans-serif;
+$font-secondary: 'inter', sans-serif;
+$font-size-base: 16px;
+
+/* ===============================
+   MIXINS
+=============================== */
+
+@mixin center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #121212;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+body {
+  position: relative;
+  background-color: white;
+  height: 932px;
+  width: 430px;
+  overflow: hidden;
+}
+
+.mobile-container {
+  background-color: white;
+  height: 932px;
+  width: 430px;
+  position: relative; /* Important pour le positionnement absolu des enfants */
+  overflow: hidden; /* Empêche le contenu de dépasser */
+}
+
