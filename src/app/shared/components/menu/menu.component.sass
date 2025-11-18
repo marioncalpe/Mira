@@ -7,10 +7,13 @@ div
     width: 100%
     display: flex
     justify-content: space-around
-    background-color: white
+    background-color: $carte
     padding: 1em 0
     border-top: 1px solid #eee
     z-index: 1000
+    border-start-start-radius: 10px
+    border-start-end-radius: 10px
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1)
 
     button
         background: none
@@ -18,7 +21,7 @@ div
         outline: none
         box-shadow: none
         svg
-            fill: $primary
+            fill: $text-secondary
     button.active
-        background-color: rgba($primary, 0.1)
-        border-radius: 4px
+        svg
+            fill: $primary
