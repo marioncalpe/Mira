@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-menu',
   standalone: true,
-  imports: [],   // on mettra MenuComponent ici après
+  imports: [RouterLink, RouterLinkActive],   // on mettra MenuComponent ici après
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.sass']
 })

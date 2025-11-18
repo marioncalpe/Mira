@@ -1,5 +1,5 @@
 @import 'styles'
-    
+
 div
     position: absolute /* Positionne relativement au parent position: relative */
     bottom: 0
@@ -12,12 +12,13 @@ div
     border-top: 1px solid #eee
     z-index: 1000
 
-    button 
+    button
         background: none
         border: none
         outline: none
         box-shadow: none
         svg
             fill: $primary
-        
-    
+    button.active
+        background-color: rgba($primary, 0.1)
+        border-radius: 4px
