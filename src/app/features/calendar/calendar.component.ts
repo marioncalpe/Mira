@@ -8,11 +8,11 @@ import { SortieModalComponent } from '../../shared/components/sortie-modal/sorti
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 
 @Component({
-  selector: 'app-calendar',
-  standalone: true,
-  imports: [FullCalendarModule, SortieModalComponent, MenuComponent],
-  templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss'],
+    selector: 'app-calendar',
+    standalone: true,
+    imports: [SortieModalComponent, MenuComponent],
+    templateUrl: './calendar.component.html',
+    styleUrls: ['./calendar.component.scss']
 })
 export class CalendarComponent implements OnInit {
 

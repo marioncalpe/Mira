@@ -4,11 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { Sortie } from '../../../core/models/sortie.model';
 
 @Component({
-  selector: 'app-sortie-modal',
-  standalone: true,
-  imports: [CommonModule, FormsModule],
-  templateUrl: './sortie-modal.component.html',
-  styleUrls: ['./sortie-modal.component.scss']
+    selector: 'app-sortie-modal',
+    standalone: true,
+    imports: [CommonModule, FormsModule],
+    templateUrl: './sortie-modal.component.html',
+    styleUrls: ['./sortie-modal.component.scss']
 })
 export class SortieModalComponent implements OnChanges {
 
