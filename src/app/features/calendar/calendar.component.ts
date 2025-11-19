@@ -1,31 +1,27 @@
 import { Component, OnInit } from '@angular/core';
-import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import interactionPlugin from '@fullcalendar/interaction';
+import { CalendarEvent } from 'angular-calendar';
+import { CalendarMonthViewComponent } from 'angular-calendar';
 import { SortieService } from '../../core/service/sortie.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { SortieModalComponent } from '../../shared/components/sortie-modal/sortie-modal.component';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 
 @Component({
-    selector: 'app-calendar',
-    standalone: true,
-    imports: [SortieModalComponent, MenuComponent],
-    templateUrl: './calendar.component.html',
-    styleUrls: ['./calendar.component.scss']
+  selector: 'app-calendar',
+  standalone: true,
+  imports: [
+    SortieModalComponent,
+    MenuComponent,
+    CalendarMonthViewComponent, // Ajoute ce module
+  ],
+  templateUrl: './calendar.component.html',
+  styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-
   modalVisible = false;
   selectedSortie: Sortie | null = null;
-
-  calendarOptions = {
-    initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin, interactionPlugin],
-    events: [] as Sortie[],
-    dateClick: this.handleDateClick.bind(this),
-    eventClick: this.handleEventClick.bind(this)
-  };
+  viewDate: Date = new Date();
+  events: CalendarEvent[] = [];
 
   constructor(private sortieService: SortieService) {}
 
@@ -34,23 +30,40 @@ export class CalendarComponent implements OnInit {
   }
 
   refreshCalendar() {
-    this.calendarOptions.events = this.sortieService.getSorties();
+    const sorties = this.sortieService.getSorties();
+    this.events = sorties.map((sortie) => ({
+      title: sortie.title,
+      start: new Date(sortie.start),
+      meta: sortie.extendedProps,
+      color: this.getColorForSortie(sortie),
+    }));
   }
 
-  handleDateClick(info: any) {
+  private getColorForSortie(sortie: Sortie) {
+    switch (sortie.extendedProps?.category) {
+      case 'travail':
+        return { primary: '#ad2121', secondary: '#FAE3E3' };
+      case 'loisir':
+        return { primary: '#1e90ff', secondary: '#D1E8FF' };
+      default:
+        return { primary: '#e3bc08', secondary: '#FDF1BA' };
+    }
+  }
+
+  handleDateClick(date: Date) {
     this.selectedSortie = {
       title: '',
-      start: info.dateStr,
-      extendedProps: {}
+      start: date.toISOString(),
+      extendedProps: {},
     };
     this.modalVisible = true;
   }
 
-  handleEventClick(info: any) {
+  handleEventClick(event: CalendarEvent) {
     this.selectedSortie = {
-      title: info.event.title,
-      start: info.event.startStr,
-      extendedProps: { ...info.event.extendedProps }
+      title: event.title,
+      start: event.start.toISOString(),
+      extendedProps: { ...event.meta },
     };
     this.modalVisible = true;
   }

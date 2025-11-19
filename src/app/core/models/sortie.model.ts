@@ -4,6 +4,7 @@ export interface Sortie {
   extendedProps: {
     category?: string;
     noteAvant?: number;
+    noteApres?: number;
     sentiment?: string;
   };
 }
