@@ -1,4 +1,11 @@
-<div class="calendar-container">
-  <full-calendar [options]="calendarOptions"></full-calendar>
-</div>
+<full-calendar [options]="calendarOptions"></full-calendar>
+
+<app-sortie-modal
+  [visible]="modalVisible"
+  [sortie]="selectedSortie"
+  (save)="onSave($event)"
+  (delete)="onDelete($event)"
+  (close)="onClose()"
+></app-sortie-modal>
+
 <app-menu></app-menu>

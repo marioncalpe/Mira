@@ -1,0 +1,27 @@
+<div class="modal-backdrop" *ngIf="visible">
+  <div class="modal">
+    <h2>📅 Sortie</h2>
+
+    <label>Titre</label>
+    <input [(ngModel)]="temp.title" type="text">
+
+    <label>Catégorie</label>
+    <select [(ngModel)]="temp.extendedProps.category">
+      <option value="Cinéma">Cinéma</option>
+      <option value="Sport">Sport</option>
+      <option value="Restaurant">Restaurant</option>
+    </select>
+
+    <label>Note avant (1 à 10)</label>
+    <input type="number" min="1" max="10" [(ngModel)]="temp.extendedProps.noteAvant">
+
+    <label>Sentiment</label>
+    <input [(ngModel)]="temp.extendedProps.sentiment" type="text">
+
+    <div class="actions">
+      <button class="save" (click)="onSave()">Valider</button>
+      <button class="delete" *ngIf="sortie" (click)="onDelete()">Supprimer</button>
+      <button class="close" (click)="onClose()">Annuler</button>
+    </div>
+  </div>
+</div>
