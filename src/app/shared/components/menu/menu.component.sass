@@ -1,28 +1,52 @@
-@use 'styles' as *;
+@use 'styles' as *
 
-
-div
+.menu-container
     position: absolute /* Positionne relativement au parent position: relative */
     bottom: 0
     left: 0
     width: 100%
-    display: flex
-    justify-content: space-around
-    background-color: $carte
-    padding: 1em 0
-    border-top: 1px solid #eee
-    z-index: 1000
-    border-start-start-radius: 10px
-    border-start-end-radius: 10px
-    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1)
 
-    button
-        background: none
-        border: none
-        outline: none
-        box-shadow: none
-        svg
-            fill: $text-secondary
-    button.active
-        svg
-            fill: $primary
+    .menu
+        display: flex
+        justify-content: space-around
+        background-color: $carte
+        padding: 1em 0
+        border-top: 1px solid #eee
+        z-index: 1000
+        border-start-start-radius: 10px
+        border-start-end-radius: 10px
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1)
+        button
+            background: none
+            border: none
+            outline: none
+            box-shadow: none
+            svg
+                fill: $text-secondary
+        button.active
+            svg
+                fill: $primary
+    // .registre
+    //     display: flex
+    //     justify-content: center
+    //     background-color: $primary
+    //     border-start-start-radius: 10px
+    //     border-start-end-radius: 10px
+        
+    //     .bouton-ajout
+    //         background: none
+    //         border: none
+    //         outline: none
+    //         box-shadow: none
+
+    //         display: flex
+    //         justify-content: center
+    //         align-items: center
+    //         font-size: 24px
+    //         background-color: $primary
+    //         border-radius: 100%
+    //         padding: 1em
+    //         color: $bg
+    //         width: 10px
+    //         height: 10px
+    //         margin-top: -20px

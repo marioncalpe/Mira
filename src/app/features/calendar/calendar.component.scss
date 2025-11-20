@@ -1,2 +1,127 @@
-@use 'styles' as *;
+@use "styles" as *;
+
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+}
+
+::ng-deep .cal-month-view .cal-cell,
+::ng-deep .cal-month-view .cal-cell-row,
+::ng-deep .cal-month-view .cal-days,
+::ng-deep .cal-month-view .cal-day-cell {
+  border: none !important;
+}
+
+::ng-deep .cal-month-view .cal-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 10px;
+}
+
+::ng-deep .cal-month-view .cal-header .cal-cell {
+  font-family: $font-secondary;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 16px;
+  color: #3a3a3a; 
+}
+
+::ng-deep .cal-month-view .cal-cell-row{
+  display: flex;
+  gap: 0.5em;
+}
+
+::ng-deep .cal-day-number {
+  display: flex;
+  font-family: $font-secondary;
+  font-size: 16px;
+  font-weight: 600;
+  color: #4a4a4a !important;
+}
+
+::ng-deep .cal-day-cell {
+  min-height: 0 !important;
+}
+
+::ng-deep .cal-day-selected {
+  background: #ff5a5a !important;
+  color: white !important;
+  border-radius: 12px;
+  padding: 4px 0;
+}
+
+::ng-deep .cal-event {
+  display: none !important;
+}
+
+::ng-deep .cal-day-cell.cal-has-events {
+  background: #ff5a5a !important; /* couleur du jour avec event */
+  border-radius: 10px;            /* optionnel : arrondi */
+  color: white !important;
+}
+
+::ng-deep .cal-day-cell.cal-has-events .cal-day-number {
+  color: white !important;
+}
+::ng-deep .cal-day-cell.cal-today .cal-day-number {
+  font-size: 20px !important;
+  color: #4a4a4a !important;
+}
+
+::ng-deep .cal-month-view .cal-day-badge {
+    display: none !important;
+}
+
+::ng-deep .cal-day-cell.cal-out-month .cal-day-number{
+  display: none !important;
+}
+
+::ng-deep .cal-month-view .cal-cell-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 0;
+}
+
+/* ===============================
+    Header and Button
+=============================== */
+.header-calendar{
+  display: flex;
+  font-size: 16px;
+  font-family: $font-main;
+  gap: 4em;
+}
+
+.bouton-ajout {
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+  background-color: $primary;
+  border-radius: 100%;
+  padding: 0.8em;
+  color: $bg;
+  width: 1px;
+  height: 1px;
+}
+
+.bouton-nav{
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  font-size: 32px;
+  font-family: $font-main;
+}
+
 

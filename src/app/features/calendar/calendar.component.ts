@@ -1,18 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
-import { CalendarMonthViewComponent } from 'angular-calendar';
+import { Component, OnInit, TemplateRef, Injectable } from '@angular/core';
+import { CommonModule, formatDate } from '@angular/common';
+import {
+  CalendarEvent,
+  CalendarDateFormatter,
+  CalendarView,
+  CalendarMonthViewComponent,
+  CalendarWeekViewComponent,
+  CalendarDayViewComponent,
+  provideCalendar,
+  DateAdapter,
+  DateFormatterParams,
+  DAYS_OF_WEEK,
+  CalendarPreviousViewDirective,
+  CalendarNextViewDirective,
+  CalendarDatePipe,
+} from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { SortieService } from '../../core/service/sortie.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { SortieModalComponent } from '../../shared/components/sortie-modal/sortie-modal.component';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
+import { CustomDateFormatter } from './custom-date-formatter';
 
 @Component({
   selector: 'app-calendar',
   standalone: true,
+  providers: [
+    provideCalendar(
+      { provide: DateAdapter, useFactory: adapterFactory },
+      {
+        dateFormatter: {
+          provide: CalendarDateFormatter,
+          useClass: CustomDateFormatter,
+        },
+      }
+    ),
+  ],
   imports: [
+    CommonModule,
     SortieModalComponent,
     MenuComponent,
-    CalendarMonthViewComponent, // Ajoute ce module
+    CalendarMonthViewComponent,
+    CalendarMonthViewComponent,
+    CalendarPreviousViewDirective,
+    CalendarNextViewDirective,
+    CalendarDatePipe,
   ],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
@@ -21,7 +53,13 @@ export class CalendarComponent implements OnInit {
   modalVisible = false;
   selectedSortie: Sortie | null = null;
   viewDate: Date = new Date();
+  view: CalendarView = CalendarView.Month;
+  locale = 'fr';
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+
   events: CalendarEvent[] = [];
+  modalMode: 'view' | 'edit' = 'view';
 
   constructor(private sortieService: SortieService) {}
 
@@ -50,14 +88,35 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  handleDateClick(date: Date) {
+ handleDateClick(date: Date) {
+  // Vérifie si un événement existe déjà pour cette date
+  const existingEvent = this.events.find(event => {
+    const eventDate = new Date(event.start);
+    return (
+      eventDate.getFullYear() === date.getFullYear() &&
+      eventDate.getMonth() === date.getMonth() &&
+      eventDate.getDate() === date.getDate()
+    );
+  });
+  if (existingEvent) {
+    // Si un événement existe, ouvre la modalité en mode "view"
+    this.selectedSortie = {
+      title: existingEvent.title,
+      start: existingEvent.start.toISOString(),
+      extendedProps: { ...existingEvent.meta },
+    };
+    this.modalMode = 'view';
+  } else {
+    // Sinon, ouvre la modalité en mode "edit" pour créer un nouvel événement
     this.selectedSortie = {
       title: '',
       start: date.toISOString(),
       extendedProps: {},
     };
-    this.modalVisible = true;
+    this.modalMode = 'edit';
   }
+  this.modalVisible = true;
+}
 
   handleEventClick(event: CalendarEvent) {
     this.selectedSortie = {
@@ -65,6 +124,19 @@ export class CalendarComponent implements OnInit {
       start: event.start.toISOString(),
       extendedProps: { ...event.meta },
     };
+
+    this.modalMode = 'view'; // 👉 mode VIEW
+    this.modalVisible = true;
+  }
+
+  openCreateModal() {
+    this.selectedSortie = {
+      title: '',
+      start: new Date().toISOString(),
+      extendedProps: {},
+    };
+
+    this.modalMode = 'edit'; // 👉 mode EDIT
     this.modalVisible = true;
   }
 
@@ -76,6 +148,10 @@ export class CalendarComponent implements OnInit {
     }
     this.refreshCalendar();
     this.modalVisible = false;
+  }
+
+  switchToEdit() {
+    this.modalMode = 'edit';
   }
 
   onDelete(sortie: Sortie) {

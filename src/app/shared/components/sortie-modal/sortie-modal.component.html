@@ -1,9 +1,29 @@
-<div class="modal-backdrop" *ngIf="visible">
+<!-- MODE VIEW -->
+<div *ngIf="mode === 'view'" class="view-mode">
+  <div class="modal">
+    <h2>{{ sortie?.title }}</h2>
+    <p>
+      <strong>Date :</strong>
+      {{ sortie?.start | date : "fullDate" : "" : "fr" }}
+    </p>
+    <p><strong>Catégorie :</strong> {{ sortie?.extendedProps?.category }}</p>
+    <p><strong>Note avant :</strong> {{ sortie?.extendedProps?.noteAvant }}</p>
+    <p><strong>Sentiment :</strong> {{ sortie?.extendedProps?.sentiment }}</p>
+
+    <div class="actions">
+      <button (click)="onClose()">Fermer</button>
+      <button (click)="switchToEdit()">Modifier</button>
+      <button (click)="onDelete()">Supprimer</button>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="mode === 'edit'" class="view-mode">
   <div class="modal">
     <h2>📅 Sortie</h2>
 
     <label>Titre</label>
-    <input [(ngModel)]="temp.title" type="text">
+    <input [(ngModel)]="temp.title" type="text" />
 
     <label>Catégorie</label>
     <select [(ngModel)]="temp.extendedProps.category">
@@ -13,17 +33,25 @@
     </select>
 
     <label>Note avant (1 à 10)</label>
-    <input type="number" min="1" max="10" [(ngModel)]="temp.extendedProps.noteAvant">
+    <input
+      type="number"
+      min="1"
+      max="10"
+      [(ngModel)]="temp.extendedProps.noteAvant"
+    />
 
     <label>Note après (1 à 10)</label>
-    <input type="number" min="1" max="10" [(ngModel)]="temp.extendedProps.noteApres">
-
+    <input
+      type="number"
+      min="1"
+      max="10"
+      [(ngModel)]="temp.extendedProps.noteApres"
+    />
     <label>Sentiment</label>
-    <input [(ngModel)]="temp.extendedProps.sentiment" type="text">
-
+    <input [(ngModel)]="temp.extendedProps.sentiment" type="text" />
     <div class="actions">
       <button class="save" (click)="onSave()">Valider</button>
-      <button class="delete" *ngIf="sortie" (click)="onDelete()">Supprimer</button>
+      <button class="delete" @if(sortie) (click)="onDelete()">Supprimer</button>
       <button class="close" (click)="onClose()">Annuler</button>
     </div>
   </div>
