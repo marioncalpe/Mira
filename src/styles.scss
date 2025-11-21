@@ -2,9 +2,6 @@
    FONT IMPORTS (Google ou local)
 =============================== */
 
-
-
-
 /* Exemple Google Fonts */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
@@ -64,6 +61,7 @@ body {
   height: 932px;
   width: 430px;
   overflow: hidden;
+  padding: 1em;
 }
 
 .mobile-container {

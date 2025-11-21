@@ -60,21 +60,33 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [];
   modalMode: 'view' | 'edit' = 'view';
-
+  sortiesDuMois: Sortie[] = [];
   constructor(private sortieService: SortieService) {}
 
   ngOnInit() {
     this.refreshCalendar();
+    this.sortiesDuMois.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+    
   }
 
   refreshCalendar() {
-    const sorties = this.sortieService.getSorties();
-    this.events = sorties.map((sortie) => ({
-      title: sortie.title,
-      start: new Date(sortie.start),
-      meta: sortie.extendedProps,
-      color: this.getColorForSortie(sortie),
-    }));
+  const sorties = this.sortieService.getSorties();
+  this.events = sorties.map((sortie) => ({
+    title: sortie.title,
+    start: new Date(sortie.start), // Conversion en Date pour le calendrier
+    meta: sortie.extendedProps,
+    color: this.getColorForSortie(sortie),
+  }));
+
+  // Filtrer les sorties du mois en cours
+  this.sortiesDuMois = sorties
+    .filter((s) => {
+      const startDate = new Date(s.start);
+      return (
+        startDate.getMonth() === this.viewDate.getMonth() &&
+        startDate.getFullYear() === this.viewDate.getFullYear()
+      );
+    });
   }
 
   private getColorForSortie(sortie: Sortie) {
@@ -163,4 +175,6 @@ export class CalendarComponent implements OnInit {
   onClose() {
     this.modalVisible = false;
   }
+
+  
 }

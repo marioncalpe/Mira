@@ -8,47 +8,47 @@
     </p>
     <p><strong>Catégorie :</strong> {{ sortie?.extendedProps?.category }}</p>
     <p><strong>Note avant :</strong> {{ sortie?.extendedProps?.noteAvant }}</p>
+    <p><strong>Note après :</strong> {{ sortie?.extendedProps?.noteApres }}</p>
     <p><strong>Sentiment :</strong> {{ sortie?.extendedProps?.sentiment }}</p>
 
     <div class="actions">
-      <button (click)="onClose()">Fermer</button>
-      <button (click)="switchToEdit()">Modifier</button>
-      <button (click)="onDelete()">Supprimer</button>
+      <button class="save" (click)="switchToEdit()">Modifier</button>
+      <button class="delete"(click)="onDelete()">Supprimer</button>
+      <button class="close"(click)="onClose()">Fermer</button> 
     </div>
   </div>
 </div>
 
 <div *ngIf="mode === 'edit'" class="view-mode">
   <div class="modal">
-    <h2>📅 Sortie</h2>
+    <h2>Sortie</h2>
 
-    <label>Titre</label>
-    <input [(ngModel)]="temp.title" type="text" />
+    <input [(ngModel)]="temp.title" type="text"  placeholder="Titre"/>
 
-    <label>Catégorie</label>
-    <select [(ngModel)]="temp.extendedProps.category">
-      <option value="Cinéma">Cinéma</option>
-      <option value="Sport">Sport</option>
-      <option value="Restaurant">Restaurant</option>
+    <select [(ngModel)]="temp.extendedProps.category" placeholder="Ressenti">
+      <option value="" disabled selected hidden>Ressenti</option>
+      <option value="Très-bien">Très-bien</option>
+      <option value="Bien">Bien</option>
+      <option value="Moyen">Moyen</option>
+      <option value="Dur">Dur</option>
     </select>
 
-    <label>Note avant (1 à 10)</label>
     <input
       type="number"
       min="1"
       max="10"
       [(ngModel)]="temp.extendedProps.noteAvant"
+      placeholder="Note avant (1 à 10)"
     />
 
-    <label>Note après (1 à 10)</label>
     <input
       type="number"
       min="1"
       max="10"
       [(ngModel)]="temp.extendedProps.noteApres"
+      placeholder="Note après (1 à 10)"
     />
-    <label>Sentiment</label>
-    <input [(ngModel)]="temp.extendedProps.sentiment" type="text" />
+    <input [(ngModel)]="temp.extendedProps.sentiment" type="text" placeholder="Description"/>
     <div class="actions">
       <button class="save" (click)="onSave()">Valider</button>
       <button class="delete" @if(sortie) (click)="onDelete()">Supprimer</button>
