@@ -10,6 +10,10 @@
   box-shadow: 0 4px 15px rgba(0,0,0,0.10);
 }
 
+h2{
+  text-transform: capitalize;
+}
+
 ::ng-deep .cal-month-view .cal-cell,
 ::ng-deep .cal-month-view .cal-days .cal-cell-row ,
 ::ng-deep .cal-month-view .cal-days,
@@ -104,9 +108,11 @@
 =============================== */
 .header-calendar{
   display: flex;
+  justify-content: space-between;
+  width: 100%;
   font-size: 16px;
   font-family: $font-main;
-  gap: 4em;
+  // gap: 4em;
   
 }
 
@@ -164,14 +170,18 @@
     text-align: center;
 
     .day {
+      font-family: $font-main;
       font-size: 1.5rem;
       line-height: 1;
+      color: $text;
     }
 
     .month {
+      font-family: $font-secondary;
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1px;
+      color: $text-secondary;
     }
   }
 
@@ -181,7 +191,7 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: rgba(74, 111, 165, 0.3); // Remplacez $primary par une couleur
+    background: #FFD6A5; // Remplacez $primary par une couleur
     z-index: 0;
   }
 
@@ -190,17 +200,18 @@
     left: 64px;
     width: 12px;
     height: 12px;
-    background: #4a6fa5; // Remplacez $primary par une couleur
+    background:#FFD6A5; // Remplacez $primary par une couleur
     border-radius: 50%;
     z-index: 1;
   }
 
   &-title {
-    font-family: Arial, sans-serif; // Remplacez $font-secondary par une police
+    font-family: $font-secondary; // Remplacez $font-secondary par une police
     font-size: 0.95rem;
-    color: #333333; // Remplacez $text par une couleur
+    color: $text; // Remplacez $text par une couleur
     font-weight: 500;
     padding-left: 20px;
+    // border-bottom: 1px solid $secondary;
   }
 }
 

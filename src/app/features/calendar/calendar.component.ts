@@ -65,22 +65,23 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit() {
     this.refreshCalendar();
-    this.sortiesDuMois.sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
-    
+    this.sortiesDuMois.sort(
+      (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+    );
   }
 
   refreshCalendar() {
-  const sorties = this.sortieService.getSorties();
-  this.events = sorties.map((sortie) => ({
-    title: sortie.title,
-    start: new Date(sortie.start), // Conversion en Date pour le calendrier
-    meta: sortie.extendedProps,
-    color: this.getColorForSortie(sortie),
-  }));
+    const sorties = this.sortieService.getSorties();
+    this.events = sorties.map((sortie) => ({
+      title: sortie.title,
+      start: new Date(sortie.start), // Conversion en Date pour le calendrier
+      meta: sortie.extendedProps,
+      id: sortie.id,
+      color: this.getColorForSortie(sortie),
+    }));
 
-  // Filtrer les sorties du mois en cours
-  this.sortiesDuMois = sorties
-    .filter((s) => {
+    // Filtrer les sorties du mois en cours
+    this.sortiesDuMois = sorties.filter((s) => {
       const startDate = new Date(s.start);
       return (
         startDate.getMonth() === this.viewDate.getMonth() &&
@@ -100,38 +101,39 @@ export class CalendarComponent implements OnInit {
     }
   }
 
- handleDateClick(date: Date) {
-  // Vérifie si un événement existe déjà pour cette date
-  const existingEvent = this.events.find(event => {
-    const eventDate = new Date(event.start);
-    return (
-      eventDate.getFullYear() === date.getFullYear() &&
-      eventDate.getMonth() === date.getMonth() &&
-      eventDate.getDate() === date.getDate()
-    );
-  });
-  if (existingEvent) {
-    // Si un événement existe, ouvre la modalité en mode "view"
-    this.selectedSortie = {
-      title: existingEvent.title,
-      start: existingEvent.start.toISOString(),
-      extendedProps: { ...existingEvent.meta },
-    };
-    this.modalMode = 'view';
-  } else {
-    // Sinon, ouvre la modalité en mode "edit" pour créer un nouvel événement
-    this.selectedSortie = {
-      title: '',
-      start: date.toISOString(),
-      extendedProps: {},
-    };
-    this.modalMode = 'edit';
+  handleDateClick(date: Date) {
+    // Vérifie si un événement existe déjà pour cette date
+    const existingEvent = this.events.find((event) => {
+      const eventDate = new Date(event.start);
+      return (
+        eventDate.getFullYear() === date.getFullYear() &&
+        eventDate.getMonth() === date.getMonth() &&
+        eventDate.getDate() === date.getDate()
+      );
+    });
+    if (existingEvent) {
+      // Si un événement existe, ouvre la modalité en mode "view"
+      this.selectedSortie = {
+        id: existingEvent.id as string,
+        title: existingEvent.title,
+        start: existingEvent.start.toISOString(),
+        extendedProps: { ...existingEvent.meta },
+      };
+      this.modalMode = 'view';
+    } else {
+      this.selectedSortie = {
+        title: '',
+        start: date.toISOString(),
+        extendedProps: {},
+      };
+      this.modalMode = 'edit';
+    }
+    this.modalVisible = true;
   }
-  this.modalVisible = true;
-}
 
   handleEventClick(event: CalendarEvent) {
     this.selectedSortie = {
+      id: event.meta.id,
       title: event.title,
       start: event.start.toISOString(),
       extendedProps: { ...event.meta },
@@ -143,6 +145,7 @@ export class CalendarComponent implements OnInit {
 
   openCreateModal() {
     this.selectedSortie = {
+      id: crypto.randomUUID(),
       title: '',
       start: new Date().toISOString(),
       extendedProps: {},
@@ -153,11 +156,13 @@ export class CalendarComponent implements OnInit {
   }
 
   onSave(sortie: Sortie) {
-    if (this.selectedSortie?.title) {
+    if (this.selectedSortie?.id) {
       this.sortieService.updateSortie(sortie);
     } else {
+      sortie.id = crypto.randomUUID();
       this.sortieService.addSortie(sortie);
     }
+
     this.refreshCalendar();
     this.modalVisible = false;
   }
@@ -175,6 +180,4 @@ export class CalendarComponent implements OnInit {
   onClose() {
     this.modalVisible = false;
   }
-
-  
 }
