@@ -1,58 +1,57 @@
 <!-- MODE VIEW -->
-<div *ngIf="mode === 'view'" class="view-mode">
-  <div class="modal">
-    <h2>{{ sortie?.title }}</h2>
-    <p>
-      <strong>Date :</strong>
-      {{ sortie?.start | date : "fullDate" : "" : "fr" }}
-    </p>
-    <p><strong>Catégorie :</strong> {{ sortie?.extendedProps?.category }}</p>
-    <p><strong>Note avant :</strong> {{ sortie?.extendedProps?.noteAvant }}</p>
-    <p><strong>Note après :</strong> {{ sortie?.extendedProps?.noteApres }}</p>
-    <p><strong>Sentiment :</strong> {{ sortie?.extendedProps?.sentiment }}</p>
-
-    <div class="actions">
-      <button class="save" (click)="switchToEdit()">Modifier</button>
-      <button class="delete"(click)="onDelete()">Supprimer</button>
-      <button class="close"(click)="onClose()">Fermer</button> 
+@if (mode === 'view') {
+  <div class="view-mode">
+    <div class="modal">
+      <h2>{{ sortie?.title }}</h2>
+      <p>
+        <strong>Date :</strong>
+        {{ sortie?.start | date : "fullDate" : "" : "fr" }}
+      </p>
+      <p><strong>Catégorie :</strong> {{ sortie?.extendedProps?.category }}</p>
+      <p><strong>Note avant :</strong> {{ sortie?.extendedProps?.noteAvant }}</p>
+      <p><strong>Note après :</strong> {{ sortie?.extendedProps?.noteApres }}</p>
+      <p><strong>Sentiment :</strong> {{ sortie?.extendedProps?.sentiment }}</p>
+      <div class="actions">
+        <button class="save" (click)="switchToEdit()">Modifier</button>
+        <button class="delete"(click)="onDelete()">Supprimer</button>
+        <button class="close"(click)="onClose()">Fermer</button>
+      </div>
     </div>
   </div>
-</div>
+}
 
-<div *ngIf="mode === 'edit'" class="view-mode">
-  <div class="modal">
-    <h2>Sortie</h2>
-
-    <input [(ngModel)]="temp.title" type="text"  placeholder="Titre"/>
-
-    <select [(ngModel)]="temp.extendedProps.category" placeholder="Ressenti">
-      <option value="" disabled selected hidden>Ressenti</option>
-      <option value="calme">calme</option>
-      <option value="moyen">moyen</option>
-      <option value="tendu">tendu</option>
-      <option value="anxieuse">anxieuse</option>
-    </select>
-
-    <input
-      type="number"
-      min="1"
-      max="10"
-      [(ngModel)]="temp.extendedProps.noteAvant"
-      placeholder="Note avant (1 à 10)"
-    />
-
-    <input
-      type="number"
-      min="1"
-      max="10"
-      [(ngModel)]="temp.extendedProps.noteApres"
-      placeholder="Note après (1 à 10)"
-    />
-    <input [(ngModel)]="temp.extendedProps.sentiment" type="text" placeholder="Description"/>
-    <div class="actions">
-      <button class="save" (click)="onSave()">Valider</button>
-      <button class="delete" @if(sortie) (click)="onDelete()">Supprimer</button>
-      <button class="close" (click)="onClose()">Annuler</button>
+@if (mode === 'edit') {
+  <div class="view-mode">
+    <div class="modal">
+      <h2>Sortie</h2>
+      <input [(ngModel)]="temp.title" type="text"  placeholder="Titre"/>
+      <select [(ngModel)]="temp.extendedProps.category" placeholder="Ressenti">
+        <option value="" disabled selected hidden>Ressenti</option>
+        <option value="calme">calme</option>
+        <option value="moyen">moyen</option>
+        <option value="tendu">tendu</option>
+        <option value="anxieuse">anxieuse</option>
+      </select>
+      <input
+        type="number"
+        min="1"
+        max="10"
+        [(ngModel)]="temp.extendedProps.noteAvant"
+        placeholder="Note avant (1 à 10)"
+        />
+      <input
+        type="number"
+        min="1"
+        max="10"
+        [(ngModel)]="temp.extendedProps.noteApres"
+        placeholder="Note après (1 à 10)"
+        />
+      <input [(ngModel)]="temp.extendedProps.sentiment" type="text" placeholder="Description"/>
+      <div class="actions">
+        <button class="save" (click)="onSave()">Valider</button>
+        <button class="delete" @if(sortie) (click)="onDelete()">Supprimer</button>
+        <button class="close" (click)="onClose()">Annuler</button>
+      </div>
     </div>
   </div>
-</div>
+}

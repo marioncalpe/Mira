@@ -5,7 +5,7 @@
       mwlCalendarPreviousView
       [(viewDate)]="viewDate"
       [view]="view"
-    >
+      >
       <
     </button>
     <h2>{{ viewDate | calendarDate : "monthViewTitle" : "fr" }}</h2>
@@ -14,7 +14,7 @@
       mwlCalendarNextView
       [(viewDate)]="viewDate"
       [view]="view"
-    >
+      >
       >
     </button>
   </div>
@@ -24,33 +24,36 @@
     [weekStartsOn]="weekStartsOn"
     (dayClicked)="handleDateClick($event.day.date)"
     (eventClicked)="handleEventClick($event.event)"
-  >
+    >
   </mwl-calendar-month-view>
 
-  <app-sortie-modal
-    *ngIf="modalVisible"
-    [sortie]="selectedSortie"
-    [mode]="modalMode"
-    (close)="modalVisible = false"
-    (save)="onSave($event)"
-    (delete)="onDelete($event)"
-  ></app-sortie-modal>
+  @if (modalVisible) {
+    <app-sortie-modal
+      [sortie]="selectedSortie"
+      [mode]="modalMode"
+      (close)="modalVisible = false"
+      (save)="onSave($event)"
+      (delete)="onDelete($event)"
+    ></app-sortie-modal>
+  }
 </div>
 <div class="timeline">
-  <div class="timeline-item" *ngFor="let sortie of sortiesDuMois">
-    <div class="timeline-date">
-      <div class="day">
-        {{ sortie.start | date : "d" }}
+  @for (sortie of sortiesDuMois; track sortie) {
+    <div class="timeline-item">
+      <div class="timeline-date">
+        <div class="day">
+          {{ sortie.start | date : "d" }}
+        </div>
+        <div class="month">
+          {{ sortie.start | date : "MMM" }}
+        </div>
       </div>
-      <div class="month">
-        {{ sortie.start | date : "MMM" }}
+      <div class="timeline-line"></div>
+      <div class="timeline-dot"></div>
+      <div class="timeline-title">
+        {{ sortie.title }}
       </div>
     </div>
-    <div class="timeline-line"></div>
-    <div class="timeline-dot"></div>
-    <div class="timeline-title">
-      {{ sortie.title }}
-    </div>
-  </div>
+  }
 </div>
 <app-menu></app-menu>
