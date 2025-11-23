@@ -63,32 +63,33 @@ export class CalendarComponent implements OnInit {
   sortiesDuMois: Sortie[] = [];
   constructor(private sortieService: SortieService) {}
 
-  ngOnInit() {
-    this.refreshCalendar();
+  
+  async ngOnInit() {
+    await this.refreshCalendar();
     this.sortiesDuMois.sort(
       (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
     );
   }
 
-  refreshCalendar() {
-    const sorties = this.sortieService.getSorties();
-    this.events = sorties.map((sortie) => ({
-      title: sortie.title,
-      start: new Date(sortie.start), // Conversion en Date pour le calendrier
-      meta: sortie.extendedProps,
-      id: sortie.id,
-      color: this.getColorForSortie(sortie),
-    }));
+  async refreshCalendar() {
+  const sorties = await this.sortieService.getSorties();
 
-    // Filtrer les sorties du mois en cours
-    this.sortiesDuMois = sorties.filter((s) => {
-      const startDate = new Date(s.start);
-      return (
-        startDate.getMonth() === this.viewDate.getMonth() &&
-        startDate.getFullYear() === this.viewDate.getFullYear()
-      );
-    });
-  }
+  this.events = sorties.map((sortie: Sortie) => ({
+    id: sortie.id,
+    title: sortie.title,
+    start: new Date(sortie.start),
+    meta: sortie.extendedProps,
+    color: this.getColorForSortie(sortie),
+  }));
+
+  this.sortiesDuMois = sorties.filter((s: Sortie) => {
+    const d = new Date(s.start);
+    return (
+      d.getMonth() === this.viewDate.getMonth() &&
+      d.getFullYear() === this.viewDate.getFullYear()
+    );
+  });
+}
 
   private getColorForSortie(sortie: Sortie) {
     switch (sortie.extendedProps?.category) {
@@ -145,11 +146,16 @@ export class CalendarComponent implements OnInit {
 
   openCreateModal() {
     this.selectedSortie = {
-      id: crypto.randomUUID(),
-      title: '',
-      start: new Date().toISOString(),
-      extendedProps: {},
-    };
+    id: crypto.randomUUID(),
+    title: 'Nouvelle sortie',
+    start: new Date().toISOString(),
+    extendedProps: {
+      category: 'calme',
+      noteAvant: 1,
+      noteApres: 1,
+      sentiment: 'positif',
+    },
+  };
 
     this.modalMode = 'edit'; // 👉 mode EDIT
     this.modalVisible = true;

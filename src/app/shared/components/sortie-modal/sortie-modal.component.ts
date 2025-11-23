@@ -27,9 +27,15 @@ export class SortieModalComponent implements OnChanges {
   @Output() close = new EventEmitter<void>();
 
   temp: Sortie = {
+    id: '',
     title: '',
-    start: '',
-    extendedProps: {},
+    start: new Date().toISOString(),
+    extendedProps: {
+      category: '',
+      noteAvant: 0,
+      noteApres: 0,
+      sentiment: '',
+    },
   };
 
   ngOnChanges() {
@@ -38,13 +44,27 @@ export class SortieModalComponent implements OnChanges {
       : { title: '', start: '', extendedProps: {} };
   }
 
-  openCreate() {
+  openCreate(sortie?: Sortie) {
     this.mode = 'edit';
     this.visible = true;
 
-    this.temp = this.sortie
-      ? { ...this.sortie }
-      : { title: '', start: '', extendedProps: {} };
+    if (sortie) {
+    // Si une sortie est fournie, on la copie dans temp
+    this.temp = { ...sortie };
+  } else {
+    // Sinon, on initialise avec des valeurs par défaut
+    this.temp = {
+      id: '',
+      title: '',
+      start: new Date().toISOString(),
+      extendedProps: {
+        category: '',
+        noteAvant: 0,
+        noteApres: 0,
+        sentiment: '',
+      },
+    };
+  }
   }
 
   onSave() {
