@@ -1,5 +1,54 @@
 <div class="head">
-    <h1>Progression</h1>
-    <app-motivation-banner></app-motivation-banner>
+  <h1>Progression</h1>
+  <app-motivation-banner></app-motivation-banner>
 </div>
+<div class="carte">
+  Stats rapides
+  {{ totalSorties }}
+  {{ sortiesCeMois }}
+</div>
+<div class="carte">
+  Sorties par mois
+  <div class="chart">
+    <div class="bar" *ngFor="let item of sortieParMois">
+      <div
+        class="bar-fill"
+         [style.height.px]="getBarHeight(item.count)"
+      ></div>
+      <span class="label">{{ item.label }}</span>
+    </div>
+  </div>
+</div>
+<div class="carte">
+  <section class="notes-summary">
+    <article class="note-card before">
+      <h3>Note avant</h3>
+      <p>{{ moyenneAvant | number : "1.1-1" }}/10</p>
+    </article>
+
+    <article class="note-card after">
+      <h3>Note après</h3>
+      <p>{{ moyenneApres | number : "1.1-1" }}/10</p>
+    </article>
+  </section>
+</div>
+<!-- <div class="carte">
+  @for (sortie of recentesSorties; track sortie) {
+  <div class="timeline-item">
+    <div class="timeline-date">
+      <div class="day">
+        {{ sortie.start | date : "d" }}
+      </div>
+      <div class="month">
+        {{ sortie.start | date : "MMM" }}
+      </div>
+    </div>
+    <div class="timeline-line"></div>
+    <div class="timeline-dot"></div>
+    <div class="timeline-title">
+      {{ sortie.title }}
+    </div>
+  </div>
+  }
+</div> -->
 <app-menu></app-menu>

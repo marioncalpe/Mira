@@ -1,0 +1,32 @@
+.chart {
+  display: flex;
+  align-items: flex-end;
+  height: 220px;
+  padding: 16px;
+  gap: 12px;
+}
+.bar {
+  flex: 1;
+  display: flex;
+  flex-direction: column; // <—
+  justify-content: flex-end;
+  align-items: center;
+  gap: 6px;
+}
+.bar-fill {
+  width: 100%;
+  background: red;
+  box-shadow: 0 6px 15px rgba(254, 107, 139, 0.35);
+  border-radius: 12px 12px 4px 4px;
+  transition: height 0.3s;
+}
+.label {
+  font-size: 0.85rem;
+  text-transform: capitalize;
+  color: #cfcff5;
+}
+.notes-summary {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}

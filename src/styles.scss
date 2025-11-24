@@ -62,6 +62,7 @@ body {
   width: 430px;
   overflow: hidden;
   padding: 1em;
+  font-family: $font-secondary;
 }
 
 h1{
@@ -120,6 +121,16 @@ h1{
   transform: rotate(15deg);
 }
 
+.carte{
+  margin: 20px 0;
+  background: $carte; // Remplacez $carte par une couleur de fond
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
 
 app-root {
   z-index: 10;
