@@ -1,11 +1,13 @@
-<h1>Calendrier de sorti</h1>
+<div class="head">
+    <h1>Calendrier de sortie</h1>
+    <app-motivation-banner></app-motivation-banner>
+</div>
 <div class="calendar-container">
   <div class="header-calendar">
     <button
       class="bouton-nav"
       mwlCalendarPreviousView
       [(viewDate)]="viewDate"
-      (viewDateChange)="onViewDateChange($event)"
       [view]="view"
       >
       <
@@ -15,7 +17,6 @@
       class="bouton-nav"
       mwlCalendarNextView
       [(viewDate)]="viewDate"
-      (viewDateChange)="onViewDateChange($event)"
       [view]="view"
       >
       >

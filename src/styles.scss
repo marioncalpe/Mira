@@ -64,6 +64,18 @@ body {
   padding: 1em;
 }
 
+h1{
+  font-family: $font-main;
+  color: $text;
+  margin: 0;
+}
+
+.head{
+        position: absolute;
+        top: 15px;
+        left: 20px;
+    }
+
 .mobile-container {
   background-color: white;
   height: 932px;

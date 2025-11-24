@@ -18,6 +18,7 @@ import { Sortie } from '../../core/models/sortie.model';
 import { SortieModalComponent } from '../../shared/components/sortie-modal/sortie-modal.component';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { CustomDateFormatter } from './custom-date-formatter';
+import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
 
 @Component({
   selector: 'app-calendar',
@@ -42,7 +43,8 @@ import { CustomDateFormatter } from './custom-date-formatter';
     CalendarPreviousViewDirective,
     CalendarNextViewDirective,
     CalendarDatePipe,
-  ],
+    MotivationBannerComponent
+],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
@@ -56,7 +58,7 @@ export class CalendarComponent implements OnInit {
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
   events: CalendarEvent[] = [];
-  modalMode: 'view' | 'edit' = 'view';
+  modalMode: 'view' | 'edit' | 'create' = 'view';
   private allSorties: Sortie[] = [];
   sortiesDuMois: Sortie[] = [];
   constructor(private sortieService: SortieService) {}
@@ -170,8 +172,13 @@ export class CalendarComponent implements OnInit {
     this.modalVisible = false;
   }
 
-  onViewDateChange(date: Date) {
-    this.viewDate = date;
+  onViewDateChange(date: any) {
+    // Correction : accepte Event ou Date
+    if (date instanceof Date) {
+      this.viewDate = date;
+    } else if (date && date.target && date.target.value) {
+      this.viewDate = new Date(date.target.value);
+    }
     this.updateSortiesForMonth();
   }
 
