@@ -1,15 +1,12 @@
-import { Component, OnInit, TemplateRef, Injectable } from '@angular/core';
-import { CommonModule, formatDate } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import {
   CalendarEvent,
   CalendarDateFormatter,
   CalendarView,
   CalendarMonthViewComponent,
-  CalendarWeekViewComponent,
-  CalendarDayViewComponent,
   provideCalendar,
   DateAdapter,
-  DateFormatterParams,
   DAYS_OF_WEEK,
   CalendarPreviousViewDirective,
   CalendarNextViewDirective,
@@ -60,36 +57,27 @@ export class CalendarComponent implements OnInit {
 
   events: CalendarEvent[] = [];
   modalMode: 'view' | 'edit' = 'view';
+  private allSorties: Sortie[] = [];
   sortiesDuMois: Sortie[] = [];
   constructor(private sortieService: SortieService) {}
 
-  
   async ngOnInit() {
     await this.refreshCalendar();
-    this.sortiesDuMois.sort(
-      (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
-    );
   }
 
   async refreshCalendar() {
-  const sorties = await this.sortieService.getSorties();
+    this.allSorties = await this.sortieService.getSorties();
 
-  this.events = sorties.map((sortie: Sortie) => ({
-    id: sortie.id,
-    title: sortie.title,
-    start: new Date(sortie.start),
-    meta: sortie.extendedProps,
-    color: this.getColorForSortie(sortie),
-  }));
+    this.events = this.allSorties.map((sortie: Sortie) => ({
+      id: sortie.id,
+      title: sortie.title,
+      start: new Date(sortie.start),
+      meta: { ...sortie.extendedProps },
+      color: this.getColorForSortie(sortie),
+    }));
 
-  this.sortiesDuMois = sorties.filter((s: Sortie) => {
-    const d = new Date(s.start);
-    return (
-      d.getMonth() === this.viewDate.getMonth() &&
-      d.getFullYear() === this.viewDate.getFullYear()
-    );
-  });
-}
+    this.updateSortiesForMonth();
+  }
 
   private getColorForSortie(sortie: Sortie) {
     switch (sortie.extendedProps?.category) {
@@ -118,7 +106,7 @@ export class CalendarComponent implements OnInit {
         id: existingEvent.id as string,
         title: existingEvent.title,
         start: existingEvent.start.toISOString(),
-        extendedProps: { ...existingEvent.meta },
+        extendedProps: { ...(existingEvent.meta ?? {}) },
       };
       this.modalMode = 'view';
     } else {
@@ -134,10 +122,10 @@ export class CalendarComponent implements OnInit {
 
   handleEventClick(event: CalendarEvent) {
     this.selectedSortie = {
-      id: event.meta.id,
+      id: event.id as string,
       title: event.title,
       start: event.start.toISOString(),
-      extendedProps: { ...event.meta },
+      extendedProps: { ...(event.meta ?? {}) },
     };
 
     this.modalMode = 'view'; // 👉 mode VIEW
@@ -146,23 +134,22 @@ export class CalendarComponent implements OnInit {
 
   openCreateModal() {
     this.selectedSortie = {
-    id: crypto.randomUUID(),
-    title: 'Nouvelle sortie',
-    start: new Date().toISOString(),
-    extendedProps: {
-      category: 'calme',
-      noteAvant: 1,
-      noteApres: 1,
-      sentiment: 'positif',
-    },
-  };
+      title: 'Nouvelle sortie',
+      start: new Date().toISOString(),
+      extendedProps: {
+        category: 'calme',
+        noteAvant: 1,
+        noteApres: 1,
+        sentiment: 'positif',
+      },
+    };
 
     this.modalMode = 'edit'; // 👉 mode EDIT
     this.modalVisible = true;
   }
 
   onSave(sortie: Sortie) {
-    if (this.selectedSortie?.id) {
+    if (sortie.id) {
       this.sortieService.updateSortie(sortie);
     } else {
       sortie.id = crypto.randomUUID();
@@ -173,10 +160,6 @@ export class CalendarComponent implements OnInit {
     this.modalVisible = false;
   }
 
-  switchToEdit() {
-    this.modalMode = 'edit';
-  }
-
   onDelete(sortie: Sortie) {
     this.sortieService.deleteSortie(sortie);
     this.refreshCalendar();
@@ -185,5 +168,24 @@ export class CalendarComponent implements OnInit {
 
   onClose() {
     this.modalVisible = false;
+  }
+
+  onViewDateChange(date: Date) {
+    this.viewDate = date;
+    this.updateSortiesForMonth();
+  }
+
+  private updateSortiesForMonth() {
+    this.sortiesDuMois = this.allSorties
+      .filter((s: Sortie) => {
+        const d = new Date(s.start);
+        return (
+          d.getMonth() === this.viewDate.getMonth() &&
+          d.getFullYear() === this.viewDate.getFullYear()
+        );
+      })
+      .sort(
+        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+      );
   }
 }

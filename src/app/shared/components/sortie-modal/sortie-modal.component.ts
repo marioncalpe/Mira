@@ -25,46 +25,33 @@ export class SortieModalComponent implements OnChanges {
   @Output() save = new EventEmitter<Sortie>();
   @Output() delete = new EventEmitter<Sortie>();
   @Output() close = new EventEmitter<void>();
+  @Output() modeChange = new EventEmitter<'view' | 'edit' | 'create'>();
 
-  temp: Sortie = {
-    id: '',
-    title: '',
-    start: new Date().toISOString(),
-    extendedProps: {
-      category: '',
-      noteAvant: 0,
-      noteApres: 0,
-      sentiment: '',
-    },
-  };
+  temp: Sortie = this.createEmptySortie();
 
   ngOnChanges() {
     this.temp = this.sortie
-      ? { ...this.sortie }
-      : { title: '', start: '', extendedProps: {} };
+      ? {
+          ...this.sortie,
+          extendedProps: { ...this.sortie.extendedProps },
+        }
+      : this.createEmptySortie();
   }
 
   openCreate(sortie?: Sortie) {
-    this.mode = 'edit';
+    this.modeChange.emit('edit');
     this.visible = true;
 
     if (sortie) {
-    // Si une sortie est fournie, on la copie dans temp
-    this.temp = { ...sortie };
-  } else {
-    // Sinon, on initialise avec des valeurs par défaut
-    this.temp = {
-      id: '',
-      title: '',
-      start: new Date().toISOString(),
-      extendedProps: {
-        category: '',
-        noteAvant: 0,
-        noteApres: 0,
-        sentiment: '',
-      },
-    };
-  }
+      // Si une sortie est fournie, on la copie dans temp
+      this.temp = {
+        ...sortie,
+        extendedProps: { ...sortie.extendedProps },
+      };
+    } else {
+      // Sinon, on initialise avec des valeurs par défaut
+      this.temp = this.createEmptySortie();
+    }
   }
 
   onSave() {
@@ -72,7 +59,7 @@ export class SortieModalComponent implements OnChanges {
   }
 
   switchToEdit() {
-    this.mode = 'edit';
+    this.modeChange.emit('edit');
   }
 
   onDelete() {
@@ -83,5 +70,19 @@ export class SortieModalComponent implements OnChanges {
 
   onClose() {
     this.close.emit();
+  }
+
+  private createEmptySortie(): Sortie {
+    return {
+      id: '',
+      title: '',
+      start: new Date().toISOString(),
+      extendedProps: {
+        category: '',
+        noteAvant: 0,
+        noteApres: 0,
+        sentiment: '',
+      },
+    };
   }
 }

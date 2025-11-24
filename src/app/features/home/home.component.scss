@@ -3,21 +3,19 @@
 
 
 .content{
-    // background-color:$bg;
-    padding: 2em 2em 4em; /* 4em en bas pour éviter que le contenu soit masqué par le menu */
-    // min-height: calc(100vh - 60px); /* ajusté selon la hauteur de ton menu */
     .head{
-        .title{
+        position: absolute;
+        top: 15px;
+        left: 20px;
+        display: flex;
+        flex-direction: column;
+        h1{
             font-family: $font-main;
             color: $text;
-            font-weight: 600;
-            font-size: 20px;
         }
-        .quote{
+        h3{
             font-family: $font-secondary;
             color: $text-secondary;
-            font-weight: 400;
-            font-size: 14px;
         }
     }
 }

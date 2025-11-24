@@ -5,6 +5,7 @@
       class="bouton-nav"
       mwlCalendarPreviousView
       [(viewDate)]="viewDate"
+      (viewDateChange)="onViewDateChange($event)"
       [view]="view"
       >
       <
@@ -14,6 +15,7 @@
       class="bouton-nav"
       mwlCalendarNextView
       [(viewDate)]="viewDate"
+      (viewDateChange)="onViewDateChange($event)"
       [view]="view"
       >
       >
@@ -21,6 +23,7 @@
   </div>
   <mwl-calendar-month-view
     [viewDate]="viewDate"
+    (viewDateChange)="onViewDateChange($event)"
     [events]="events"
     [weekStartsOn]="weekStartsOn"
     (dayClicked)="handleDateClick($event.day.date)"
@@ -32,6 +35,7 @@
     <app-sortie-modal
       [sortie]="selectedSortie"
       [mode]="modalMode"
+      (modeChange)="modalMode = $event"
       (close)="modalVisible = false"
       (save)="onSave($event)"
       (delete)="onDelete($event)"
