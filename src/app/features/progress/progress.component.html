@@ -11,10 +11,7 @@
   Sorties par mois
   <div class="chart">
     <div class="bar" *ngFor="let item of sortieParMois">
-      <div
-        class="bar-fill"
-         [style.height.px]="getBarHeight(item.count)"
-      ></div>
+      <div class="bar-fill" [style.height.px]="getBarHeight(item.count)"></div>
       <span class="label">{{ item.label }}</span>
     </div>
   </div>
@@ -32,7 +29,7 @@
     </article>
   </section>
 </div>
-<!-- <div class="carte">
+<div class="carte">
   @for (sortie of recentesSorties; track sortie) {
   <div class="timeline-item">
     <div class="timeline-date">
@@ -50,5 +47,5 @@
     </div>
   </div>
   }
-</div> -->
+</div>
 <app-menu></app-menu>

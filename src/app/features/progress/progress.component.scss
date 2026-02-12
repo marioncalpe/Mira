@@ -1,32 +1,110 @@
+@use 'styles' as *;
+
 .chart {
   display: flex;
   align-items: flex-end;
-  height: 220px;
+  justify-content: space-around;
+  height: 120px;
   padding: 16px;
-  gap: 12px;
+  gap: 15px;
 }
+
 .bar {
-  flex: 1;
   display: flex;
   flex-direction: column; // <—
   justify-content: flex-end;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
 }
+
 .bar-fill {
   width: 100%;
-  background: red;
+  background: $primary;
   box-shadow: 0 6px 15px rgba(254, 107, 139, 0.35);
   border-radius: 12px 12px 4px 4px;
   transition: height 0.3s;
 }
+
 .label {
   font-size: 0.85rem;
   text-transform: capitalize;
   color: #cfcff5;
 }
+
 .notes-summary {
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+}
+
+.timeline {
+  margin: 20px 0;
+  background: #ffffff; // Remplacez $carte par une couleur de fond
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+  &-item {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+  }
+
+  &-date {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+    color: #4a6fa5; // Remplacez $primary par une couleur
+    font-size: 0.95rem;
+    text-align: center;
+
+    .day {
+      font-family: $font-main;
+      font-size: 1.5rem;
+      line-height: 1;
+      color: $text;
+    }
+
+    .month {
+      font-family: $font-secondary;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: $text-secondary;
+    }
+  }
+
+  &-line {
+    position: absolute;
+    left: 69px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #FFD6A5; // Remplacez $primary par une couleur
+    z-index: 0;
+  }
+
+  &-dot {
+    position: absolute;
+    left: 64px;
+    width: 12px;
+    height: 12px;
+    background:#FFD6A5; // Remplacez $primary par une couleur
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  &-title {
+    font-family: $font-secondary; // Remplacez $font-secondary par une police
+    font-size: 0.95rem;
+    color: $text; // Remplacez $text par une couleur
+    font-weight: 500;
+    padding-left: 20px;
+    // border-bottom: 1px solid $secondary;
+  }
 }

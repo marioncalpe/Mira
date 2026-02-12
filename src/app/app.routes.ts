@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { CalendarComponent } from './features/calendar/calendar.component';
-import { ClassComponent } from './features/class/class.component';
+import { AchivementsComponent } from './features/Achivements/Achivements.component';
 import { ProgressComponent } from './features/progress/progress.component';
 import { SettingsComponent } from './features/settings/settings.component';
 
@@ -20,8 +20,8 @@ export const routes: Routes = [
     component: CalendarComponent
   },
   {
-    path: 'class',
-    component: ClassComponent
+    path: 'achivements',
+    component: AchivementsComponent
   },
   {
     path: 'progress',

@@ -10,7 +10,7 @@ import { Sortie } from '../../core/models/sortie.model';
   standalone: true,
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss'],
-  imports: [MenuComponent, MotivationBannerComponent, DecimalPipe, DatePipe, CommonModule],
+  imports: [MenuComponent, MotivationBannerComponent, DecimalPipe, CommonModule],
 })
 export class ProgressComponent implements OnInit {
   sorties: Sortie[] = [];
@@ -66,7 +66,7 @@ export class ProgressComponent implements OnInit {
       counts.set(key, (counts.get(key) ?? 0) + 1);
     });
 
-    for (let i = 5; i >= 0; i--) {
+    for (let i = 4; i >= 0; i--) {
       // 5 => 6 mois
       const date = new Date();
       date.setMonth(date.getMonth() - i);
