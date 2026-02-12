@@ -5,81 +5,23 @@
     <app-motivation-banner></app-motivation-banner>
   </div>
   <div class="contenair">
-    <img
-      src="assets/icons/achivements/1-NombresDeSorties/1PremiereSortie.png"
-    />
-
-    <img src="assets/icons/achivements/1-NombresDeSorties/1EnMouvement.png" />
-
-    <img src="assets/icons/achivements/1-NombresDeSorties/1MiraActive.png" />
-
-    <img src="assets/icons/achivements/1-NombresDeSorties/1Exploratrice.png" />
-
-    <img src="assets/icons/achivements/1-NombresDeSorties/1Aventurier.png" />
-
-    <img src="assets/icons/achivements/1-NombresDeSorties/1Nomade.png" />
-
-    <img
-      src="assets/icons/achivements/1-NombresDeSorties/1ToujoursDehors.png"
-    />
-
-    <img src="assets/icons/achivements/1-NombresDeSorties/1Maratonien.png" />
-
-    <img src="assets/icons/achivements/1-NombresDeSorties/1Inarretable.png" />
-
-    <img
-      src="assets/icons/achivements/1-NombresDeSorties/1LegendesSortie.png"
-    />
-
-    <img src="assets/icons/achivements/2-Humeurs/2RayonDeSoleil.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2EnergiePositive.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2HumeurEnOr.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2BonneVibes.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2Optimiste.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2StableEtSereine.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2CavaAller.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2TuTiensLeCap.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2Ressilient.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2SortieCourageuse.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2TuNeLachesRien.png" />
-
-    <img src="assets/icons/achivements/2-Humeurs/2courageQuotidien.png" />
-
-    <img src="assets/icons/achivements/3-Progression/3PetitMieux.png" />
-
-    <img src="assets/icons/achivements/3-Progression/3Tuprograsse.png" />
-
-    <img src="assets/icons/achivements/3-Progression/3BonneDynamique.png" />
-
-    <img src="assets/icons/achivements/3-Progression/3AscensionPositive.png" />
-
-    <img src="assets/icons/achivements/3-Progression/3RevenirplusFort.png" />
-
-    <img src="assets/icons/achivements/3-Progression/3Resilience.png" />
-
-    <img src="assets/icons/achivements/3-Progression/3Transformation.png" />
-
-    <img src="assets/icons/achivements/4-Repetitions/4JoursDaffilee.png" />
-
-    <img src="assets/icons/achivements/4-Repetitions/4ToujoursPresent.png" />
-
-    <img src="assets/icons/achivements/4-Repetitions/4RythmeTrouve.png" />
-
-    <img src="assets/icons/achivements/4-Repetitions/4RoutineSolide.png" />
-
-    <img src="assets/icons/achivements/4-Repetitions/4FlowParfait.png" />
-
-    <img src="assets/icons/achivements/4-Repetitions/4Constance.png" />
+    <div
+      *ngFor="let trophy of trophies"
+      class="trophy"
+      [class.locked]="!trophy.unlocked"
+      (click)="openTrophy(trophy)"
+    >
+      <img [src]="trophy.image" />
+      <div class="lock-overlay" *ngIf="!trophy.unlocked">🔒</div>
+    </div>
   </div>
 </div>
 <app-menu></app-menu>
+<div class="modal" *ngIf="selectedTrophy" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <img [src]="selectedTrophy.image" />
+    <h2>{{ selectedTrophy.title }}</h2>
+    <p>{{ selectedTrophy.description }}</p>
+    <p *ngIf="!selectedTrophy.unlocked">🔒 Pas encore débloqué</p>
+  </div>
+</div>

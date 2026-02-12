@@ -4,18 +4,67 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
-    height: 83vh;
+    flex: 1;
     overflow-y: auto;
-    // padding-top: 50px;
-  }
-
-  .trophee {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    padding-top: 50px;
   }
   img {
     width: 100px;
     height: 100px;
+  }
+  .trophy {
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+
+    img {
+      width: 70px;
+      height: 70px;
+      transition: 0.3s;
+    }
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &.locked img {
+      filter: grayscale(100%) brightness(0.6);
+    }
+
+    .lock-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 8px;
+      color: white;
+    }
+  }
+}
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    width: 80%;
+    max-width: 300px;
+
+    img {
+      width: 120px;
+      height: 120px;
+      margin-bottom: 10px;
+    }
   }
 }
