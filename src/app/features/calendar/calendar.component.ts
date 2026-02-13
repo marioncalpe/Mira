@@ -1,3 +1,13 @@
+/**
+ * Composant principal du calendrier.
+ *
+ * Gère :
+ * - L'affichage des sorties dans angular-calendar
+ * - L'ouverture de la modal (view / edit / create)
+ * - La synchronisation avec le SortieService
+ * - Le filtrage des sorties du mois en cours
+ */
+
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -31,7 +41,7 @@ import { MotivationBannerComponent } from '../../shared/components/motivation-ba
           provide: CalendarDateFormatter,
           useClass: CustomDateFormatter,
         },
-      }
+      },
     ),
   ],
   imports: [
@@ -43,33 +53,50 @@ import { MotivationBannerComponent } from '../../shared/components/motivation-ba
     CalendarPreviousViewDirective,
     CalendarNextViewDirective,
     CalendarDatePipe,
-    MotivationBannerComponent
-],
+    MotivationBannerComponent,
+  ],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+  // Date actuellement affichée dans le calendrier
+  viewDate: Date = new Date();
+
+  // Type de vue (Month / Week / Day)
+  view: CalendarView = CalendarView.Month;
+
+  // Liste des événements convertis pour angular-calendar
+  events: CalendarEvent[] = [];
+
+  // Toutes les sorties récupérées depuis le storage
+  private allSorties: Sortie[] = [];
+
+  // Sorties filtrées pour le mois affiché
+  sortiesDuMois: Sortie[] = [];
+
   modalVisible = false;
   selectedSortie: Sortie | null = null;
-  viewDate: Date = new Date();
-  view: CalendarView = CalendarView.Month;
   locale = 'fr';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
-
-  events: CalendarEvent[] = [];
   modalMode: 'view' | 'edit' | 'create' = 'view';
-  private allSorties: Sortie[] = [];
-  sortiesDuMois: Sortie[] = [];
+
   constructor(private sortieService: SortieService) {}
 
+  // Au démarrage du composant, on recharge le calendrier pour afficher les sorties
   async ngOnInit() {
     await this.refreshCalendar();
   }
 
+  /**
+   * Recharge toutes les sorties depuis le service
+   * puis les transforme en événements compatibles
+   * avec angular-calendar.
+   */
   async refreshCalendar() {
     this.allSorties = await this.sortieService.getSorties();
 
+    // Transformation des Sorties en CalendarEvent
     this.events = this.allSorties.map((sortie: Sortie) => ({
       id: sortie.id,
       title: sortie.title,
@@ -81,6 +108,10 @@ export class CalendarComponent implements OnInit {
     this.updateSortiesForMonth();
   }
 
+  /**
+   * Retourne la couleur de l'événement
+   * en fonction de la catégorie de la sortie.
+   */
   private getColorForSortie(sortie: Sortie) {
     switch (sortie.extendedProps?.category) {
       case 'travail':
@@ -92,6 +123,12 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  /**
+   * Gère le clic sur une date du calendrier.
+   *
+   * - Si un événement existe déjà ce jour-là → ouvre en mode "view"
+   * - Sinon → ouvre la modal en mode création
+   */
   handleDateClick(date: Date) {
     // Vérifie si un événement existe déjà pour cette date
     const existingEvent = this.events.find((event) => {
@@ -122,6 +159,10 @@ export class CalendarComponent implements OnInit {
     this.modalVisible = true;
   }
 
+  /**
+   * Gère le clic sur un événement existant.
+   * Ouvre la modal en mode consultation.
+   */
   handleEventClick(event: CalendarEvent) {
     this.selectedSortie = {
       id: event.id as string,
@@ -150,6 +191,12 @@ export class CalendarComponent implements OnInit {
     this.modalVisible = true;
   }
 
+  /**
+   * Sauvegarde une sortie.
+   *
+   * - Si elle possède un id → update
+   * - Sinon → création d'une nouvelle sortie
+   */
   onSave(sortie: Sortie) {
     if (sortie.id) {
       this.sortieService.updateSortie(sortie);
@@ -182,6 +229,10 @@ export class CalendarComponent implements OnInit {
     this.updateSortiesForMonth();
   }
 
+  /**
+   * Met à jour la liste des sorties
+   * correspondant uniquement au mois actuellement affiché.
+   */
   private updateSortiesForMonth() {
     this.sortiesDuMois = this.allSorties
       .filter((s: Sortie) => {
@@ -192,7 +243,7 @@ export class CalendarComponent implements OnInit {
         );
       })
       .sort(
-        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime()
+        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
       );
   }
 }

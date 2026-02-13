@@ -1,40 +1,96 @@
 import { Injectable } from '@angular/core';
-import { StorageService } from './storage.service';
-import { Sortie } from '../models/sortie.model';
+import { Sortie, StoredSortie } from '../models/sortie.model';
 
-@Injectable({ providedIn: 'root' })
+/**
+ * Service responsable de la gestion
+ * du stockage des sorties dans le localStorage.
+ *
+ * Il s'occupe de :
+ * - Sauvegarder
+ * - Lire
+ * - Mettre à jour
+ * - Supprimer
+ * les sorties.
+ */
+
+@Injectable({
+  providedIn: 'root',
+})
 export class SortieStorageService {
-  private readonly KEY = 'sorties';
+  /**
+   * Clé utilisée dans le localStorage
+   * pour enregistrer les sorties.
+   */
+  private readonly STORAGE_KEY = 'sorties';
 
-  constructor(private storage: StorageService) {}
+  constructor() {}
 
+  /**
+   * Récupère les données brutes stockées
+   * dans le localStorage.
+   *
+   * @returns Tableau de StoredSortie
+   */
+   private getStoredSorties(): StoredSortie[] {
+    const data = localStorage.getItem(this.STORAGE_KEY);
+    if (!data) return [];
+    return JSON.parse(data) as StoredSortie[];
+  }
+
+  /**
+   * Sauvegarde un tableau de StoredSortie
+   * dans le localStorage.
+   */
+  private saveStoredSorties(sorties: StoredSortie[]): void {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(sorties));
+  }
+
+  /**
+   * Récupère toutes les sorties
+   * et les convertit en modèle Sortie
+   * utilisable par l'application.
+   */
   getSorties(): Sortie[] {
-    return this.storage.get<Sortie[]>(this.KEY) ?? [];
+    const stored = this.getStoredSorties();
+    return stored.map(s => ({
+      ...s,
+      extendedProps: s.extendedProps ? JSON.parse(s.extendedProps as unknown as string) : {},
+    }));
   }
 
-  saveSorties(sorties: Sortie[]): void {
-    this.storage.set(this.KEY, sorties);
+  /**
+   * Ajoute une nouvelle sortie
+   * dans le stockage.
+   */
+  addSortie(sortie: Sortie): Sortie[] {
+    const stored = this.getStoredSorties();
+    const newStored: StoredSortie = {
+      ...sortie,
+      extendedProps: JSON.stringify(sortie.extendedProps),
+    };
+    stored.push(newStored);
+    this.saveStoredSorties(stored);
+    return this.getSorties();
   }
 
-  addSortie(sortie: Sortie): void {
-    const sorties = this.getSorties();
-    sorties.push(sortie);
-    this.saveSorties(sorties);
+  /**
+   * Met à jour une sortie existante.
+   */
+  updateSortie(sortie: Sortie): Sortie[] {
+    const stored = this.getStoredSorties();
+    const idx = stored.findIndex(s => s.id === sortie.id);
+    if (idx === -1) return this.getSorties();
+    stored[idx] = { ...sortie, extendedProps: JSON.stringify(sortie.extendedProps) };
+    this.saveStoredSorties(stored);
+    return this.getSorties();
   }
 
-  updateSortie(sortie: Sortie): void {
-    const sorties = this.getSorties().map(s =>
-      s.id === sortie.id ? sortie : s
-    );
-    this.saveSorties(sorties);
-  }
-
-  deleteSortie(id: string): void {
-    const sorties = this.getSorties().filter(s => s.id !== id);
-    this.saveSorties(sorties);
-  }
-
-  deleteAllSorties(): void {
-    this.storage.remove(this.KEY);
+  /**
+   * Supprime une sortie du stockage.
+   */
+  deleteSortie(id: string | number): Sortie[] {
+    const updated = this.getStoredSorties().filter(s => s.id !== id);
+    this.saveStoredSorties(updated);
+    return this.getSorties();
   }
 }
