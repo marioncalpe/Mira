@@ -3,12 +3,12 @@
   <app-motivation-banner></app-motivation-banner>
 </div>
 <div class="carte">
-  Stats rapides
+  <h3>Stats rapides</h3>
   {{ totalSorties }}
   {{ sortiesCeMois }}
 </div>
 <div class="carte">
-  Sorties par mois
+  <h3>Sorties par mois</h3>
   <div class="chart">
     <div class="bar" *ngFor="let item of sortieParMois">
       <div class="bar-fill" [style.height.px]="getBarHeight(item.count)"></div>

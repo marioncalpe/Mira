@@ -3,12 +3,12 @@
 =============================== */
 
 /* Exemple Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
 
 /* Exemple font locale */
 @font-face {
-  font-family: 'MyFont';
-  src: url('/assets/fonts/MyFont-Regular.woff2') format('woff2');
+  font-family: "MyFont";
+  src: url("/assets/fonts/MyFont-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
 }
@@ -17,22 +17,31 @@
    PALETTE
 =============================== */
 
-$primary: #FF4D6D;
-$secondary: #FFD6A5;
-$accent: #FFD93D;
+// $primary: #A8D5BA; // Boutons positifs, accents de succès, indicateurs “ok”
+// $secondary: #FFF5E6;
+// $accent: #FFAB91; // Couleur d'accentuation pour les éléments interactifs, les liens, les icônes
+
+// $bg: #6FA8DC; // Fond principal, en-têtes, barres de navigation
+// $carte: #D7C1E0; // Cartes, sections de relaxation, arrière-plans secondaires
+// $text: #2b2b2b;
+// $text-secondary: #5C5C5C;
+
+$primary: #ff4d6d;
+$secondary: #ffd6a5;
+$accent: #ffd93d;
 
 $bg: #f9f9f9;
 $carte: #ffffff;
 $text: #2b2b2b;
-$text-secondary: #5C5C5C;
+$text-secondary: #5c5c5c;
 $radius: 14px;
 
 /* ===============================
    TYPOGRAPHIE
 =============================== */
 
-$font-main: 'Poppins', sans-serif;
-$font-secondary: 'inter', sans-serif;
+$font-main: "Poppins", sans-serif;
+$font-secondary: "inter", sans-serif;
 $font-size-base: 16px;
 
 /* ===============================
@@ -44,7 +53,8 @@ $font-size-base: 16px;
   justify-content: center;
   align-items: center;
 }
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: #121212;
@@ -65,9 +75,9 @@ body {
   font-family: $font-secondary;
 }
 
-h1{
+h1 {
   font-family: $font-main;
-  color: $text;
+  // color: $text;
   margin: 0;
 }
 h4 {
@@ -75,11 +85,17 @@ h4 {
   color: $text-secondary;
   font-style: italic;
 }
-.head{
-        position: absolute;
-        top: 15px;
-        left: 20px;
-    }
+.head {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  padding: 1em;
+  padding-bottom: 2em;
+  color: white;
+  // background-color: rgba(255, 255, 255, 0);
+  overflow: visible;
+}
 
 .mobile-container {
   background-color: white;
@@ -93,39 +109,43 @@ h4 {
   position: relative;
   // width: 100%;
   // height: 100vh;
-  background: linear-gradient(135deg, #F8D4B7 0%, #F9E8D9 100%);
+  // background: linear-gradient(135deg, #f8d4b7 0%, #f9e8d9 100%);
+  background-image: url("https://images.toucharger.com/img/graphiques/fonds-d-ecran/nature-paysages/ciel/galaxy-note-8-fond-d-ecran-nuage.76098.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
   overflow: hidden;
 }
 
-/* Forme abstraite en bas à gauche */
-.background::before {
-  content: "";
-  position: absolute;
-  width: 60%;
-  height: 60%;
-  background: #FF4D6D;
-  opacity: 0.5;
-  border-radius: 50% 40% 60% 30%;
-  bottom: -15%;
-  left: -10%;
-  transform: rotate(-15deg);
-}
+// /* Forme abstraite en bas à gauche */
+// .background::before {
+//   content: "";
+//   position: absolute;
+//   width: 60%;
+//   height: 60%;
+//   background: #ff4d6d;
+//   opacity: 0.5;
+//   border-radius: 50% 40% 60% 30%;
+//   bottom: -15%;
+//   left: -10%;
+//   transform: rotate(-15deg);
+// }
 
-/* Forme abstraite en haut à droite */
-.background::after {
-  content: "";
-  position: absolute;
-  width: 60%;
-  height: 50%;
-  background: #FF4D6D;
-  opacity: 0.2;
-  border-radius: 50% 30% 60% 40%;
-  top: -10%;
-  right: -10%;
-  transform: rotate(15deg);
-}
+// /* Forme abstraite en haut à droite */
+// .background::after {
+//   content: "";
+//   position: absolute;
+//   width: 60%;
+//   height: 50%;
+//   background: #ff4d6d;
+//   opacity: 0.2;
+//   border-radius: 50% 30% 60% 40%;
+//   top: -10%;
+//   right: -10%;
+//   transform: rotate(15deg);
+// }
 
-.carte{
+.carte {
   margin: 20px 0;
   background: $carte; // Remplacez $carte par une couleur de fond
   padding: 20px;

@@ -28,24 +28,24 @@
     <input [(ngModel)]="temp.title" type="text" placeholder="Titre" />
     <select [(ngModel)]="temp.extendedProps.category" placeholder="Ressenti">
       <option value="" disabled selected hidden>Ressenti</option>
-      <option value="calme">calme</option>
+      <option value="tresbien">très bien</option>
+      <option value="bien">bien</option>
       <option value="moyen">moyen</option>
-      <option value="tendu">tendu</option>
       <option value="anxieuse">anxieuse</option>
     </select>
     <input
       type="number"
       min="1"
-      max="10"
+      max="5"
       [(ngModel)]="temp.extendedProps.noteAvant"
-      placeholder="Note avant (1 à 10)"
+      placeholder="Note avant (1 à 5)"
     />
     <input
       type="number"
       min="1"
-      max="10"
+      max="5"
       [(ngModel)]="temp.extendedProps.noteApres"
-      placeholder="Note après (1 à 10)"
+      placeholder="Note après (1 à 5)"
     />
     <textarea
       [(ngModel)]="temp.extendedProps.sentiment"
