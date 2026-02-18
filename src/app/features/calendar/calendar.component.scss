@@ -36,8 +36,12 @@ h2{
 }
 
 ::ng-deep .cal-month-view .cal-cell-row{
-  display: flex;
-  gap: 0.5em;
+  // display: flex;
+  // gap: 0.5em;
+  // margin-bottom: 5px;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 colonnes pour les 7 jours de la semaine */
+  gap: 5px; /* Supprime l'espace entre les cellules */
   margin-bottom: 5px;
 }
 
@@ -77,15 +81,15 @@ h2{
 ::ng-deep .cal-day-cell.cal-has-events {
   background: $primary !important; /* couleur du jour avec event */
   border-radius: 100%;            /* optionnel : arrondi */
-  color: white !important;
+  color: $text-light !important;
 }
 
 ::ng-deep .cal-day-cell.cal-has-events .cal-day-number {
-  color: white !important;
+  color: $text-light !important;
 }
 ::ng-deep .cal-day-cell.cal-today .cal-day-number {
   font-size: 20px !important;
-  color: #4a4a4a !important;
+  color: $text-light !important;
 }
 
 ::ng-deep .cal-month-view .cal-day-badge {
@@ -187,7 +191,7 @@ h2{
     top: 0;
     bottom: 0;
     width: 2px;
-    background: #FFD6A5; // Remplacez $primary par une couleur
+    background: $primary; // Remplacez $primary par une couleur
     z-index: 0;
   }
 
@@ -196,7 +200,7 @@ h2{
     left: 64px;
     width: 12px;
     height: 12px;
-    background:#FFD6A5; // Remplacez $primary par une couleur
+    background: $primary; // Remplacez $primary par une couleur
     border-radius: 50%;
     z-index: 1;
   }
