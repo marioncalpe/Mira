@@ -1,4 +1,29 @@
-@use 'styles' as *;
+@use "styles" as *;
+
+.content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2em;
+  // justify-content: flex-end;
+  height: 800px;
+  overflow-y: scroll;
+  overflow: overlay;
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1em;
+
+  .carte {
+    gap: 0px;
+    margin: 0px;
+    flex-grow: 1;
+  }
+}
 
 .chart {
   display: flex;
@@ -19,8 +44,8 @@
 
 .bar-fill {
   width: 100%;
-  background: $primary;
-  box-shadow: 0 6px 15px rgba(254, 107, 139, 0.35);
+  background: $secondary;
+  box-shadow: 0 6px 15px rgba(183, 0, 255, 0.363);
   border-radius: 12px 12px 4px 4px;
   transition: height 0.3s;
 }
@@ -84,7 +109,7 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: #FFD6A5; // Remplacez $primary par une couleur
+    background: $secondary; // Remplacez $primary par une couleur
     z-index: 0;
   }
 
@@ -93,7 +118,7 @@
     left: 64px;
     width: 12px;
     height: 12px;
-    background:#FFD6A5; // Remplacez $primary par une couleur
+    background: $secondary; // Remplacez $primary par une couleur
     border-radius: 50%;
     z-index: 1;
   }
