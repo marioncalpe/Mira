@@ -26,7 +26,7 @@ export class ProgressComponent implements OnInit {
     year: '2-digit',
   });
   maxSortiesParMois = 0;
-  chartHeight = 100; // hauteur par défaut du graphique en pixels
+  chartHeight = 120; // hauteur par défaut du graphique en pixels
 
   constructor(private sortieService: SortieService) {}
 

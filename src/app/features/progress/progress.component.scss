@@ -3,7 +3,7 @@
 .content {
   display: flex;
   flex-direction: column;
-  margin-top: 2em;
+  margin-top: 4em;
   // justify-content: flex-end;
   height: 800px;
   overflow-y: scroll;
@@ -19,9 +19,22 @@
   gap: 1em;
 
   .carte {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     gap: 0px;
     margin: 0px;
     flex-grow: 1;
+    padding: 1em;
+
+    h4{
+      font-size: 0.6em;
+    }
+    p{
+      font-size: 37px;
+      margin: 0;
+      font: $font-main;
+    }
   }
 }
 
@@ -29,7 +42,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  height: 120px;
+  // height: 120px;
   padding: 16px;
   gap: 15px;
 }
@@ -48,6 +61,11 @@
   box-shadow: 0 6px 15px rgba(183, 0, 255, 0.363);
   border-radius: 12px 12px 4px 4px;
   transition: height 0.3s;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  color: $text-light;
+  padding-bottom: 2px;
 }
 
 .label {

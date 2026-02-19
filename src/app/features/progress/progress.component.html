@@ -5,20 +5,20 @@
 <div class="content">
   <div class="stats">
     <div class="carte">
-      <h3>Sortie du mois</h3>
-      {{ sortiesCeMois }}
+      <p>{{ sortiesCeMois }}</p>
+      <h4>Sortie du mois</h4>
     </div>
     <div class="carte">
-      <h3>Total de sorties</h3>
-      {{ totalSorties }}
+      <p>{{ totalSorties }}</p>
+      <h4>Total de sorties</h4>
     </div>
     <div class="carte">
-      <h3>Note avant</h3>
-      <p>{{ moyenneAvant | number: "1.1-1" }}/5</p>
+      <p>{{ moyenneAvant | number: "1.1-1" }}</p>
+      <h4>Note avant</h4>
     </div>
     <div class="carte">
-      <h3>Note après</h3>
-      <p>{{ moyenneApres | number: "1.1-1" }}/5</p>
+      <p>{{ moyenneApres | number: "1.1-1" }}</p>
+      <h4>Note après</h4>
     </div>
   </div>
   <div class="carte">
@@ -28,7 +28,7 @@
         <div
           class="bar-fill"
           [style.height.px]="getBarHeight(item.count)"
-        ></div>
+        >{{ item.count }}</div>
         <span class="label">{{ item.label }}</span>
       </div>
     </div>
