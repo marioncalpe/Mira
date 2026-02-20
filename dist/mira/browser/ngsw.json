@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1771579134831,
+  "timestamp": 1771597257931,
   "index": "/Mira/index.html",
   "assetGroups": [
     {
@@ -28,6 +28,7 @@
         "ignoreVary": true
       },
       "urls": [
+        "/Mira/assets/icons/MiraIcone.png",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1Aventurier.png",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1EnMouvement.png",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1Exploratrice.png",
@@ -92,6 +93,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
+    "/Mira/assets/icons/MiraIcone.png": "2d102edbb6427b2f1afae78d44412419a9f8253c",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Aventurier.png": "96f6f6f3071b147124f1411c33783566e86a5a34",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1EnMouvement.png": "e850546c5c8e956c2ac5cfbd6e153ab1c0f25574",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Exploratrice.png": "1915a69d0d10ac909d51f8be9dd03a8f9d4886bd",
@@ -151,7 +153,7 @@
     "/Mira/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
     "/Mira/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
     "/Mira/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
-    "/Mira/index.html": "c39dc54cd1c31d68d1a8128d59b5f23ae866cb9d",
+    "/Mira/index.html": "ad96ddffe4b64aff0c9ec2a0a02420325042508b",
     "/Mira/main-CR4BLISZ.js": "f075b66dccbd2104eef59cc20c06aae944dee2af",
     "/Mira/manifest.webmanifest": "a628dd273f6c7e4e6791e538d7bcdda4c73ed37f",
     "/Mira/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
