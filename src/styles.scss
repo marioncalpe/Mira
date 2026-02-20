@@ -14,17 +14,32 @@
 }
 
 /* ===============================
+   BREAKPOINTS
+=============================== */
+$mobile: 393px;
+$tablet: 768px;
+$desktop: 1024px;
+
+@mixin mobile {
+  @media (max-width: $mobile) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: $tablet) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (max-width: $desktop) {
+    @content;
+  }
+}
+/* ===============================
    PALETTE
 =============================== */
-
-// $primary: #A8D5BA; // Boutons positifs, accents de succès, indicateurs “ok”
-// $secondary: #FFF5E6;
-// $accent: #FFAB91; // Couleur d'accentuation pour les éléments interactifs, les liens, les icônes
-
-// $bg: #6FA8DC; // Fond principal, en-têtes, barres de navigation
-// $carte: #D7C1E0; // Cartes, sections de relaxation, arrière-plans secondaires
-// $text: #2b2b2b;
-// $text-secondary: #5C5C5C;
 
 $primary: #ff4d6d;
 $secondary: #B585D4;
@@ -54,26 +69,38 @@ $font-size-base: 16px;
   justify-content: center;
   align-items: center;
 }
-html,
-body {
+// html,
+// body {
+//   margin: 0;
+//   padding: 0;
+//   background-color: #121212;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   height: 100vh;
+//   overflow: hidden;
+// }
+html, body {
   margin: 0;
   padding: 0;
   background-color: #121212;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
 }
 
 body {
   position: relative;
   background-color: $bg;
-  height: 932px;
-  width: 430px;
-  // overflow: hidden;
+  height: 100dvh;      // prend toute la hauteur de l'écran
+  width: 100vw;        // prend toute la largeur de l'écran
+  max-width: 430px;    // limite sur grands écrans
+  overflow: hidden;
   padding: 1em;
   font-family: $font-secondary;
+  box-sizing: border-box;
 }
 
 h1 {
@@ -100,10 +127,10 @@ h4 {
 
 .mobile-container {
   background-color: white;
-  height: 932px;
-  width: 430px;
-  position: relative; /* Important pour le positionnement absolu des enfants */
-  overflow: hidden; /* Empêche le contenu de dépasser */
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .background {

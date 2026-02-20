@@ -8,11 +8,17 @@
   border-radius: 20px;
   padding: 20px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+  width: 100%;
+  box-sizing: border-box; // évite que le padding déborde
 }
 
 h2{
   text-transform: capitalize;
 }
+
+/* ===============================
+    NG-DEEP CALENDAR CUSTOMIZATION
+=============================== */
 
 ::ng-deep .cal-month-view .cal-cell,
 ::ng-deep .cal-month-view .cal-days .cal-cell-row ,
@@ -20,7 +26,9 @@ h2{
 ::ng-deep .cal-month-view .cal-day-cell {
   border: none !important;
 }
-
+::ng-deep .cal-month-view {
+  width: 100%; // prend toute la largeur dispo
+}
 ::ng-deep .cal-month-view .cal-header {
   border-bottom: 1px solid $secondary;
   padding-bottom: 10px;
@@ -31,8 +39,8 @@ h2{
   font-family: $font-secondary;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 16px;
-  color: #3a3a3a; 
+  font-size: 13px; // réduit un peu pour mobile
+  color: #3a3a3a;
 }
 
 ::ng-deep .cal-month-view .cal-cell-row{
@@ -50,10 +58,10 @@ h2{
   margin-top: 0 !important;
   margin-right: 0 !important;
   margin-bottom: 0 !important;
-  padding: 0.5em;
   font-family: $font-secondary;
-  font-size: 16px;
+  font-size: 13px; // réduit pour mobile
   font-weight: 600;
+  padding: 0.3em;
   color: #4a4a4a !important;
 }
 
@@ -106,14 +114,13 @@ h2{
 /* ===============================
     Header and Button
 =============================== */
-.header-calendar{
+.header-calendar {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   font-size: 16px;
   font-family: $font-main;
-  // gap: 4em;
-  
 }
 
 .bouton-ajout {
@@ -145,13 +152,15 @@ h2{
 
 .timeline {
   margin: 20px 0;
-  background: #ffffff; // Remplacez $carte par une couleur de fond
+  background: #ffffff;
   padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-sizing: border-box; // évite le débordement
 
   &-item {
     display: grid;
