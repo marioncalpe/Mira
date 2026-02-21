@@ -1,10 +1,11 @@
 @use 'styles' as *
 
 .menu-container
-    position: absolute /* Positionne relativement au parent position: relative */
+    position: fixed  // fixed au lieu de absolute
     bottom: 0
     left: 0
     width: 100%
+    z-index: 1000
 
     .menu
         display: flex
