@@ -1,7 +1,11 @@
-@use 'styles' as *
+/*======================*/
+/* IMPORT STYLE GLOBAL  */
+/*======================*/
+
+@use "styles" as *;
 
 .menu-container
-    position: fixed  // fixed au lieu de absolute
+    position: fixed
     bottom: 0
     left: 0
     width: 100%
@@ -27,27 +31,3 @@
         button.active
             svg
                 fill: $primary
-    // .registre
-    //     display: flex
-    //     justify-content: center
-    //     background-color: $primary
-    //     border-start-start-radius: 10px
-    //     border-start-end-radius: 10px
-        
-    //     .bouton-ajout
-    //         background: none
-    //         border: none
-    //         outline: none
-    //         box-shadow: none
-
-    //         display: flex
-    //         justify-content: center
-    //         align-items: center
-    //         font-size: 24px
-    //         background-color: $primary
-    //         border-radius: 100%
-    //         padding: 1em
-    //         color: $bg
-    //         width: 10px
-    //         height: 10px
-    //         margin-top: -20px

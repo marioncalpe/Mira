@@ -1,11 +1,7 @@
-/* ===============================
-   FONT IMPORTS (Google ou local)
-=============================== */
+/*================================*/
+/* FONT IMPORTS (Google ou local) */
+/*================================*/
 
-/* Exemple Google Fonts */
-// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
-
-/* Exemple font locale */
 @font-face {
   font-family: "MyFont";
   src: url("/assets/fonts/MyFont-Regular.woff2") format("woff2");
@@ -13,9 +9,10 @@
   font-style: normal;
 }
 
-/* ===============================
-   BREAKPOINTS
-=============================== */
+/*======================*/
+/*     BREAKPOINTS      */
+/*======================*/
+
 $mobile: 393px;
 $tablet: 768px;
 $desktop: 1024px;
@@ -37,13 +34,14 @@ $desktop: 1024px;
     @content;
   }
 }
-/* ===============================
-   PALETTE
-=============================== */
+
+/*======================*/
+/*      PALETTE         */
+/*======================*/
 
 $primary: #ff4d6d;
-$secondary: #B585D4;
-$accent: #B478AE;
+$secondary: #b585d4;
+$accent: #b478ae;
 
 $bg: #f9f9f9;
 $carte: #ffffff;
@@ -52,17 +50,17 @@ $text-secondary: #5c5c5c;
 $text-light: #ffffff;
 $radius: 14px;
 
-/* ===============================
-   TYPOGRAPHIE
-=============================== */
+/*======================*/
+/*     TYPOGRAPHIE      */
+/*======================*/
 
 $font-main: "Poppins", sans-serif;
 $font-secondary: "inter", sans-serif;
 $font-size-base: 16px;
 
-/* ===============================
-   MIXINS
-=============================== */
+/*======================*/
+/*        MIXINS        */
+/*======================*/
 
 @mixin center {
   display: flex;
@@ -70,7 +68,12 @@ $font-size-base: 16px;
   align-items: center;
 }
 
-html, body {
+/*======================*/
+/*        GLOBAL        */
+/*======================*/
+
+html,
+body {
   margin: 0;
   padding: 0;
   background-color: #121212;
@@ -84,25 +87,52 @@ html, body {
 body {
   position: relative;
   background-color: $bg;
-  height: 100dvh;      // prend toute la hauteur de l'écran
-  width: 100vw;        // prend toute la largeur de l'écran
-  max-width: 430px;    // limite sur grands écrans
+  height: 100dvh; // prend toute la hauteur de l'écran
+  width: 100vw; // prend toute la largeur de l'écran
+  max-width: 430px; // limite sur grands écrans
   overflow: hidden;
   padding: 1em;
   font-family: $font-secondary;
   box-sizing: border-box;
 }
 
+/*======================*/
+/*        BALISE        */
+/*======================*/
+
 h1 {
   font-family: $font-main;
   margin: 0;
+}
+
+h2 {
+  display: flex;
+  justify-content: center;
+  font-family: $font-main;
+  text-transform: capitalize;
 }
 
 h4 {
   font-family: $font-secondary;
   color: $text-secondary;
   font-style: italic;
+  font-size: 0.55em;
+  text-align: center;
 }
+
+p {
+  font-size: 28px; // réduit un peu pour tenir sur mobile
+  margin: 0;
+  font-family: $font-main;
+}
+
+app-root {
+  z-index: 10;
+}
+
+/*======================*/
+/*        CLASS         */
+/*======================*/
 
 .head {
   position: absolute;
@@ -141,8 +171,4 @@ h4 {
   gap: 10px;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-app-root {
-  z-index: 10;
 }

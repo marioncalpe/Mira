@@ -1,4 +1,8 @@
-@use 'styles' as *;
+/*======================*/
+/* IMPORT STYLE GLOBAL  */
+/*======================*/
+
+@use "styles" as *;
 
 .view-mode, .view-mode {
   position: fixed;
@@ -11,12 +15,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-h2{
-  display: flex;
-  justify-content: center;
-  font-family: $font-main;
 }
 
 .modal {

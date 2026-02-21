@@ -1,4 +1,8 @@
-@use 'styles' as *;
+/*======================*/
+/* IMPORT STYLE GLOBAL  */
+/*======================*/
+
+@use "styles" as *;
 
 div {
     font-family: $font-secondary;
