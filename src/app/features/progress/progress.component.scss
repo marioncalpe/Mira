@@ -135,6 +135,13 @@
   padding-left: 20px;
 }
 
+
+p {
+  font-size: 28px; // réduit un peu pour tenir sur mobile
+  margin: 0;
+  font-family: $font-main;
+}
+
 .objectifs-header {
   display: flex;
   justify-content: space-between;

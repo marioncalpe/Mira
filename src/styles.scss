@@ -1,7 +1,7 @@
 /*================================*/
 /* FONT IMPORTS (Google ou local) */
 /*================================*/
-
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap");
 @font-face {
   font-family: "MyFont";
   src: url("/assets/fonts/MyFont-Regular.woff2") format("woff2");
@@ -120,11 +120,6 @@ h4 {
   text-align: center;
 }
 
-p {
-  font-size: 28px; // réduit un peu pour tenir sur mobile
-  margin: 0;
-  font-family: $font-main;
-}
 
 app-root {
   z-index: 10;

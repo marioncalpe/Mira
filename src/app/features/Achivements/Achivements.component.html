@@ -6,13 +6,13 @@
   </div>
   <div class="contenair">
     <div
-      *ngFor="let trophy of trophies"
+      *ngFor="let badge of badges"
       class="trophy"
-      [class.locked]="!trophy.unlocked"
-      (click)="openTrophy(trophy)"
+      [class.locked]="!badge.unlocked"
+      (click)="openTrophy(badge)"
     >
-      <img [src]="trophy.image" />
-      <div class="lock-overlay" *ngIf="!trophy.unlocked">🔒</div>
+      <img [src]="badge.image" />
+      <div class="lock-overlay" *ngIf="!badge.unlocked">🔒</div>
     </div>
   </div>
 </div>
