@@ -223,6 +223,36 @@ export class AchivementsComponent implements OnInit {
       description: 'Tu as fait 30 sorties consécutives !',
       unlocked: false,
     },
+    {
+      image: 'assets/icons/achivements/5-Objectifs/5Premierpas.png',
+      title: 'Premier pas',
+      description: 'Tu as fait ton premier objectif !',
+      unlocked: false,
+    },
+    {
+      image: 'assets/icons/achivements/5-Objectifs/5ObjectifAtteint.png',
+      title: 'Objectif Atteint',
+      description: 'Tu as terminé 3 objectifs !',
+      unlocked: false,
+    },
+    {
+      image: 'assets/icons/achivements/5-Objectifs/5EfficacitéPure.png',
+      title: 'Efficacité Pure',
+      description: 'Tu as terminé 5 objectifs !',
+      unlocked: false,
+    },
+    {
+      image: 'assets/icons/achivements/5-Objectifs/5Determination.png',
+      title: 'Détermination',
+      description: 'Tu as terminé 10 objectifs !',
+      unlocked: false,
+    },
+    {
+      image: 'assets/icons/achivements/5-Objectifs/5Maitrise.png',
+      title: 'Maîtrise',
+      description: 'Tu as terminé 20 objectifs !',
+      unlocked: false,
+    },
   ];
 
   constructor() {}
