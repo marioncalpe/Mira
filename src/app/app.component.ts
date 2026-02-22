@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SortieService } from './core/service/sortie.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,7 @@ import { SortieService } from './core/service/sortie.service';
 export class AppComponent implements OnInit {
   title = 'Mira';
 
-  constructor(private sortieService: SortieService) {}
+  constructor() {}
 
   async ngOnInit() {
     // Supprime les anciennes données corrompues au démarrage

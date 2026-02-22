@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe, DatePipe } from '@angular/common';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
-import { SortieService } from '../../core/service/sortie.service';
 import { Sortie } from '../../core/models/sortie.model';
-import { ObjectifService } from '../../core/service/objectif.service';
+import { StorageService } from '../../core/storage/storage.service';
 import { Objectif } from '../../core/models/objectif.model';
 import { FormsModule } from '@angular/forms';
 
@@ -44,12 +43,11 @@ export class ProgressComponent implements OnInit {
   nouveauTitreObjectif = '';
 
   constructor(
-    private sortieService: SortieService,
-    private objectifService: ObjectifService,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
-    this.objectifService.objectifs$.subscribe((objectifs) => {
+    this.storageService.objectifs$.subscribe((objectifs) => {
       this.AllObjectifs = objectifs;
       this.objectifsEnCours = this.AllObjectifs.filter(
         (obj) => obj.statut === 'en cours',
@@ -58,7 +56,7 @@ export class ProgressComponent implements OnInit {
         (obj) => obj.statut === 'terminé',
       );
     });
-    this.sorties = this.sortieService.getSorties();
+    this.sorties = this.storageService.getSorties();
     this.totalSorties = this.sorties.length;
     const now = new Date();
     this.sortiesCeMois = this.sorties.filter((sortie) => {
@@ -128,7 +126,7 @@ export class ProgressComponent implements OnInit {
   }
 
   updateObjectif(id: string) {
-    this.objectifService.updateObjectif(id);
+    this.storageService.updateObjectif(id);
   }
   ajouterObjectif() {
     this.modalObjectifVisible = true;
@@ -137,12 +135,12 @@ export class ProgressComponent implements OnInit {
     if (!this.nouveauTitreObjectif.trim()) {
       return; // Ne pas créer d'objectif si le titre est vide
     } else {
-      this.objectifService.addObjectif(this.nouveauTitreObjectif);
+      this.storageService.addObjectif(this.nouveauTitreObjectif);
       this.modalObjectifVisible = false;
       this.nouveauTitreObjectif = ''; // Réinitialiser le champ de saisie
     }
   }
   supprimerObjectif(id: string){
-    this.objectifService.supprimerObjectif(id);
+    this.storageService.supprimerObjectif(id);
   }
 }

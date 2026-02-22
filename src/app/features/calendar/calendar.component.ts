@@ -4,7 +4,7 @@
  * Gère :
  * - L'affichage des sorties dans angular-calendar
  * - L'ouverture de la modal (view / edit / create)
- * - La synchronisation avec le SortieService
+ * - La synchronisation avec le StorageService
  * - Le filtrage des sorties du mois en cours
  */
 
@@ -23,7 +23,7 @@ import {
   CalendarDatePipe,
 } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { SortieService } from '../../core/service/sortie.service';
+import { StorageService } from '../../core/storage/storage.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { SortieModalComponent } from '../../shared/components/sortie-modal/sortie-modal.component';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
@@ -81,7 +81,7 @@ export class CalendarComponent implements OnInit {
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   modalMode: 'view' | 'edit' | 'create' = 'view';
 
-  constructor(private sortieService: SortieService) {}
+  constructor(private storageService: StorageService) {}
 
   // Au démarrage du composant, on recharge le calendrier pour afficher les sorties
   async ngOnInit() {
@@ -94,7 +94,7 @@ export class CalendarComponent implements OnInit {
    * avec angular-calendar.
    */
   async refreshCalendar() {
-    this.allSorties = await this.sortieService.getSorties();
+    this.allSorties = this.storageService.getSorties();
 
     // Transformation des Sorties en CalendarEvent
     this.events = this.allSorties.map((sortie: Sortie) => ({
@@ -199,10 +199,10 @@ export class CalendarComponent implements OnInit {
    */
   onSave(sortie: Sortie) {
     if (sortie.id) {
-      this.sortieService.updateSortie(sortie);
+      this.storageService.updateSortie(sortie);
     } else {
       sortie.id = crypto.randomUUID();
-      this.sortieService.addSortie(sortie);
+      this.storageService.addSortie(sortie);
     }
 
     this.refreshCalendar();
@@ -210,7 +210,7 @@ export class CalendarComponent implements OnInit {
   }
 
   onDelete(sortie: Sortie) {
-    this.sortieService.deleteSortie(sortie);
+    this.storageService.deleteSortie(sortie.id!);
     this.refreshCalendar();
     this.modalVisible = false;
   }
