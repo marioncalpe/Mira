@@ -22,7 +22,7 @@
   gap: 0.5em;
 
   //* sous modification de la classe .carte globale
-  .carte { 
+  .carte {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -133,4 +133,93 @@
   color: $text;
   font-weight: 500;
   padding-left: 20px;
+}
+
+.objectifs-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1.5em;
+    height: 1.5em;
+    border-radius: 50%;
+    border: none;
+    background: $secondary; // cercle rempli
+    font-size: 1.5em;
+    color: white;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+}
+
+.listObjectif{
+  display: flex;
+  justify-content: space-between;
+}
+
+.suppr {
+  background: transparent;
+  border: none;
+  color: $text-secondary;
+  font-size: 1em;
+}
+
+.objectif {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  button{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid $text-secondary;
+    background: transparent;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  
+  &.termine{
+    div{
+      text-decoration: line-through;
+      color: $text-secondary;
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: $secondary; // cercle rempli
+      text-decoration: none; // annule la ligne sur le bouton
+      border: none;
+      stroke: white;
+      svg{
+        width: 3em;
+        height: 3em;
+      }
+    }
+  }
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #8c8b8b;
+  width: 100%;
+  height: 1px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9999; // très haut pour passer devant FullCalendar
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

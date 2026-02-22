@@ -163,9 +163,9 @@ app-root {
 }
 
 .carte {
-  margin: 20px 0;
+  margin: 20px 0 0 0;
   background: $carte;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
