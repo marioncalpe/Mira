@@ -2,26 +2,60 @@
   <div class="head">
     <h1>Succes</h1>
     <!-- valeur quote random  -->
+    <!-- Composant enfant qui affiche une citation motivante aléatoire -->
     <app-motivation-banner></app-motivation-banner>
   </div>
+
   <div class="contenair">
+    <!--
+      *ngFor : directive Angular qui boucle sur le tableau `badges`
+      Pour chaque badge, elle crée une div .trophy
+    -->
     <div
       *ngFor="let badge of badges"
       class="trophy"
       [class.locked]="!badge.unlocked"
       (click)="openTrophy(badge)"
     >
+      <!--
+        [class.locked] : liaison dynamique de classe CSS.
+        Si badge.unlocked est false → la classe "locked" est ajoutée
+        Ce qui va rendre l'image en grisé via le CSS
+      -->
+      <!-- (click) : au clic sur ce badge, on appelle openTrophy() avec le badge cliqué -->
       <img [src]="badge.image" />
+      <!-- [src] : liaison dynamique, src prend la valeur de badge.image -->
+
       <div class="lock-overlay" *ngIf="!badge.unlocked">🔒</div>
+      <!--
+        *ngIf : affiche ce div SEULEMENT si le badge n'est pas débloqué
+        C'est le cadenas qui s'affiche par-dessus l'image
+      -->
     </div>
   </div>
 </div>
+
 <app-menu></app-menu>
+<!-- Composant enfant : la barre de navigation en bas -->
+
+<!--
+  *ngIf="selectedTrophy" : la modal n'existe dans le DOM que si un trophée est sélectionné
+  (click)="closeModal()" : cliquer sur le fond sombre ferme la modal
+-->
 <div class="modal" *ngIf="selectedTrophy" (click)="closeModal()">
   <div class="modal-content" (click)="$event.stopPropagation()">
-    <img [src]="selectedTrophy.image" />
+    <!--
+      $event.stopPropagation() : TRÈS IMPORTANT
+      Sans ça, cliquer à l'intérieur de la modal déclencherait aussi
+      le closeModal() du parent → la modal se fermerait immédiatement
+      stopPropagation() bloque la remontée du clic vers le parent
+    -->
+    <div class="img-wrapper">
+        <img [src]="selectedTrophy.image" [class.blurred]="!selectedTrophy.unlocked"/>
+        <p class="lock-text" *ngIf="!selectedTrophy.unlocked">🔒 Pas encore débloqué</p>
+    </div>
     <h2>{{ selectedTrophy.title }}</h2>
+    <!-- {{ }} : interpolation Angular, affiche la valeur de la variable -->
     <p>{{ selectedTrophy.description }}</p>
-    <p *ngIf="!selectedTrophy.unlocked">🔒 Pas encore débloqué</p>
   </div>
 </div>

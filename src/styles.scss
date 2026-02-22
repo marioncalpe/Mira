@@ -123,6 +123,12 @@ h4 {
 
 app-root {
   z-index: 10;
+  height: calc(100dvh - 190px);
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  box-sizing: border-box;
+  margin-top: 3.5em;
 }
 
 /*======================*/

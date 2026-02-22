@@ -3,20 +3,12 @@
 .content {
   display: flex;
   flex-direction: column;
-  margin-top: 4em;
-  height: calc(100dvh - 140px); // s'adapte à l'écran
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  box-sizing: border-box;
   gap: 0; // le gap est géré par .carte dans styles.scss
 
   .contenair {
     display: grid;
     grid-template-columns: repeat(4, 1fr); // 4 colonnes fixes
     gap: 15px;
-    padding: 15px;
-    padding-top: 50px;
     box-sizing: border-box;
 
     @include mobile {
@@ -62,7 +54,7 @@
     }
   }
 }
-//! revoir la disposition de la modal 
+//! revoir la disposition de la modal
 .modal {
   position: fixed;
   inset: 0;
@@ -80,13 +72,35 @@
     width: 80%;
     max-width: 300px;
 
-    img {
-      width: 200px;
-      height: auto;
+    .img-wrapper {
+      position: relative;
+      display: inline-block;
       margin-bottom: 10px;
+
+      img {
+        width: 200px;
+        height: auto;
+        display: block;
+
+        &.blurred {
+          filter: blur(8px) grayscale(100%) brightness(0.4);
+        }
+      }
+
+      .lock-text {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0;
+        font-size: 16px;
+        color: white;
+        border-radius: 8px;
+      }
     }
 
-    p{
+    p {
       font-size: 18px;
       margin: 0;
       font-family: $font-main;

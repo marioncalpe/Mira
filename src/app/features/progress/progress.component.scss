@@ -7,12 +7,6 @@
 .content {
   display: flex;
   flex-direction: column;
-  margin-top: 4em;
-  height: calc(100dvh - 140px); // s'adapte à l'écran
-  overflow-y: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  box-sizing: border-box;
   gap: 0; // le gap est géré par .carte dans styles.scss
 }
 

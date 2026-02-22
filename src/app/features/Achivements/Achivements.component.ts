@@ -16,12 +16,15 @@ export class AchivementsComponent implements OnInit {
   // Plus de tableau codé en dur, on utilise les badges du storage
   badges: Badge[] = [];
   selectedTrophy: Badge | null = null;
-
+  // badge actuellement affiché dans la modal
+  // null = pas de modal ouverte
   constructor(private storageService: StorageService) {}
 
   ngOnInit() {
-    // On s'abonne aux badges du storage
-    // À chaque changement, la liste se met à jour automatiquement
+    // badges$ est un Observable (flux de données)
+    // .subscribe() permet de s'y abonner :
+    // À chaque fois que les badges changent dans le StorageService,
+    // cette fonction est appelée et met à jour le tableau local
     this.storageService.badges$.subscribe((badges) => {
       this.badges = badges;
     });
