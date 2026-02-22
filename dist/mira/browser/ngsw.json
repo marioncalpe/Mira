@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1771761676365,
+  "timestamp": 1771780362499,
   "index": "/Mira/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/Mira/favicon.ico",
         "/Mira/index.html",
-        "/Mira/main-UWOZOZVZ.js",
+        "/Mira/main-4YE2K7IN.js",
         "/Mira/manifest.webmanifest",
         "/Mira/polyfills-5CFQRCPP.js",
-        "/Mira/styles-UEI36FMD.css"
+        "/Mira/styles-PLY5GNPL.css"
       ],
       "patterns": []
     },
@@ -28,7 +28,6 @@
         "ignoreVary": true
       },
       "urls": [
-        "/Mira/assets/icons/MiraIcone.png",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1Aventurier.png",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1EnMouvement.png",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1Exploratrice.png",
@@ -65,20 +64,11 @@
         "/Mira/assets/icons/achivements/4-Repetitions/4RoutineSolide.png",
         "/Mira/assets/icons/achivements/4-Repetitions/4RythmeTrouve.png",
         "/Mira/assets/icons/achivements/4-Repetitions/4ToujoursPresent.png",
-        "/Mira/assets/icons/calendar.svg",
-        "/Mira/assets/icons/class-hunter-svgrepo-com.svg",
-        "/Mira/assets/icons/class-mage-svgrepo-com.svg",
-        "/Mira/assets/icons/class-paladin-svgrepo-com.svg",
-        "/Mira/assets/icons/class-rogue-svgrepo-com.svg",
-        "/Mira/assets/icons/class-warrior-svgrepo-com.svg",
-        "/Mira/assets/icons/class.svg",
-        "/Mira/assets/icons/flamme.svg",
-        "/Mira/assets/icons/home.svg",
-        "/Mira/assets/icons/leaf1.svg",
-        "/Mira/assets/icons/leaf2.svg",
-        "/Mira/assets/icons/leaf3.svg",
-        "/Mira/assets/icons/progress.svg",
-        "/Mira/assets/icons/settings.svg",
+        "/Mira/assets/icons/achivements/5-Objectifs/5Determination.png",
+        "/Mira/assets/icons/achivements/5-Objectifs/5EfficacitéPure.png",
+        "/Mira/assets/icons/achivements/5-Objectifs/5Maitrise.png",
+        "/Mira/assets/icons/achivements/5-Objectifs/5ObjectifAtteint.png",
+        "/Mira/assets/icons/achivements/5-Objectifs/5Premierpas.png",
         "/Mira/icons/icon-128x128.png",
         "/Mira/icons/icon-144x144.png",
         "/Mira/icons/icon-152x152.png",
@@ -93,7 +83,6 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/Mira/assets/icons/MiraIcone.png": "667bb4ed6c49bec638bea2753886dda319c050d3",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Aventurier.png": "96f6f6f3071b147124f1411c33783566e86a5a34",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1EnMouvement.png": "e850546c5c8e956c2ac5cfbd6e153ab1c0f25574",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Exploratrice.png": "1915a69d0d10ac909d51f8be9dd03a8f9d4886bd",
@@ -130,20 +119,11 @@
     "/Mira/assets/icons/achivements/4-Repetitions/4RoutineSolide.png": "dafe93ad42bdf1d6ed3f41f70068fc7ee0daf6b1",
     "/Mira/assets/icons/achivements/4-Repetitions/4RythmeTrouve.png": "96929b51c238b680c35fbfb65eada566ebf1979c",
     "/Mira/assets/icons/achivements/4-Repetitions/4ToujoursPresent.png": "77c68d09e54379fc654d40e8d90be4e2cb0889da",
-    "/Mira/assets/icons/calendar.svg": "fa17c4ee7810e514d7019cf7409da6454268c9ff",
-    "/Mira/assets/icons/class-hunter-svgrepo-com.svg": "357abf0ef4fda16d25740abef82fe10f3ec12be7",
-    "/Mira/assets/icons/class-mage-svgrepo-com.svg": "18a6ebf110b18b8eab3883c7419e5c9fd3bfa488",
-    "/Mira/assets/icons/class-paladin-svgrepo-com.svg": "03e6965c0181132b7b429f531a8404416b74bd41",
-    "/Mira/assets/icons/class-rogue-svgrepo-com.svg": "f0b87921f07563365c4645a2fd15fb22165a0cae",
-    "/Mira/assets/icons/class-warrior-svgrepo-com.svg": "fb19502f29357e83a7b221cf98ef1114a7567a30",
-    "/Mira/assets/icons/class.svg": "6fb2cd466d9a71e3b8fe1c006f9d3953809c2818",
-    "/Mira/assets/icons/flamme.svg": "8c737440c0045bea8c72c2498a9d231f0644edac",
-    "/Mira/assets/icons/home.svg": "6224236e1ebc6d368a1cfb8f6e86a5f57f2aab11",
-    "/Mira/assets/icons/leaf1.svg": "cb155bf7378cc65d716109871a365c3f554cafcf",
-    "/Mira/assets/icons/leaf2.svg": "504bcb3c928d88cf939625825ccb8dfa7db443f3",
-    "/Mira/assets/icons/leaf3.svg": "a0734077e12d0c3ae997881d55b99a49c8bd8412",
-    "/Mira/assets/icons/progress.svg": "11cf9c363007f307105e6b49d7742e5eb9840c0c",
-    "/Mira/assets/icons/settings.svg": "51148e60ce75dd4192f5fa900e35f5c33c0f9736",
+    "/Mira/assets/icons/achivements/5-Objectifs/5Determination.png": "02305a9e76886e5e1d1b48f3379e0bae6379ae24",
+    "/Mira/assets/icons/achivements/5-Objectifs/5EfficacitéPure.png": "84b4521c5fa0cbfc546077691d594c1d5f4f1bf1",
+    "/Mira/assets/icons/achivements/5-Objectifs/5Maitrise.png": "9e6c7cf64f30e864891bda39c509ed741a5259bb",
+    "/Mira/assets/icons/achivements/5-Objectifs/5ObjectifAtteint.png": "20683d085f24c24ae791c1e9299776472ce7d2c4",
+    "/Mira/assets/icons/achivements/5-Objectifs/5Premierpas.png": "ef199805798ee1652d9f37fb1fb31f9badafa678",
     "/Mira/favicon.ico": "fbbe27b3159fc47056399608e291bd6cd2cdab19",
     "/Mira/icons/icon-128x128.png": "ba50cbf39c002ca9ffd01e9bcdd1466f38788f1d",
     "/Mira/icons/icon-144x144.png": "c5ac17bb37d3e107c8af1ced12dda6eb54f5bc9f",
@@ -153,11 +133,11 @@
     "/Mira/icons/icon-512x512.png": "4f51eafd5a74ec96dd604e005e206d30b9612c16",
     "/Mira/icons/icon-72x72.png": "0fa40ee55f8437db06dc396ea4769eac234b2354",
     "/Mira/icons/icon-96x96.png": "e0772db727a509f09c4e6d08855effd886a55175",
-    "/Mira/index.html": "9e897197939d79619ee140621b1d57ca9abdbfec",
-    "/Mira/main-UWOZOZVZ.js": "d3f85bba523c023ce6226206874243fb60c5c5e8",
+    "/Mira/index.html": "77ad82cada9108b6487459144c94e28c8285d124",
+    "/Mira/main-4YE2K7IN.js": "0271921e45afd6cad26e42127abf3ba64722be05",
     "/Mira/manifest.webmanifest": "a628dd273f6c7e4e6791e538d7bcdda4c73ed37f",
     "/Mira/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
-    "/Mira/styles-UEI36FMD.css": "dc6d1328b3e33a7c4d483c6327465ec6fe5283b7"
+    "/Mira/styles-PLY5GNPL.css": "4fc6f3d96db2192ba6d0442f420154d06f1df6cc"
   },
   "navigationUrls": [
     {
