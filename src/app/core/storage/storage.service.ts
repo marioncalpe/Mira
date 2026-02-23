@@ -217,7 +217,7 @@ export class StorageService {
     const sortiesAvecAmelioration = sorties.filter(s =>
       s.extendedProps?.noteApres !== undefined &&
       s.extendedProps?.noteAvant !== undefined &&
-      s.extendedProps.noteApres < s.extendedProps.noteAvant,
+      s.extendedProps.noteApres > s.extendedProps.noteAvant,
     ).length;
 
     /*================================*/

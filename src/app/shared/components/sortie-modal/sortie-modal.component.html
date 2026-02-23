@@ -1,12 +1,13 @@
 <!-- MODE VIEW -->
-@if (mode === 'view') {
-<div class="view-mode">
-  <div class="modal">
-    <h2>{{ sortie?.start | date : "longDate" : "" : "fr" }}</h2>
-    <h3>
+@if (mode === "view") {
+  <div class="view-mode">
+    <div class="modal">
+      <!-- <h2>{{ sortie?.start | date : "longDate" : "" : "fr" }}</h2>
+    <p>
+      <strong>Titre :</strong>
       {{ sortie?.title }}
-    </h3>
-    <p><strong>Humeur :</strong> {{ sortie?.extendedProps?.category }}</p>
+    </p>
+    <p><strong>Catégorie :</strong> {{ sortie?.extendedProps?.category }}</p>
     <p><strong>Note avant :</strong> {{ sortie?.extendedProps?.noteAvant }}</p>
     <p><strong>Note après :</strong> {{ sortie?.extendedProps?.noteApres }}</p>
     <p><strong>Sentiment :</strong> {{ sortie?.extendedProps?.sentiment }}</p>
@@ -15,50 +16,69 @@
       <button class="delete" *ngIf="sortie" (click)="onDelete()">
         Supprimer
       </button>
-
       <button class="close" (click)="onClose()">Fermer</button>
+    </div> -->
+      <h2 style="margin-bottom: 0;">{{ sortie?.title }}</h2>
+      <p style="display: flex; align-items: center; justify-content: center; margin: 0; font-size: 15px;">
+        {{ sortie?.start | date: "dd MMM yyyy" : "" : "fr" }}
+      </p>
+      <p><strong>Humeur :</strong> {{ sortie?.extendedProps?.category }}</p>
+      <p>
+        <strong>Note avant :</strong> {{ sortie?.extendedProps?.noteAvant }}
+      </p>
+      <p>
+        <strong>Note après :</strong> {{ sortie?.extendedProps?.noteApres }}
+      </p>
+      <p><strong>Sentiment :</strong> {{ sortie?.extendedProps?.sentiment }}</p>
+      <div class="actions">
+        <button class="save" (click)="switchToEdit()">Modifier</button>
+        <button class="delete" *ngIf="sortie" (click)="onDelete()">
+          Supprimer
+        </button>
+        <button class="close" (click)="onClose()">Fermer</button>
+      </div>
     </div>
   </div>
-</div>
-} @if (mode === 'edit') {
-<div class="view-mode">
-  <div class="modal">
-    <h2>Sortie</h2>
-    <input [(ngModel)]="temp.title" type="text" placeholder="Titre" />
-    <select [(ngModel)]="temp.extendedProps.category" placeholder="Ressenti">
-      <option value="" disabled selected hidden>Ressenti</option>
-      <option value="tresbien">très bien</option>
-      <option value="bien">bien</option>
-      <option value="moyen">moyen</option>
-      <option value="anxieuse">anxieuse</option>
-    </select>
-    <input
-      type="number"
-      min="1"
-      max="5"
-      [(ngModel)]="temp.extendedProps.noteAvant"
-      placeholder="Note avant (1 à 5)"
-    />
-    <input
-      type="number"
-      min="1"
-      max="5"
-      [(ngModel)]="temp.extendedProps.noteApres"
-      placeholder="Note après (1 à 5)"
-    />
-    <textarea
-      [(ngModel)]="temp.extendedProps.sentiment"
-      type="text"
-      placeholder="Description"
-    ></textarea>
-    <div class="actions">
-      <button class="save" (click)="onSave()">Valider</button>
-      <button class="delete" *ngIf="sortie" (click)="onDelete()">
-        Supprimer
-      </button>
+}
+@if (mode === "edit") {
+  <div class="view-mode">
+    <div class="modal">
+      <h2>Sortie</h2>
+      <input [(ngModel)]="temp.title" type="text" placeholder="Titre" />
+      <select [(ngModel)]="temp.extendedProps.category" placeholder="Ressenti">
+        <option value="" disabled selected hidden>Ressenti</option>
+        <option value="tresbien">très bien</option>
+        <option value="bien">bien</option>
+        <option value="moyen">moyen</option>
+        <option value="anxieuse">anxieuse</option>
+      </select>
+      <input
+        type="number"
+        min="1"
+        max="5"
+        [(ngModel)]="temp.extendedProps.noteAvant"
+        placeholder="Note avant (1 à 5)"
+      />
+      <input
+        type="number"
+        min="1"
+        max="5"
+        [(ngModel)]="temp.extendedProps.noteApres"
+        placeholder="Note après (1 à 5)"
+      />
+      <textarea
+        [(ngModel)]="temp.extendedProps.sentiment"
+        type="text"
+        placeholder="Description"
+      ></textarea>
+      <div class="actions">
+        <button class="save" (click)="onSave()">Valider</button>
+        <button class="delete" *ngIf="sortie" (click)="onDelete()">
+          Supprimer
+        </button>
 
-      <button class="close" (click)="onClose()">Annuler</button>
+        <button class="close" (click)="onClose()">Annuler</button>
+      </div>
     </div>
   </div>
-</div>
 }
