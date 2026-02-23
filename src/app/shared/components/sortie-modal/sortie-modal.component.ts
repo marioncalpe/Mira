@@ -17,18 +17,42 @@ import { Sortie } from '../../../core/models/sortie.model';
   styleUrls: ['./sortie-modal.component.scss'],
 })
 export class SortieModalComponent implements OnChanges {
+
+  /*================================*/
+  /*            INPUTS              */
+  /*  Données reçues du composant   */
+  /*  parent (ex: calendar)         */
+  /*================================*/
+
   @Input() visible = true;
   @Input() sortie: Sortie | null = null;
-
   @Input() mode: 'view' | 'edit' | 'create' = 'view';
+
+  /*================================*/
+  /*            OUTPUTS             */
+  /*  Événements envoyés au parent  */
+  /*================================*/
 
   @Output() save = new EventEmitter<Sortie>();
   @Output() delete = new EventEmitter<Sortie>();
   @Output() close = new EventEmitter<void>();
   @Output() modeChange = new EventEmitter<'view' | 'edit' | 'create'>();
 
+  /*================================*/
+  /*           VARIABLES            */
+  /*================================*/
+
+  // Copie temporaire de la sortie en cours d'édition
+  // On travaille sur cette copie pour ne pas modifier l'original
+  // tant que l'utilisateur n'a pas validé
   temp: Sortie = this.createEmptySortie();
 
+  /*================================*/
+  /*          CYCLE DE VIE          */
+  /*================================*/
+
+  // S'exécute à chaque fois qu'un @Input() change
+  // On recharge temp avec la nouvelle sortie reçue
   ngOnChanges() {
     this.temp = this.sortie
       ? {
@@ -38,40 +62,48 @@ export class SortieModalComponent implements OnChanges {
       : this.createEmptySortie();
   }
 
-  openCreate(sortie?: Sortie) {
+  /*================================*/
+  /*            ACTIONS             */
+  /*================================*/
+
+  // Ouvre la modal en mode création
+  // Si une sortie est fournie on la copie, sinon on part de zéro
+  openCreate(sortie?: Sortie): void {
     this.modeChange.emit('edit');
     this.visible = true;
-
-    if (sortie) {
-      // Si une sortie est fournie, on la copie dans temp
-      this.temp = {
-        ...sortie,
-        extendedProps: { ...sortie.extendedProps },
-      };
-    } else {
-      // Sinon, on initialise avec des valeurs par défaut
-      this.temp = this.createEmptySortie();
-    }
+    this.temp = sortie
+      ? { ...sortie, extendedProps: { ...sortie.extendedProps } }
+      : this.createEmptySortie();
   }
 
-  onSave() {
+  // Envoie la sortie modifiée au composant parent
+  onSave(): void {
     this.save.emit(this.temp);
   }
 
-  switchToEdit() {
+  // Passe en mode édition depuis le mode vue
+  switchToEdit(): void {
     this.modeChange.emit('edit');
   }
 
-  onDelete() {
+  // Envoie la sortie originale au parent pour suppression
+  onDelete(): void {
     if (this.sortie) {
       this.delete.emit(this.sortie);
     }
   }
 
-  onClose() {
+  // Ferme la modal sans sauvegarder
+  onClose(): void {
     this.close.emit();
   }
 
+  /*================================*/
+  /*       MÉTHODES PRIVÉES         */
+  /*================================*/
+
+  // Retourne une sortie vide avec des valeurs par défaut
+  // Utilisée à l'initialisation et à la création
   private createEmptySortie(): Sortie {
     return {
       id: '',

@@ -13,14 +13,29 @@ import { Badge } from '../../core/models/badge.model';
   imports: [CommonModule, MenuComponent, MotivationBannerComponent],
 })
 export class AchivementsComponent implements OnInit {
-  // Plus de tableau codé en dur, on utilise les badges du storage
+
+  /*================================*/
+  /*           VARIABLES            */
+  /*================================*/
+
+  // Liste des badges récupérés depuis le StorageService
   badges: Badge[] = [];
+
+  // Badge actuellement affiché dans la modal
+  // null = aucune modal ouverte
   selectedTrophy: Badge | null = null;
-  // badge actuellement affiché dans la modal
-  // null = pas de modal ouverte
+
+  /*================================*/
+  /*         CONSTRUCTEUR           */
+  /*================================*/
+
   constructor(private storageService: StorageService) {}
 
-  ngOnInit() {
+  /*================================*/
+  /*          CYCLE DE VIE          */
+  /*================================*/
+
+  ngOnInit(): void {
     // badges$ est un Observable (flux de données)
     // .subscribe() permet de s'y abonner :
     // À chaque fois que les badges changent dans le StorageService,
@@ -30,11 +45,17 @@ export class AchivementsComponent implements OnInit {
     });
   }
 
-  openTrophy(badge: Badge) {
+  /*================================*/
+  /*         ACTIONS - MODAL        */
+  /*================================*/
+
+  // Ouvre la modal avec le badge sélectionné
+  openTrophy(badge: Badge): void {
     this.selectedTrophy = badge;
   }
 
-  closeModal() {
+  // Ferme la modal
+  closeModal(): void {
     this.selectedTrophy = null;
   }
 }

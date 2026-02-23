@@ -1,13 +1,3 @@
-/**
- * Composant principal du calendrier.
- *
- * Gère :
- * - L'affichage des sorties dans angular-calendar
- * - L'ouverture de la modal (view / edit / create)
- * - La synchronisation avec le StorageService
- * - Le filtrage des sorties du mois en cours
- */
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
@@ -49,7 +39,6 @@ import { MotivationBannerComponent } from '../../shared/components/motivation-ba
     SortieModalComponent,
     MenuComponent,
     CalendarMonthViewComponent,
-    CalendarMonthViewComponent,
     CalendarPreviousViewDirective,
     CalendarNextViewDirective,
     CalendarDatePipe,
@@ -59,13 +48,18 @@ import { MotivationBannerComponent } from '../../shared/components/motivation-ba
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
+
+  /*================================*/
+  /*       VARIABLES - CALENDRIER   */
+  /*================================*/
+
   // Date actuellement affichée dans le calendrier
   viewDate: Date = new Date();
 
   // Type de vue (Month / Week / Day)
   view: CalendarView = CalendarView.Month;
 
-  // Liste des événements convertis pour angular-calendar
+  // Événements convertis pour angular-calendar
   events: CalendarEvent[] = [];
 
   // Toutes les sorties récupérées depuis le storage
@@ -74,29 +68,45 @@ export class CalendarComponent implements OnInit {
   // Sorties filtrées pour le mois affiché
   sortiesDuMois: Sortie[] = [];
 
+  /*================================*/
+  /*       VARIABLES - MODAL        */
+  /*================================*/
+
   modalVisible = false;
   selectedSortie: Sortie | null = null;
+  modalMode: 'view' | 'edit' | 'create' = 'view';
+
+  /*================================*/
+  /*       VARIABLES - CONFIG       */
+  /*================================*/
+
   locale = 'fr';
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
-  modalMode: 'view' | 'edit' | 'create' = 'view';
+
+  /*================================*/
+  /*         CONSTRUCTEUR           */
+  /*================================*/
 
   constructor(private storageService: StorageService) {}
 
-  // Au démarrage du composant, on recharge le calendrier pour afficher les sorties
-  async ngOnInit() {
+  /*================================*/
+  /*          CYCLE DE VIE          */
+  /*================================*/
+
+  async ngOnInit(): Promise<void> {
     await this.refreshCalendar();
   }
 
-  /**
-   * Recharge toutes les sorties depuis le service
-   * puis les transforme en événements compatibles
-   * avec angular-calendar.
-   */
-  async refreshCalendar() {
+  /*================================*/
+  /*       CHARGEMENT DONNÉES       */
+  /*================================*/
+
+  // Recharge toutes les sorties et les transforme
+  // en événements compatibles avec angular-calendar
+  async refreshCalendar(): Promise<void> {
     this.allSorties = this.storageService.getSorties();
 
-    // Transformation des Sorties en CalendarEvent
     this.events = this.allSorties.map((sortie: Sortie) => ({
       id: sortie.id,
       title: sortie.title,
@@ -108,29 +118,41 @@ export class CalendarComponent implements OnInit {
     this.updateSortiesForMonth();
   }
 
-  /**
-   * Retourne la couleur de l'événement
-   * en fonction de la catégorie de la sortie.
-   */
+  // Met à jour la liste des sorties du mois affiché
+  private updateSortiesForMonth(): void {
+    this.sortiesDuMois = this.allSorties
+      .filter((s: Sortie) => {
+        const d = new Date(s.start);
+        return (
+          d.getMonth() === this.viewDate.getMonth() &&
+          d.getFullYear() === this.viewDate.getFullYear()
+        );
+      })
+      .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+  }
+
+  /*================================*/
+  /*       COULEURS ÉVÉNEMENTS      */
+  /*  Couleur selon la catégorie    */
+  /*================================*/
+
   private getColorForSortie(sortie: Sortie) {
     switch (sortie.extendedProps?.category) {
-      case 'travail':
-        return { primary: '#ad2121', secondary: '#FAE3E3' };
-      case 'loisir':
-        return { primary: '#1e90ff', secondary: '#D1E8FF' };
-      default:
-        return { primary: '#e3bc08', secondary: '#FDF1BA' };
+      case 'tresbien': return { primary: '#4CAF50', secondary: '#E8F5E9' };
+      case 'bien':     return { primary: '#1e90ff', secondary: '#D1E8FF' };
+      case 'moyen':    return { primary: '#e3bc08', secondary: '#FDF1BA' };
+      case 'anxieuse': return { primary: '#ad2121', secondary: '#FAE3E3' };
+      default:         return { primary: '#9E9E9E', secondary: '#F5F5F5' };
     }
   }
 
-  /**
-   * Gère le clic sur une date du calendrier.
-   *
-   * - Si un événement existe déjà ce jour-là → ouvre en mode "view"
-   * - Sinon → ouvre la modal en mode création
-   */
-  handleDateClick(date: Date) {
-    // Vérifie si un événement existe déjà pour cette date
+  /*================================*/
+  /*         GESTION CLICS          */
+  /*================================*/
+
+  // Clic sur une date : ouvre en mode vue si sortie existante,
+  // sinon ouvre en mode création
+  handleDateClick(date: Date): void {
     const existingEvent = this.events.find((event) => {
       const eventDate = new Date(event.start);
       return (
@@ -139,8 +161,8 @@ export class CalendarComponent implements OnInit {
         eventDate.getDate() === date.getDate()
       );
     });
+
     if (existingEvent) {
-      // Si un événement existe, ouvre la modalité en mode "view"
       this.selectedSortie = {
         id: existingEvent.id as string,
         title: existingEvent.title,
@@ -159,23 +181,20 @@ export class CalendarComponent implements OnInit {
     this.modalVisible = true;
   }
 
-  /**
-   * Gère le clic sur un événement existant.
-   * Ouvre la modal en mode consultation.
-   */
-  handleEventClick(event: CalendarEvent) {
+  // Clic sur un événement existant : ouvre en mode vue
+  handleEventClick(event: CalendarEvent): void {
     this.selectedSortie = {
       id: event.id as string,
       title: event.title,
       start: event.start.toISOString(),
       extendedProps: { ...(event.meta ?? {}) },
     };
-
-    this.modalMode = 'view'; // 👉 mode VIEW
+    this.modalMode = 'view';
     this.modalVisible = true;
   }
 
-  openCreateModal() {
+  // Ouvre la modal en mode création avec des valeurs par défaut
+  openCreateModal(): void {
     this.selectedSortie = {
       title: 'Nouvelle sortie',
       start: new Date().toISOString(),
@@ -186,64 +205,45 @@ export class CalendarComponent implements OnInit {
         sentiment: 'positif',
       },
     };
-
-    this.modalMode = 'edit'; // 👉 mode EDIT
+    this.modalMode = 'edit';
     this.modalVisible = true;
   }
 
-  /**
-   * Sauvegarde une sortie.
-   *
-   * - Si elle possède un id → update
-   * - Sinon → création d'une nouvelle sortie
-   */
-  onSave(sortie: Sortie) {
+  /*================================*/
+  /*         ACTIONS MODAL          */
+  /*================================*/
+
+  // Sauvegarde : update si id existant, création sinon
+  onSave(sortie: Sortie): void {
     if (sortie.id) {
       this.storageService.updateSortie(sortie);
     } else {
       sortie.id = crypto.randomUUID();
       this.storageService.addSortie(sortie);
     }
-
     this.refreshCalendar();
     this.modalVisible = false;
   }
 
-  onDelete(sortie: Sortie) {
+  // Supprime la sortie et rafraîchit le calendrier
+  onDelete(sortie: Sortie): void {
     this.storageService.deleteSortie(sortie.id!);
     this.refreshCalendar();
     this.modalVisible = false;
   }
 
-  onClose() {
+  // Ferme la modal sans sauvegarder
+  onClose(): void {
     this.modalVisible = false;
   }
 
-  onViewDateChange(date: any) {
-    // Correction : accepte Event ou Date
+  // Mise à jour de la date affichée (changement de mois)
+  onViewDateChange(date: any): void {
     if (date instanceof Date) {
       this.viewDate = date;
-    } else if (date && date.target && date.target.value) {
+    } else if (date?.target?.value) {
       this.viewDate = new Date(date.target.value);
     }
     this.updateSortiesForMonth();
-  }
-
-  /**
-   * Met à jour la liste des sorties
-   * correspondant uniquement au mois actuellement affiché.
-   */
-  private updateSortiesForMonth() {
-    this.sortiesDuMois = this.allSorties
-      .filter((s: Sortie) => {
-        const d = new Date(s.start);
-        return (
-          d.getMonth() === this.viewDate.getMonth() &&
-          d.getFullYear() === this.viewDate.getFullYear()
-        );
-      })
-      .sort(
-        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
-      );
   }
 }
