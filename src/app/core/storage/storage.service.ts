@@ -480,63 +480,138 @@ export class StorageService {
   }
   // Vérifie et débloque les badges en fonction du nombre de sorties
   private verifierBadges(sorties: Sortie[]): void {
-  const total = sorties.length;
-  const badges = this.badgesSubject.getValue();
+    const total = sorties.length;
+    const badges = this.badgesSubject.getValue();
 
-  // Compte les sorties par catégorie d'humeur
-  const tresbien = sorties.filter(s => s.extendedProps?.category === 'tresbien').length;
-  const bien = sorties.filter(s => s.extendedProps?.category === 'bien').length;
-  const moyen = sorties.filter(s => s.extendedProps?.category === 'moyen').length;
-  const anxieuse = sorties.filter(s => s.extendedProps?.category === 'anxieuse').length;
+    // Compte les sorties par catégorie d'humeur
+    const tresbien = sorties.filter(
+      (s) => s.extendedProps?.category === 'tresbien',
+    ).length;
+    const bien = sorties.filter(
+      (s) => s.extendedProps?.category === 'bien',
+    ).length;
+    const moyen = sorties.filter(
+      (s) => s.extendedProps?.category === 'moyen',
+    ).length;
+    const anxieuse = sorties.filter(
+      (s) => s.extendedProps?.category === 'anxieuse',
+    ).length;
 
-  // Compte les objectifs terminés
-  const objectifsTermines = this.objectifsSubject.getValue()
-    .filter(o => o.statut === 'terminé').length;
+    // Compte les objectifs terminés
+    const objectifsTermines = this.objectifsSubject
+      .getValue()
+      .filter((o) => o.statut === 'terminé').length;
 
-  const regles: { [id: string]: boolean } = {
-    // Nombre de sorties
-    premiere_sortie:  total >= 1,
-    en_mouvement:     total >= 5,
-    mira_active:      total >= 10,
-    exploratrice:     total >= 20,
-    aventurier:       total >= 30,
-    nomade:           total >= 50,
-    toujours_dehors:  total >= 75,
-    marathonien:      total >= 100,
-    inarretable:      total >= 150,
-    legende_sortie:   total >= 200,
+    const maxConsecutifs = this.getMaxJoursConsecutifs(sorties);
 
-    // Humeurs
-    rayon_soleil:     tresbien >= 5,
-    energie_positive: tresbien >= 15,
-    humeur_or:        tresbien >= 30,
-    bonne_vibes:      bien >= 5,
-    optimiste:        bien >= 10,
-    stable_sereine:   bien >= 25,
-    cava_aller:       moyen >= 5,
-    tu_tiens_cap:     moyen >= 15,
-    ressilient:       moyen >= 30,
-    sortie_courageuse: anxieuse >= 1,
-    tu_laches_rien:   anxieuse >= 5,
-    courage_quotidien: anxieuse >= 10,
+    const sortiesAvecAmelioration = sorties.filter(
+      (s) =>
+        s.extendedProps?.noteApres !== undefined &&
+        s.extendedProps?.noteAvant !== undefined &&
+        s.extendedProps.noteApres < s.extendedProps.noteAvant,
+    ).length;
 
-    // Objectifs
-    premier_pas:      objectifsTermines >= 1,
-    objectif_atteint: objectifsTermines >= 3,
-    efficacite_pure:  objectifsTermines >= 5,
-    determination:    objectifsTermines >= 10,
-    maitrise:         objectifsTermines >= 20,
-  };
+    const regles: { [id: string]: boolean } = {
+      // Nombre de sorties
+      premiere_sortie: total >= 1,
+      en_mouvement: total >= 5,
+      mira_active: total >= 10,
+      exploratrice: total >= 20,
+      aventurier: total >= 30,
+      nomade: total >= 50,
+      toujours_dehors: total >= 75,
+      marathonien: total >= 100,
+      inarretable: total >= 150,
+      legende_sortie: total >= 200,
 
-  const updated = badges.map((badge) => {
-    if (badge.unlocked) return badge;
-    if (regles[badge.id]) {
-      return { ...badge, unlocked: true, dateUnlocked: new Date().toISOString() };
+      // Humeurs
+      rayon_soleil: tresbien >= 5,
+      energie_positive: tresbien >= 15,
+      humeur_or: tresbien >= 30,
+      bonne_vibes: bien >= 5,
+      optimiste: bien >= 10,
+      stable_sereine: bien >= 25,
+      cava_aller: moyen >= 5,
+      tu_tiens_cap: moyen >= 15,
+      ressilient: moyen >= 30,
+      sortie_courageuse: anxieuse >= 1,
+      tu_laches_rien: anxieuse >= 5,
+      courage_quotidien: anxieuse >= 10,
+
+      // Objectifs
+      premier_pas: objectifsTermines >= 1,
+      objectif_atteint: objectifsTermines >= 3,
+      efficacite_pure: objectifsTermines >= 5,
+      determination: objectifsTermines >= 10,
+      maitrise: objectifsTermines >= 20,
+
+      // Répétitions
+      jours_affillee: maxConsecutifs >= 2,
+      toujours_present: maxConsecutifs >= 3,
+      rythme_trouve: maxConsecutifs >= 7,
+      routine_solide: maxConsecutifs >= 14,
+      flow_parfait: maxConsecutifs >= 21,
+      constance: maxConsecutifs >= 30,
+
+      // Amelioration note
+      petit_mieux : sortiesAvecAmelioration >= 1,
+      tu_progresses : sortiesAvecAmelioration >= 5,
+      bonne_dynamique : sortiesAvecAmelioration >= 10,
+      ascension_positive : sortiesAvecAmelioration >= 20,
+    };
+
+    const updated = badges.map((badge) => {
+      if (badge.unlocked) return badge;
+      if (regles[badge.id]) {
+        return {
+          ...badge,
+          unlocked: true,
+          dateUnlocked: new Date().toISOString(),
+        };
+      }
+      return badge;
+    });
+
+    this.badgesSubject.next(updated);
+    this.saveBadges(updated);
+  }
+
+  //======================//
+  //      TEST TEST       //
+  //======================//
+
+  private getMaxJoursConsecutifs(sorties: Sortie[]): number {
+    if (sorties.length === 0) return 0;
+
+    // 1. Trier les sorties par date du plus ancien au plus récent
+    const triees = sorties.sort(
+      (a, b) =>
+        // comment tu comparerais deux dates ici ?
+        new Date(a.start).getTime() - new Date(b.start).getTime(),
+    );
+
+    // 2. On démarre avec 1 jour consécutif minimum
+    let maxConsecutifs = 1;
+    let compteur = 1;
+
+    // 3. On parcourt le tableau
+    for (let i = 1; i < triees.length; i++) {
+      const dateActuelle = new Date(triees[i].start);
+      const datePrecedente = new Date(triees[i - 1].start);
+
+      // 4. On calcule la différence en millisecondes
+      const diff = dateActuelle.getTime() - datePrecedente.getTime();
+
+      if (diff === 86400000) {
+        // consécutif !
+        compteur++;
+        maxConsecutifs = Math.max(maxConsecutifs, compteur);
+      } else {
+        // on repart à 1
+        compteur = 1;
+      }
     }
-    return badge;
-  });
 
-  this.badgesSubject.next(updated);
-  this.saveBadges(updated);
-}
+    return maxConsecutifs;
+  }
 }
