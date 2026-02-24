@@ -12,7 +12,7 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); // force 4 colonnes
+  grid-template-columns: repeat(6, 1fr);
   gap: 0.5em;
 
   //* sous modification de la classe .carte globale
@@ -20,10 +20,34 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex-basis: auto;
     gap: 0px;
     margin: 0px;
     padding: 0.8em 0.3em;
+
+    p {
+      font-size: 28px; // réduit un peu pour tenir sur mobile
+      margin: 0;
+      font-family: $font-main;
+    }
+    svg {
+      width: 28px;
+      height: 28px;
+      stroke: $accent;
+    }
   }
+  .carte-row {
+    flex-direction: row;
+    justify-content: center;
+    gap: 0.5em;
+  }
+}
+.stats > .carte:nth-child(-n + 2) {
+  grid-column: span 3; // 2 éléments sur la première ligne
+}
+
+.stats > .carte:nth-child(n + 3) {
+  grid-column: span 2; // 3 éléments sur la seconde ligne
 }
 
 .chart {
@@ -70,18 +94,12 @@
   justify-content: space-between;
 }
 
-p {
-  font-size: 28px; // réduit un peu pour tenir sur mobile
-  margin: 0;
-  font-family: $font-main;
-}
-
 .objectifs-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 
-  button{
+  button {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,7 +115,7 @@ p {
   }
 }
 
-.listObjectif{
+.listObjectif {
   display: flex;
   justify-content: space-between;
 }
@@ -114,7 +132,7 @@ p {
   align-items: center;
   gap: 10px;
 
-  button{
+  button {
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -123,9 +141,9 @@ p {
     cursor: pointer;
     flex-shrink: 0;
   }
-  
-  &.termine{
-    div{
+
+  &.termine {
+    div {
       text-decoration: line-through;
       color: $text-secondary;
     }
@@ -137,7 +155,7 @@ p {
       text-decoration: none; // annule la ligne sur le bouton
       border: none;
       stroke: white;
-      svg{
+      svg {
         width: 3em;
         height: 3em;
       }

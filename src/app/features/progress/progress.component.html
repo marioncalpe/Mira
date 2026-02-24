@@ -4,26 +4,80 @@
 </div>
 <div class="content">
   <div class="stats">
-    
     <div class="carte">
-      <p>{{ totalSorties }}</p>
-      <h4>Total de sorties</h4>
-    </div>
-    <div class="carte">
-      <p>{{ moyenneAvant | number: "1.1-1" }}</p>
+      <p>{{ getStars(moyenneAvant) }}</p>
       <h4>Moyenne avant</h4>
     </div>
     <div class="carte">
-      <p>{{ moyenneApres | number: "1.1-1" }}</p>
+      <p>{{ getStars(moyenneApres) }}</p>
       <h4>Moyenne après</h4>
     </div>
-    <div class="carte">
-      <p>{{ objectifTermines.length }}</p>
-      <h4>Objectifs terminé</h4>
+    <!--  -->
+    <div class="carte carte-row">
+      <h4>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-calendar-check-icon lucide-calendar-check"
+        >
+          <path d="M8 2v4" />
+          <path d="M16 2v4" />
+          <rect width="18" height="18" x="3" y="4" rx="2" />
+          <path d="M3 10h18" />
+          <path d="m9 16 2 2 4-4" />
+        </svg>
+      </h4>
+      <p>{{ totalSorties }}</p>
     </div>
-    <div class="carte">
+    <div class="carte carte-row">
+      <h4>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-badge-check-icon lucide-badge-check"
+        >
+          <path
+            d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
+          />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      </h4>
+      <p>{{ objectifTermines.length }}</p>
+    </div>
+    <div class="carte carte-row">
+      <h4>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-flame-icon lucide-flame"
+        >
+          <path
+            d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"
+          />
+        </svg>
+      </h4>
       <p>{{ maxJoursConsecutifs }}</p>
-      <h4>Jours consécutifs</h4>
     </div>
   </div>
   <div class="carte">
@@ -71,7 +125,9 @@
           ></button>
           <div>{{ objectifs.titre }}</div>
         </div>
-        <button class="suppr" (click)="supprimerObjectif(objectifs.id)">x</button>
+        <button class="suppr" (click)="supprimerObjectif(objectifs.id)">
+          x
+        </button>
       </div>
     }
     <hr />
@@ -92,7 +148,9 @@
           </button>
           <div>{{ objectifs.titre }}</div>
         </div>
-        <button class="suppr" (click)="supprimerObjectif(objectifs.id)">x</button>
+        <button class="suppr" (click)="supprimerObjectif(objectifs.id)">
+          x
+        </button>
       </div>
     }
   </div>

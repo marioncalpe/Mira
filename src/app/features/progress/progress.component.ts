@@ -74,6 +74,11 @@ export class ProgressComponent implements OnInit {
   /*        CHARGEMENT DONNÉES      */
   /*================================*/
 
+  getStars(note: number): string {
+    const fullStars = Math.round(note);
+    return '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
+  }
+
   // S'abonne aux objectifs du storage
   // Se met à jour automatiquement si les objectifs changent
   private chargerObjectifs(): void {
