@@ -1,9 +1,28 @@
 <div class="content">
-    <div class="head">
-        <h1>Bonjour Marion,</h1>
-        <!-- valeur quote random  -->
-        <app-motivation-banner></app-motivation-banner>
-    </div>
-    
+  <div class="head">
+    <h1>Bonjour Marion,</h1>
+    <!-- valeur quote random  -->
+    <app-motivation-banner></app-motivation-banner>
+  </div>
+  <div class="carte">
+    <h3>Sortie recentes</h3>
+    @for (sortie of recentesSorties; track sortie) {
+      <div class="timeline-item">
+        <div class="timeline-date">
+          <div class="day">
+            {{ sortie.start | date: "d" }}
+          </div>
+          <div class="month">
+            {{ sortie.start | date: "MMM" }}
+          </div>
+        </div>
+        <div class="timeline-line"></div>
+        <div class="timeline-dot"></div>
+        <div class="timeline-title">
+          {{ sortie.title }}
+        </div>
+      </div>
+    }
+  </div>
 </div>
 <app-menu></app-menu>
