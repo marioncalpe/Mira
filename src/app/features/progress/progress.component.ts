@@ -21,7 +21,6 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class ProgressComponent implements OnInit {
-
   /*================================*/
   /*       VARIABLES - SORTIES      */
   /*================================*/
@@ -74,18 +73,25 @@ export class ProgressComponent implements OnInit {
   /*        CHARGEMENT DONNÉES      */
   /*================================*/
 
-  getStars(note: number): string {
+  // Ex: note 3.2 → [true, true, true, false, false]
+  // true = étoile pleine, false = étoile vide
+  getStars(note: number): boolean[] {
     const fullStars = Math.round(note);
-    return '★'.repeat(fullStars) + '☆'.repeat(5 - fullStars);
+    return Array(5)
+      .fill(false)
+      .map((_, i) => i < fullStars);
   }
-
   // S'abonne aux objectifs du storage
   // Se met à jour automatiquement si les objectifs changent
   private chargerObjectifs(): void {
     this.storageService.objectifs$.subscribe((objectifs) => {
       this.AllObjectifs = objectifs;
-      this.objectifsEnCours = objectifs.filter(obj => obj.statut === 'en cours');
-      this.objectifTermines = objectifs.filter(obj => obj.statut === 'terminé');
+      this.objectifsEnCours = objectifs.filter(
+        (obj) => obj.statut === 'en cours',
+      );
+      this.objectifTermines = objectifs.filter(
+        (obj) => obj.statut === 'terminé',
+      );
     });
   }
 
@@ -106,10 +112,10 @@ export class ProgressComponent implements OnInit {
 
     // Moyennes des notes avant/après
     const notesAvant = this.sorties
-      .map(s => s.extendedProps?.noteAvant)
+      .map((s) => s.extendedProps?.noteAvant)
       .filter((note): note is number => typeof note === 'number');
     const notesApres = this.sorties
-      .map(s => s.extendedProps?.noteApres)
+      .map((s) => s.extendedProps?.noteApres)
       .filter((note): note is number => typeof note === 'number');
 
     this.moyenneAvant = this.average(notesAvant);
@@ -121,7 +127,9 @@ export class ProgressComponent implements OnInit {
       .slice(0, 5);
 
     // Record de jours consécutifs
-    this.maxJoursConsecutifs = this.storageService.getMaxJoursConsecutifs(this.sorties);
+    this.maxJoursConsecutifs = this.storageService.getMaxJoursConsecutifs(
+      this.sorties,
+    );
   }
 
   // Calcule les données du graphique (6 derniers mois)
@@ -144,7 +152,10 @@ export class ProgressComponent implements OnInit {
     }
 
     this.sortieParMois = this.months;
-    this.maxSortiesParMois = Math.max(...this.sortieParMois.map(m => m.count), 1);
+    this.maxSortiesParMois = Math.max(
+      ...this.sortieParMois.map((m) => m.count),
+      1,
+    );
   }
 
   /*================================*/

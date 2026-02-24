@@ -33,7 +33,6 @@
     svg {
       width: 28px;
       height: 28px;
-      stroke: $accent;
     }
   }
   .carte-row {
@@ -49,6 +48,9 @@
 .stats > .carte:nth-child(n + 3) {
   grid-column: span 2; // 3 éléments sur la seconde ligne
 }
+
+.star-full { color: gold; }
+.star-empty { color: lightgray; }
 
 .chart {
   display: flex;
