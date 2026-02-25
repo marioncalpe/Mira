@@ -24,5 +24,19 @@
       </div>
     }
   </div>
+  <div class="carte">
+    <h3>Derniers badges obtenus</h3>
+    <div class="lastBadges">
+      @for (badge of lastBadges(); track badge) {
+        <div class="badge-item">
+          <img
+            [src]="badge.image"
+            alt="{{ badge.title }}"
+            class="badge-image"
+          />
+        </div>
+      }
+    </div>
+  </div>
 </div>
 <app-menu></app-menu>

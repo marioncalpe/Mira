@@ -2,9 +2,20 @@
 /* IMPORT STYLE GLOBAL  */
 /*======================*/
 
-@use 'styles' as *;
+@use "styles" as *;
 
-
-.content{
-    
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0; // le gap est géré par .carte dans styles.scss
+  .lastBadges {
+    display: flex;
+    box-sizing: border-box;
+    gap: 10px;
+    img {
+      width: 100%;
+      min-width: 100px;
+      height: auto; // garde les proportions
+    }
+  }
 }
