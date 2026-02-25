@@ -1,8 +1,7 @@
 /*======================*/
 /* IMPORT STYLE GLOBAL  */
 /*======================*/
-
-@use "styles" as *;
+@use "styles" as *
 
 .menu-container
     position: fixed
@@ -14,6 +13,7 @@
     .menu
         display: flex
         justify-content: space-around
+        align-items: center
         background-color: $carte
         padding: 1em 0
         border-top: 1px solid #eee
@@ -21,6 +21,9 @@
         border-start-start-radius: 10px
         border-start-end-radius: 10px
         box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.1)
+        overflow: visible
+        position: relative
+
         button
             background: none
             border: none
@@ -28,6 +31,24 @@
             box-shadow: none
             svg
                 stroke: $text-secondary
+
         button.active
             svg
                 stroke: $primary
+
+        .fab
+            background: $primary
+            border: none
+            border-radius: 50%
+            width: 30px
+            height: 30px
+            display: flex
+            align-items: center
+            justify-content: center
+            // transform: translateY(-10px)
+            // margin-bottom: -10px
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)
+            svg
+                stroke: white !important
+            &:active
+                transform: translateY(-8px)

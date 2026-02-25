@@ -2,22 +2,6 @@
 @if (mode === "view") {
   <div class="view-mode">
     <div class="modal">
-      <!-- <h2>{{ sortie?.start | date : "longDate" : "" : "fr" }}</h2>
-    <p>
-      <strong>Titre :</strong>
-      {{ sortie?.title }}
-    </p>
-    <p><strong>Catégorie :</strong> {{ sortie?.extendedProps?.category }}</p>
-    <p><strong>Note avant :</strong> {{ sortie?.extendedProps?.noteAvant }}</p>
-    <p><strong>Note après :</strong> {{ sortie?.extendedProps?.noteApres }}</p>
-    <p><strong>Sentiment :</strong> {{ sortie?.extendedProps?.sentiment }}</p>
-    <div class="actions">
-      <button class="save" (click)="switchToEdit()">Modifier</button>
-      <button class="delete" *ngIf="sortie" (click)="onDelete()">
-        Supprimer
-      </button>
-      <button class="close" (click)="onClose()">Fermer</button>
-    </div> -->
       <h2 style="margin-bottom: 0;">{{ sortie?.title }}</h2>
       <p style="display: flex; align-items: center; justify-content: center; margin: 0; font-size: 15px;">
         {{ sortie?.start | date: "dd MMM yyyy" : "" : "fr" }}

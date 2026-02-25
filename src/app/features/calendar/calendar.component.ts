@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
 import {
   CalendarEvent,
   CalendarDateFormatter,
@@ -48,7 +49,6 @@ import { MotivationBannerComponent } from '../../shared/components/motivation-ba
   styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit {
-
   /*================================*/
   /*       VARIABLES - CALENDRIER   */
   /*================================*/
@@ -88,7 +88,10 @@ export class CalendarComponent implements OnInit {
   /*         CONSTRUCTEUR           */
   /*================================*/
 
-  constructor(private storageService: StorageService) {}
+  constructor(
+    private storageService: StorageService,
+    private route: ActivatedRoute,
+  ) {}
 
   /*================================*/
   /*          CYCLE DE VIE          */
@@ -96,6 +99,12 @@ export class CalendarComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.refreshCalendar();
+    // On lit les paramètres de l'URL
+    this.route.queryParams.subscribe((params) => {
+      if (params['openModal'] === 'true') {
+        this.openCreateModal();
+      }
+    });
   }
 
   /*================================*/
@@ -128,7 +137,9 @@ export class CalendarComponent implements OnInit {
           d.getFullYear() === this.viewDate.getFullYear()
         );
       })
-      .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+      .sort(
+        (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
+      );
   }
 
   /*================================*/
@@ -138,11 +149,16 @@ export class CalendarComponent implements OnInit {
 
   private getColorForSortie(sortie: Sortie) {
     switch (sortie.extendedProps?.category) {
-      case 'tresbien': return { primary: '#4CAF50', secondary: '#E8F5E9' };
-      case 'bien':     return { primary: '#1e90ff', secondary: '#D1E8FF' };
-      case 'moyen':    return { primary: '#e3bc08', secondary: '#FDF1BA' };
-      case 'anxieuse': return { primary: '#ad2121', secondary: '#FAE3E3' };
-      default:         return { primary: '#9E9E9E', secondary: '#F5F5F5' };
+      case 'tresbien':
+        return { primary: '#4CAF50', secondary: '#E8F5E9' };
+      case 'bien':
+        return { primary: '#1e90ff', secondary: '#D1E8FF' };
+      case 'moyen':
+        return { primary: '#e3bc08', secondary: '#FDF1BA' };
+      case 'anxieuse':
+        return { primary: '#ad2121', secondary: '#FAE3E3' };
+      default:
+        return { primary: '#9E9E9E', secondary: '#F5F5F5' };
     }
   }
 
