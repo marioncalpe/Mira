@@ -16,11 +16,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  &:hover {
+      transform: none;
+    }
 }
 
 .modal {
+  position: relative;
   background: white;
   padding: 20px;
+  padding-top: 50px;
   border-radius: 14px;
   width: 300px;
   display: flex;
@@ -98,8 +103,9 @@
   border-radius: 8px;
   color: $text;
   font-family: $font-main;
-  background-color: transparent;
-  border: 1px solid #414141;
+  background-color: #f1f1f1;
+  // border: 1px solid #414141;
+  border: none;
 }
 
 .form-group textarea {
@@ -111,7 +117,8 @@
   color: $text;
   height: 96px;
   border: 1px solid #414141;
-  background-color: transparent;
+  border: none;
+  background-color: #f1f1f1;
   font-family: $font-main;
 }
 
@@ -134,7 +141,8 @@
 
 button {
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 20px;
+  font-weight: bold;
   border: none;
   cursor: pointer;
 }
@@ -149,6 +157,18 @@ button {
   color: $text-light;
 }
 
-.close {
-  background: #ddd;
+.close-btn{        // ← renomme ta classe pour éviter le conflit avec .close existant}
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: $text-secondary;
+    padding: 4px 8px;
+    border-radius: 50%;
+    &:hover{
+      background: #f0f0f0;
+    }
 }

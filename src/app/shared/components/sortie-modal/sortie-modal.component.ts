@@ -125,4 +125,27 @@ export class SortieModalComponent implements OnChanges {
   isNoteApres(seuil: number): boolean {
     return (this.temp.extendedProps?.noteApres ?? 0) >= seuil;
   }
+
+  isNoteAvantView(seuil: number): boolean {
+    return (this.sortie?.extendedProps?.noteAvant ?? 0) >= seuil;
+  }
+
+  isNoteApresView(seuil: number): boolean {
+    return (this.sortie?.extendedProps?.noteApres ?? 0) >= seuil;
+  }
+
+  getCategoryEmoji(): string {
+    switch (this.sortie?.extendedProps?.category) {
+      case 'tresbien':
+        return '😊';
+      case 'bien':
+        return '🙂';
+      case 'moyen':
+        return '😐';
+      case 'anxieuse':
+        return '😰';
+      default:
+        return '';
+    }
+  }
 }
