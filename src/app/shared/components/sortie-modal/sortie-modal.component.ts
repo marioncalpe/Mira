@@ -17,7 +17,6 @@ import { Sortie } from '../../../core/models/sortie.model';
   styleUrls: ['./sortie-modal.component.scss'],
 })
 export class SortieModalComponent implements OnChanges {
-
   /*================================*/
   /*            INPUTS              */
   /*  Données reçues du composant   */
@@ -116,5 +115,14 @@ export class SortieModalComponent implements OnChanges {
         sentiment: '',
       },
     };
+  }
+
+  // Retourne true si la note est >= au seuil
+  isNoteAvant(seuil: number): boolean {
+    return (this.temp.extendedProps?.noteAvant ?? 0) >= seuil;
+  }
+
+  isNoteApres(seuil: number): boolean {
+    return (this.temp.extendedProps?.noteApres ?? 0) >= seuil;
   }
 }

@@ -4,7 +4,6 @@
 
 @use "styles" as *;
 
-.view-mode,
 .view-mode {
   position: fixed;
   top: 0;
@@ -26,7 +25,7 @@
   width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 2em;
   font-family: $font-secondary;
 }
 .modal-view {
@@ -38,44 +37,92 @@
   flex-direction: column;
   gap: 1em;
   font-family: $font-secondary;
-
-  // .view-infs {
-  //   display: grid;
-  //   grid-template-columns: repeat(2, 1fr); // force 4 colonnes
-  //   gap: 0.5em;
-
-  //   .carte {
-  //     display: flex;
-  //     flex-direction: column;
-  //     align-items: center;
-  //     justify-content: center;
-  //   }
-  // }
 }
 
-input,
-select,
-textarea {
-  border: 2px solid transparent;
-  width: auto;
-  height: 2.5em;
-  padding-left: 0.8em;
+.humeurs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  button {
+    font-size: 24px;
+    background: none;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    padding: 8px;
+    cursor: pointer;
+    &.active {
+      // border-color: $primary;
+    }
+    &.inactive{
+      filter: grayscale(100%) opacity(0.4);
+    }
+  }
+}
+
+.notes {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 2em;
+}
+
+.etoiles {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  div {
+    display: flex;
+    justify-content: center;
+    color: #5c5c5c;
+    font-style: italic;
+    font-size: 0.55em;
+    text-align: center;
+  }
+  gap: 4px;
+  button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    color: gold;
+    &:hover {
+      transform: scale(1.2);
+    }
+  }
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: $text;
+  font-family: $font-main;
+  background-color: transparent;
+  border: 1px solid #414141;
+}
+
+.form-group textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 16px;
+  border-radius: 8px;
+  resize: none;
+  color: $text;
+  height: 96px;
+  border: 1px solid #414141;
+  background-color: transparent;
+  font-family: $font-main;
+}
+
+.form-group input:focus {
   outline: none;
-  overflow: hidden;
-  background-color: #f3f3f3;
-  border-radius: 10px;
-  transition: all 0.5s;
+  border-color: $accent;
 }
 
-input:hover,
-input:focus,
-select:hover,
-select:focus,
-textarea:hover,
-textarea:focus {
-  border: 2px solid $secondary;
-  box-shadow: 0px 0px 0px 7px rgb(255, 214, 165, 20%);
-  background-color: white;
+.form-group textarea:focus {
+  outline: none;
+  border-color: $accent;
 }
 
 .actions {
