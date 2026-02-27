@@ -234,7 +234,7 @@
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </button>
-          <div>{{ objectifs.titre }}</div>
+          <div style="text-overflow: ellipsis;">{{ objectifs.titre }}</div>
         </div>
         <!-- Bouton de suppression -->
         <button class="suppr" (click)="supprimerObjectif(objectifs.id)">
