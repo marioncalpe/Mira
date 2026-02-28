@@ -138,11 +138,11 @@
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
+          class="lucide lucide-goal-icon lucide-goal"
         >
-          <path
-            d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"
-          />
-          <path d="m9 12 2 2 4-4" />
+          <path d="M12 13V2l8 4-8 4" />
+          <path d="M20.561 10.222a9 9 0 1 1-12.55-5.29" />
+          <path d="M8.002 9.997a5 5 0 1 0 8.9 2.02" />
         </svg>
       </h4>
       <p>{{ objectifTermines.length }}</p>
@@ -234,7 +234,7 @@
               <path d="M20 6 9 17l-5-5" />
             </svg>
           </button>
-          <div style="text-overflow: ellipsis;">{{ objectifs.titre }}</div>
+          <div>{{ objectifs.titre }}</div>
         </div>
         <!-- Bouton de suppression -->
         <button class="suppr" (click)="supprimerObjectif(objectifs.id)">

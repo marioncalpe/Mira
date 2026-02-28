@@ -22,7 +22,7 @@
         </svg>
       </button>
       <!-- Titre et date de la sortie -->
-      <h2 style="margin-bottom: 0">{{ sortie?.title }}</h2>
+      <h2 style="margin: 0; text-align: center">{{ sortie?.title }}</h2>
       <p
         style="
           display: flex;
@@ -70,9 +70,7 @@
         <!-- ================================ -->
         <div class="etoiles">
           <div>
-            <button
-              [class.active]="isNoteAvant(1)"
-            >
+            <button [class.active]="isNoteAvant(1)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -89,9 +87,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteAvant(2)"
-            >
+            <button [class.active]="isNoteAvant(2)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -108,9 +104,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteAvant(3)"
-            >
+            <button [class.active]="isNoteAvant(3)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -127,9 +121,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteAvant(4)"
-            >
+            <button [class.active]="isNoteAvant(4)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -146,9 +138,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteAvant(5)"
-            >
+            <button [class.active]="isNoteAvant(5)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -175,9 +165,7 @@
         <!-- ================================ -->
         <div class="etoiles">
           <div>
-            <button
-              [class.active]="isNoteApres(1)"
-            >
+            <button [class.active]="isNoteApres(1)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -194,9 +182,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteApres(2)"
-            >
+            <button [class.active]="isNoteApres(2)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -213,9 +199,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteApres(3)"
-            >
+            <button [class.active]="isNoteApres(3)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -232,9 +216,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteApres(4)"
-            >
+            <button [class.active]="isNoteApres(4)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -251,9 +233,7 @@
                 />
               </svg>
             </button>
-            <button
-              [class.active]="isNoteApres(5)"
-            >
+            <button [class.active]="isNoteApres(5)">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -278,10 +258,10 @@
 
       <!-- Actions disponibles en mode consultation -->
       <div class="actions">
-        <button class="save" (click)="switchToEdit()">Modifier</button>
-        <button class="delete" *ngIf="sortie" (click)="onDelete()">
+        <button class="delete" *ngIf="sortie" (click)="modeChange.emit('suppr')">
           Supprimer
         </button>
+        <button class="save" (click)="switchToEdit()">Modifier</button>
       </div>
     </div>
   </div>
@@ -597,10 +577,27 @@
 
       <!-- Actions disponibles en mode édition -->
       <div class="actions">
-        <button class="save" (click)="onSave()">Valider</button>
-        <button class="delete" *ngIf="sortie" (click)="onDelete()">
+        <!-- Au lieu de (click)="onDelete()", on passe en mode suppr -->
+        <button
+          class="delete"
+          *ngIf="sortie"
+          (click)="modeChange.emit('suppr')"
+        >
           Supprimer
         </button>
+        <button class="save" (click)="onSave()">Valider</button>
+      </div>
+    </div>
+  </div>
+}
+@if(mode === "suppr") {
+  <div class="view-mode">
+    <div class="modal">
+      <h2>Supprimer cette sortie ?</h2>
+      <p>Cette action est irréversible.</p>
+      <div class="actions">
+        <button class="delete" (click)="onDelete()">Confirmer</button>
+        <button class="close" (click)="onClose()">Annuler</button>
       </div>
     </div>
   </div>

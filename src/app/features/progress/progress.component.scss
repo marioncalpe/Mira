@@ -134,6 +134,10 @@
   align-items: center;
   gap: 10px;
   overflow: hidden;
+  div{
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   button {
     width: 20px;

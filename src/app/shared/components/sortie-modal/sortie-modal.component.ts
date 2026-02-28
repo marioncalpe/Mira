@@ -25,7 +25,7 @@ export class SortieModalComponent implements OnChanges {
 
   @Input() visible = true;
   @Input() sortie: Sortie | null = null;
-  @Input() mode: 'view' | 'edit' | 'create' = 'view';
+  @Input() mode: 'view' | 'edit' | 'suppr' |'create' = 'view';
 
   /*================================*/
   /*            OUTPUTS             */
@@ -35,7 +35,7 @@ export class SortieModalComponent implements OnChanges {
   @Output() save = new EventEmitter<Sortie>();
   @Output() delete = new EventEmitter<Sortie>();
   @Output() close = new EventEmitter<void>();
-  @Output() modeChange = new EventEmitter<'view' | 'edit' | 'create'>();
+  @Output() modeChange = new EventEmitter<'view' | 'edit' | 'suppr' | 'create'>();
 
   /*================================*/
   /*           VARIABLES            */

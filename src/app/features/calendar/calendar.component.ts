@@ -74,7 +74,7 @@ export class CalendarComponent implements OnInit {
 
   modalVisible = false;
   selectedSortie: Sortie | null = null;
-  modalMode: 'view' | 'edit' | 'create' = 'view';
+  modalMode: 'view' | 'edit' | 'suppr' | 'create' = 'view';
 
   /*================================*/
   /*       VARIABLES - CONFIG       */
