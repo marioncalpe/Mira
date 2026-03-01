@@ -9,6 +9,44 @@ import { Badge } from '../models/badge.model';
 /*  Source unique de vérité de    */
 /*  toutes les données de l'app   */
 /*================================*/
+/*================================================*/
+/*             STORAGE SERVICE                    */
+/*  Ce service est la source unique de données    */
+/*  de toute l'application.                       */
+/*                                                */
+/*  MÉTHODES DISPONIBLES DEPUIS N'IMPORTE OÙ :   */
+/*                                                */
+/*  --- SORTIES ---                               */
+/*  getSorties()          → tableau complet       */
+/*  addSortie(sortie)     → ajoute une sortie     */
+/*  updateSortie(sortie)  → modifie une sortie    */
+/*  deleteSortie(id)      → supprime une sortie   */
+/*                                                */
+/*  --- OBJECTIFS ---                             */
+/*  getObjectifs()           → tableau complet    */
+/*  addObjectif(titre)       → ajoute             */
+/*  updateObjectif(id)       → bascule le statut  */
+/*  supprimerObjectif(id)    → supprime           */
+/*  getObjectifsEnCours()    → filtre en cours    */
+/*  getObjectifsTermines()   → filtre terminés    */
+/*                                                */
+/*  --- STATS ---                                 */
+/*  getTotalSorties()        → nombre total       */
+/*  getSortiesCeMois()       → sorties ce mois    */
+/*  getMoyenneAvant()        → moyenne note avant */
+/*  getMoyenneApres()        → moyenne note après */
+/*  getStreak()              → jours consécutifs  */
+/*  getRecentesSorties(n)    → n dernières        */
+/*                                                */
+/*  --- BADGES ---                                */
+/*  badges$                  → observable         */
+/*  getDerniersBadges(n)     → n derniers         */
+/*                                                */
+/*  --- OBSERVABLES (abonnement automatique) ---  */
+/*  sorties$    → flux de sorties                 */
+/*  objectifs$  → flux d'objectifs                */
+/*  badges$     → flux de badges                  */
+/*================================================*/
 @Injectable({
   providedIn: 'root',
 })

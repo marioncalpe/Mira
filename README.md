@@ -1,27 +1,81 @@
-# Mira
+🌸 Mira
+Mira est une application mobile Angular de suivi de sorties pour les personnes souffrant d'anxiété sociale ou d'agoraphobie. Elle permet de planifier, noter et analyser ses sorties du quotidien, avec un système de succès pour encourager la progression.
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.4.
+📱 Pages de l'application
+PageDescriptionHomeTableau de bord avec résumé des stats, derniers badges et sorties récentesCalendrierPlanification et consultation des sorties par moisSuccèsCollection de badges à débloquer selon sa progressionProgressionStatistiques détaillées, graphique mensuel et objectifs personnelsParamètresConfiguration de l'application
 
-## Development server
+🏗️ Architecture
+src/
+├── app/
+│   ├── core/
+│   │   ├── models/          # Interfaces TypeScript (Sortie, Badge, Objectif)
+│   │   └── storage/         # StorageService — source unique de données
+│   ├── features/
+│   │   ├── home/            # Page d'accueil
+│   │   ├── calendar/        # Calendrier des sorties
+│   │   ├── achivements/     # Page des succès/badges
+│   │   ├── progress/        # Page de progression
+│   │   └── settings/        # Paramètres
+│   └── shared/
+│       └── components/
+│           ├── menu/              # Barre de navigation + bouton FAB
+│           ├── sortie-modal/      # Modal création/édition/consultation
+│           └── motivation-banner/ # Bandeau avec citation motivante
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+🗄️ StorageService
+Toutes les données sont centralisées dans StorageService. Les données sont persistées dans le localStorage.
+Méthodes disponibles
+typescript// Sorties
+getSorties()           // tableau complet
+addSortie(sortie)      // ajoute une sortie
+updateSortie(sortie)   // modifie une sortie
+deleteSortie(id)       // supprime une sortie
 
-## Code scaffolding
+// Objectifs
+getObjectifs()            // tableau complet
+addObjectif(titre)        // ajoute
+updateObjectif(id)        // bascule en cours ↔ terminé
+supprimerObjectif(id)     // supprime
+getObjectifsEnCours()     // filtre en cours
+getObjectifsTermines()    // filtre terminés
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+// Stats (calculées automatiquement)
+getTotalSorties()         // nombre total
+getSortiesCeMois()        // sorties du mois en cours
+getMoyenneAvant()         // moyenne note avant
+getMoyenneApres()         // moyenne note après
+getStreak()               // record de jours consécutifs
+getRecentesSorties(n)     // n dernières sorties
 
-## Build
+// Badges
+getDerniersBadges(n)      // n derniers badges débloqués
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+// Observables (abonnement automatique)
+sorties$                  // flux de sorties
+objectifs$                // flux d'objectifs
+badges$                   // flux de badges
 
-## Running unit tests
+🚀 Lancer le projet
+bash# Installation des dépendances
+npm install
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Serveur de développement
+ng serve
+Puis ouvrir http://localhost:4200
 
-## Running end-to-end tests
+🛠️ Commandes utiles
+bash# Générer un composant
+ng generate component features/nom-du-composant
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+# Générer un service
+ng generate service core/nom-du-service
 
-## Further help
+# Build de production
+ng build
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+🔧 Technologies
+
+Angular 21 — Framework principal
+angular-calendar — Composant calendrier
+LocalStorage — Persistance des données
+SCSS / SASS — Styles
