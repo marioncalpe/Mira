@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
   sortiesCeMois = 0;
   streak = 0;
   moyenneApres = 0;
+  nbObjectifsEnCours = 0;
+  nbBadgesDebloques = 0;
 
   /*================================*/
   /*         CONSTRUCTEUR           */
@@ -42,11 +44,19 @@ export class HomeComponent implements OnInit {
   /*================================*/
 
   ngOnInit(): void {
+    // NB sortie du mois
+    this.sortiesCeMois = this.storageService.getSortiesCeMois();
+    // STEAK
+    this.streak = this.storageService.getStreak();
+    // Nb objectifs en cours
+    this.nbObjectifsEnCours = this.storageService.getNombreObjectifsEnCours();
+    // Nb total badges débloqués
+    this.nbBadgesDebloques = this.storageService.getNombreBadgesDebloques();
     this.recentesSorties = this.storageService.getRecentesSorties();
     this.derniersBadges = this.storageService.getDerniersBadges();
     this.totalSorties = this.storageService.getTotalSorties();
-    this.sortiesCeMois = this.storageService.getSortiesCeMois();
-    this.streak = this.storageService.getStreak();
+    
+    
     this.moyenneApres = this.storageService.getMoyenneApres();
   }
 }
