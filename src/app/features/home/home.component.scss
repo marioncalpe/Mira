@@ -8,6 +8,40 @@
   display: flex;
   flex-direction: column;
   gap: 0; // le gap est géré par .carte dans styles.scss
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5em;
+
+    .carte {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex-basis: auto;
+      gap: 1em;
+      margin: 0px;
+      padding: 0.8em 0.3em;
+      p {
+        font-size: 28px; // réduit un peu pour tenir sur mobile
+        margin: 0;
+        font-family: $font-main;
+      }
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+      .lucide-calendar-fold-icon {
+        stroke: $icon-sortie;
+      }
+      .lucide-circle-dot-dashed-icon {
+        stroke: $icon-objectif;
+      }
+      .lucide-fire-icon {
+        stroke: $icon-steak;
+      }
+    }
+  }
   .lastBadges {
     display: flex;
     box-sizing: border-box;

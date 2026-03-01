@@ -4,9 +4,9 @@
     <!-- valeur quote random  -->
     <app-motivation-banner></app-motivation-banner>
   </div>
-  <div>
+  <div class="stats">
     <!-- Carte : Total des sorties du mois (icône calendrier) -->
-    <!-- <div class="carte carte-row">
+    <div class="carte carte-row">
       <h4>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -14,24 +14,26 @@
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#b585d4"
+          stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="lucide-calendar-icon"
+          class="lucide lucide-calendar-fold-icon lucide-calendar-fold"
         >
+          <path
+            d="M3 20a2 2 0 0 0 2 2h10a2.4 2.4 0 0 0 1.706-.706l3.588-3.588A2.4 2.4 0 0 0 21 16V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"
+          />
+          <path d="M15 22v-5a1 1 0 0 1 1-1h5" />
           <path d="M8 2v4" />
           <path d="M16 2v4" />
-          <rect width="18" height="18" x="3" y="4" rx="2" />
           <path d="M3 10h18" />
-          <path d="m9 16 2 2 4-4" />
         </svg>
       </h4>
-      <p>{{ totalSorties }}</p>
-    </div> -->
+      <p>{{ sortiesCeMois }}</p>
+    </div>
 
     <!-- Carte : Objectifs en cours (icône badge) -->
-    <!-- <div class="carte carte-row">
+    <div class="carte carte-row">
       <h4>
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,19 +41,25 @@
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#79B584"
+          stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="lucide lucide-goal-icon lucide-goal"
+          class="lucide lucide-circle-dot-dashed-icon lucide-circle-dot-dashed"
         >
-          <path d="M12 13V2l8 4-8 4" />
-          <path d="M20.561 10.222a9 9 0 1 1-12.55-5.29" />
-          <path d="M8.002 9.997a5 5 0 1 0 8.9 2.02" />
+          <path d="M10.1 2.18a9.93 9.93 0 0 1 3.8 0" />
+          <path d="M17.6 3.71a9.95 9.95 0 0 1 2.69 2.7" />
+          <path d="M21.82 10.1a9.93 9.93 0 0 1 0 3.8" />
+          <path d="M20.29 17.6a9.95 9.95 0 0 1-2.7 2.69" />
+          <path d="M13.9 21.82a9.94 9.94 0 0 1-3.8 0" />
+          <path d="M6.4 20.29a9.95 9.95 0 0 1-2.69-2.7" />
+          <path d="M2.18 13.9a9.93 9.93 0 0 1 0-3.8" />
+          <path d="M3.71 6.4a9.95 9.95 0 0 1 2.7-2.69" />
+          <circle cx="12" cy="12" r="1" />
         </svg>
       </h4>
-      <p>{{ objectifTermines.length }}</p>
-    </div> -->
+      <p>{{ nbObjectifsEnCours }}</p>
+    </div>
 
     <!-- Carte : Record jours consécutifs (icône flamme) -->
     <div class="carte carte-row">
@@ -62,7 +70,7 @@
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#ff4d6d"
+          stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -74,7 +82,7 @@
         </svg>
       </h4>
       <p>{{ streak }}</p>
-    </div> 
+    </div>
   </div>
   <div class="carte">
     <h3>Sortie recentes</h3>

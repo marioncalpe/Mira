@@ -54,9 +54,5 @@ export class HomeComponent implements OnInit {
     this.nbBadgesDebloques = this.storageService.getNombreBadgesDebloques();
     this.recentesSorties = this.storageService.getRecentesSorties();
     this.derniersBadges = this.storageService.getDerniersBadges();
-    this.totalSorties = this.storageService.getTotalSorties();
-    
-    
-    this.moyenneApres = this.storageService.getMoyenneApres();
   }
 }
