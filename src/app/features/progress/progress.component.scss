@@ -39,6 +39,16 @@
     flex-direction: row;
     justify-content: center;
     gap: 0.5em;
+
+    .lucide-calendar-icon {
+      stroke: $icon-sortie;
+    }
+    .lucide-goal-icon{
+      stroke: $icon-objectif;
+    }
+    .lucide-fire-icon {
+      stroke: $icon-steak;
+    }
   }
 }
 .stats > .carte:nth-child(-n + 2) {

@@ -58,6 +58,16 @@ $font-main: "Poppins", sans-serif;
 $font-secondary: "inter", sans-serif;
 $font-size-base: 16px;
 
+/*=========================*/
+/*      PALETTE ICONE      */
+/*=========================*/
+$icon-menu: $text-secondary;
+$icon-menu-active: $primary;
+$icon-sortie: $accent;
+$icon-objectif: #79B584;
+$icon-steak: $primary;
+
+
 /*======================*/
 /*        MIXINS        */
 /*======================*/
@@ -178,6 +188,7 @@ app-root {
   gap: 10px;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  
 }
 
 .timeline-item {
