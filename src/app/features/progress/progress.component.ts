@@ -21,6 +21,7 @@ import { FormsModule } from '@angular/forms';
   ],
 })
 export class ProgressComponent implements OnInit {
+
   /*================================*/
   /*       VARIABLES - SORTIES      */
   /*================================*/
@@ -36,9 +37,8 @@ export class ProgressComponent implements OnInit {
   /*      VARIABLES - GRAPHIQUE     */
   /*================================*/
   sortieParMois: { label: string; key: string; count: number }[] = [];
-  months: { label: string; key: string; count: number }[] = [];
   maxSortiesParMois = 0;
-  chartHeight = 120; // Hauteur max du graphique en pixels
+  chartHeight = 120;
   formatter = new Intl.DateTimeFormat('fr-FR', {
     month: 'short',
     year: '2-digit',
@@ -47,7 +47,6 @@ export class ProgressComponent implements OnInit {
   /*================================*/
   /*      VARIABLES - OBJECTIFS     */
   /*================================*/
-  AllObjectifs: Objectif[] = [];
   objectifsEnCours: Objectif[] = [];
   objectifTermines: Objectif[] = [];
   modalObjectifVisible = false;
@@ -59,11 +58,9 @@ export class ProgressComponent implements OnInit {
   constructor(private storageService: StorageService) {}
 
   /*================================*/
-  /*           NGONINIT             */
-  /*  S'exécute au chargement du    */
-  /*  composant                     */
+  /*          CYCLE DE VIE          */
   /*================================*/
-  ngOnInit() {
+  ngOnInit(): void {
     this.chargerObjectifs();
     this.chargerSorties();
     this.calculerGraphique();
@@ -73,66 +70,23 @@ export class ProgressComponent implements OnInit {
   /*        CHARGEMENT DONNÉES      */
   /*================================*/
 
-  // Ex: note 3.2 → [true, true, true, false, false]
-  // true = étoile pleine, false = étoile vide
-  getStars(note: number): boolean[] {
-    const fullStars = Math.round(note);
-    return Array(5)
-      .fill(false)
-      .map((_, i) => i < fullStars);
-  }
-  // S'abonne aux objectifs du storage
-  // Se met à jour automatiquement si les objectifs changent
   private chargerObjectifs(): void {
-    this.storageService.objectifs$.subscribe((objectifs) => {
-      this.AllObjectifs = objectifs;
-      this.objectifsEnCours = objectifs.filter(
-        (obj) => obj.statut === 'en cours',
-      );
-      this.objectifTermines = objectifs.filter(
-        (obj) => obj.statut === 'terminé',
-      );
+    this.storageService.objectifs$.subscribe(() => {
+      this.objectifsEnCours = this.storageService.getObjectifsEnCours();
+      this.objectifTermines = this.storageService.getObjectifsTermines();
     });
   }
 
-  // Charge et calcule toutes les stats liées aux sorties
   private chargerSorties(): void {
     this.sorties = this.storageService.getSorties();
-    this.totalSorties = this.sorties.length;
-
-    // Sorties du mois en cours
-    const now = new Date();
-    this.sortiesCeMois = this.sorties.filter((sortie) => {
-      const date = new Date(sortie.start);
-      return (
-        date.getMonth() === now.getMonth() &&
-        date.getFullYear() === now.getFullYear()
-      );
-    }).length;
-
-    // Moyennes des notes avant/après
-    const notesAvant = this.sorties
-      .map((s) => s.extendedProps?.noteAvant)
-      .filter((note): note is number => typeof note === 'number');
-    const notesApres = this.sorties
-      .map((s) => s.extendedProps?.noteApres)
-      .filter((note): note is number => typeof note === 'number');
-
-    this.moyenneAvant = this.average(notesAvant);
-    this.moyenneApres = this.average(notesApres);
-
-    // 5 sorties les plus récentes pour l'historique
-    this.recentesSorties = [...this.sorties]
-      .sort((a, b) => new Date(b.start).getTime() - new Date(a.start).getTime())
-      .slice(0, 5);
-
-    // Record de jours consécutifs
-    this.maxJoursConsecutifs = this.storageService.getMaxJoursConsecutifs(
-      this.sorties,
-    );
+    this.totalSorties = this.storageService.getTotalSorties();
+    this.sortiesCeMois = this.storageService.getSortiesCeMois();
+    this.moyenneAvant = this.storageService.getMoyenneAvant();
+    this.moyenneApres = this.storageService.getMoyenneApres();
+    this.recentesSorties = this.storageService.getRecentesSorties();
+    this.maxJoursConsecutifs = this.storageService.getStreak();
   }
 
-  // Calcule les données du graphique (6 derniers mois)
   private calculerGraphique(): void {
     const counts = new Map<string, number>();
 
@@ -142,30 +96,28 @@ export class ProgressComponent implements OnInit {
       counts.set(key, (counts.get(key) ?? 0) + 1);
     });
 
+    const months: { label: string; key: string; count: number }[] = [];
     for (let i = 4; i >= 0; i--) {
       const date = new Date();
       date.setMonth(date.getMonth() - i);
       const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
       const label = this.formatter.format(date);
       const count = counts.get(key) ?? 0;
-      this.months.push({ label, key, count });
+      months.push({ label, key, count });
     }
 
-    this.sortieParMois = this.months;
-    this.maxSortiesParMois = Math.max(
-      ...this.sortieParMois.map((m) => m.count),
-      1,
-    );
+    this.sortieParMois = months;
+    this.maxSortiesParMois = Math.max(...this.sortieParMois.map(m => m.count), 1);
   }
 
   /*================================*/
   /*        MÉTHODES UTILITAIRES    */
   /*================================*/
 
-  // Calcule la moyenne d'un tableau de nombres
-  private average(values: number[]): number {
-    if (!values.length) return 0;
-    return values.reduce((acc, value) => acc + value, 0) / values.length;
+  // Retourne un tableau de booléens pour afficher les étoiles
+  getStars(note: number): boolean[] {
+    const fullStars = Math.round(note);
+    return Array(5).fill(false).map((_, i) => i < fullStars);
   }
 
   // Calcule la hauteur d'une barre du graphique en pixels

@@ -36,10 +36,6 @@ export class AchivementsComponent implements OnInit {
   /*================================*/
 
   ngOnInit(): void {
-    // badges$ est un Observable (flux de données)
-    // .subscribe() permet de s'y abonner :
-    // À chaque fois que les badges changent dans le StorageService,
-    // cette fonction est appelée et met à jour le tableau local
     this.storageService.badges$.subscribe((badges) => {
       this.badges = badges;
     });
@@ -49,12 +45,10 @@ export class AchivementsComponent implements OnInit {
   /*         ACTIONS - MODAL        */
   /*================================*/
 
-  // Ouvre la modal avec le badge sélectionné
   openTrophy(badge: Badge): void {
     this.selectedTrophy = badge;
   }
 
-  // Ferme la modal
   closeModal(): void {
     this.selectedTrophy = null;
   }
