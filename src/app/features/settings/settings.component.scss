@@ -3,3 +3,35 @@
 /*======================*/
 
 @use "styles" as *;
+.section {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  align-items: start;
+
+  h2{
+    color: $text-light;
+  }
+  .btn-data{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    button{
+        display: flex;
+        align-items: center;
+        background: linear-gradient(173deg,rgba(181, 133, 212, 1) 0%, rgba(180, 120, 174, 1) 50%, rgba(255, 77, 109, 1) 100%);
+        border: none;
+        border-radius: 10px;
+        color: white;
+        gap: 1em;
+        padding: 10px 20px;
+
+        div{
+            font-family: $font-main;
+            font-size: 16px;
+            font-weight: bold;
+        }
+    }
+  }
+}

@@ -3,27 +3,81 @@
 </div>
 <div class="section">
   <h2>Données</h2>
+  <div class="btn-data">
+    <!-- Export : simple bouton -->
+    <button class="btn-save" (click)="exporter()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-save-icon lucide-save"
+      >
+        <path
+          d="M15.2 3a2 2 0 0 1 1.4.6l3.8 3.8a2 2 0 0 1 .6 1.4V19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"
+        />
+        <path d="M17 21v-7a1 1 0 0 0-1-1H8a1 1 0 0 0-1 1v7" />
+        <path d="M7 3v4a1 1 0 0 0 1 1h7" />
+      </svg>
+      <div>Sauvegarder mes données</div>
+    </button>
 
-  <!-- Export : simple bouton -->
-  <button class="btn-save" (click)="exporter()">
-    💾 Sauvegarder mes données
-  </button>
+    <!-- Import : input file caché + bouton qui le déclenche -->
+    <input
+      type="file"
+      accept=".json"
+      #importInput
+      style="display: none"
+      (change)="importer($event)"
+    />
+    <button class="btn-import" (click)="importInput.click()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-file-down-icon lucide-file-down"
+      >
+        <path
+          d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"
+        />
+        <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+        <path d="M12 18v-6" />
+        <path d="m9 15 3 3 3-3" />
+      </svg>
+      <div>Importer mes données</div>
+    </button>
 
-  <!-- Import : input file caché + bouton qui le déclenche -->
-  <input
-    type="file"
-    accept=".json"
-    #importInput
-    style="display: none"
-    (change)="importer($event)"
-  />
-  <button class="btn-import" (click)="importInput.click()">
-    📂 Importer mes données
-  </button>
-
-  <!-- Effacer -->
-  <button class="btn-delete" (click)="effacer()">
-    🗑️ Effacer toutes mes données
-  </button>
+    <!-- Effacer -->
+    <button class="btn-delete" (click)="effacer()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-trash-icon lucide-trash"
+      >
+        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" />
+        <path d="M3 6h18" />
+        <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+      </svg>
+      <div>Effacer toutes mes données</div>
+    </button>
+  </div>
 </div>
 <app-menu></app-menu>
