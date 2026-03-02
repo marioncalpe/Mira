@@ -720,4 +720,17 @@ export class StorageService {
       },
     ];
   }
+
+  /*================================*/
+  /*         IMPORT / EXPORT        */
+  /*================================*/
+
+  // Télécharge toutes les données en fichier .json
+  exportData(): void {}
+
+  // Importe les données depuis un fichier .json
+  importData(fichier: File): void {}
+
+  // Efface toutes les données du localStorage
+  clearData(): void {}
 }

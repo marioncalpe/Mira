@@ -29,6 +29,7 @@
             border: none
             outline: none
             box-shadow: none
+
             svg
                 stroke: $icon-menu
 
@@ -52,3 +53,20 @@
                 stroke: white !important
             &:active
                 transform: translateY(-8px)
+
+.settings
+    position: absolute
+    top: 25px
+    right: 15px
+    background: transparent
+    border: none
+    outline: none
+    box-shadow: none
+    svg
+        width: 26px
+        height: 26px
+        stroke: $icon-setting  
+    button.active
+            svg
+                stroke: $icon-menu-active
+
