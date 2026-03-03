@@ -128,7 +128,7 @@ ng build
 
 ## 🔧 Technologies
 
-- **Angular 18** — Framework principal
+- **Angular 21** — Framework principal
 - **angular-calendar** — Composant calendrier
 - **LocalStorage** — Persistance des données
 - **SCSS / SASS** — Styles
