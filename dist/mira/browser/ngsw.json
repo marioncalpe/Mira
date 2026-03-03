@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1772543029958,
+  "timestamp": 1772543673602,
   "index": "/Mira/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/Mira/favicon.ico",
         "/Mira/index.html",
-        "/Mira/main-VVOXIRWD.js",
+        "/Mira/main-53SI2QA3.js",
         "/Mira/manifest.webmanifest",
         "/Mira/polyfills-5CFQRCPP.js",
-        "/Mira/styles-EPC7CJHC.css"
+        "/Mira/styles-2AEEJ575.css"
       ],
       "patterns": []
     },
@@ -78,14 +78,14 @@
         "/Mira/icons/icon-512x512.png",
         "/Mira/icons/icon-72x72.png",
         "/Mira/icons/icon-96x96.png",
-        "/Mira/media/background-VGJF4UKT.webp"
+        "/Mira/media/background-NH7P422F.webp"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "/Mira/assets/background.webp": "784a9bf4f667820bfccbd52d10392ee8605a8938",
+    "/Mira/assets/background.webp": "93ab086ce141adf941661712870288625f29bcae",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Aventurier.webp": "5b700fce5017ae4c4bc8a8a856001a1e9c3e915f",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1EnMouvement.webp": "d883748e1b3e3941aef6d283b30a06bbe790f573",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Exploratrice.webp": "0adffc0b430f58ed2c238799cd2fa0eae34acc09",
@@ -136,12 +136,12 @@
     "/Mira/icons/icon-512x512.png": "4f51eafd5a74ec96dd604e005e206d30b9612c16",
     "/Mira/icons/icon-72x72.png": "0fa40ee55f8437db06dc396ea4769eac234b2354",
     "/Mira/icons/icon-96x96.png": "e0772db727a509f09c4e6d08855effd886a55175",
-    "/Mira/index.html": "6d776bb7dbf0b40d0f358d1b9fe4f73f688d5c1d",
-    "/Mira/main-VVOXIRWD.js": "7a555d91ebc5f3c3a81a3bc7b9cfd6dda8e0676c",
+    "/Mira/index.html": "334c981819fe233d73d60e7aab81255195581cd6",
+    "/Mira/main-53SI2QA3.js": "00eea686e1650e017702c639e4e04a688171779c",
     "/Mira/manifest.webmanifest": "a628dd273f6c7e4e6791e538d7bcdda4c73ed37f",
-    "/Mira/media/background-VGJF4UKT.webp": "784a9bf4f667820bfccbd52d10392ee8605a8938",
+    "/Mira/media/background-NH7P422F.webp": "93ab086ce141adf941661712870288625f29bcae",
     "/Mira/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
-    "/Mira/styles-EPC7CJHC.css": "e4c56c8646bf784016b8383bffd78fb30dc0aba8"
+    "/Mira/styles-2AEEJ575.css": "05cefc6a53765fc1cf78e3be0b2630554d82990a"
   },
   "navigationUrls": [
     {
