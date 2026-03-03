@@ -432,7 +432,7 @@ export class StorageService {
     const data = {
       sorties: this.sortiesSubject.getValue(),
       objectifs: this.objectifsSubject.getValue(),
-      badges: this.badgesSubject.getValue(),
+      //badges: this.badgesSubject.getValue(),
     };
 
     // 2. On convertit en texte JSON lisible (le 2 = indentation pour que ce soit joli)
@@ -467,12 +467,12 @@ export class StorageService {
         // ?? [] = si la donnée est absente, on met un tableau vide par défaut
         this.sortiesSubject.next(data.sorties ?? []);
         this.objectifsSubject.next(data.objectifs ?? []);
-        this.badgesSubject.next(data.badges ?? this.getDefaultBadges());
+        // this.badgesSubject.next(data.badges ?? this.getDefaultBadges());
 
         // 5. On sauvegarde dans le localStorage
         this.saveSorties(data.sorties ?? []);
         this.saveObjectifs(data.objectifs ?? []);
-        this.saveBadges(data.badges ?? this.getDefaultBadges());
+        // this.saveBadges(data.badges ?? this.getDefaultBadges());
 
       } catch (e) {
         // Si le fichier est invalide ou corrompu
@@ -532,7 +532,7 @@ export class StorageService {
       { id: 'resilience',         image: 'assets/icons/achivements/3-Progression/3Resilience.webp',           title: 'Résilience',           description: '3 sorties consécutives après une période Anxieux',         unlocked: false, dateUnlocked: null },
       { id: 'transformation',     image: 'assets/icons/achivements/3-Progression/3Transformation.webp',       title: 'Transformation',       description: 'Amélioration visible sur un mois',                        unlocked: false, dateUnlocked: null },
       { id: 'jours_affillee',     image: 'assets/icons/achivements/4-Repetitions/4JoursDaffilee.webp',        title: "2 Jours d'affilée",    description: 'Tu as fait 2 sorties consécutives !',                     unlocked: false, dateUnlocked: null },
-      { id: 'toujours_present',   image: 'assets/icons/achivements/4-Repetitions/4ToujoursPrésent.webp',      title: 'Toujours présent',     description: 'Tu as fait 3 sorties consécutives !',                     unlocked: false, dateUnlocked: null },
+      { id: 'toujours_present',   image: 'assets/icons/achivements/4-Repetitions/4ToujoursPresent.webp',      title: 'Toujours présent',     description: 'Tu as fait 3 sorties consécutives !',                     unlocked: false, dateUnlocked: null },
       { id: 'rythme_trouve',      image: 'assets/icons/achivements/4-Repetitions/4RythmeTrouve.webp',         title: 'Rythme Trouvé',        description: 'Tu as fait 7 sorties consécutives !',                     unlocked: false, dateUnlocked: null },
       { id: 'routine_solide',     image: 'assets/icons/achivements/4-Repetitions/4RoutineSolide.webp',        title: 'Routine Solide',       description: 'Tu as fait 14 sorties consécutives !',                    unlocked: false, dateUnlocked: null },
       { id: 'flow_parfait',       image: 'assets/icons/achivements/4-Repetitions/4FlowParfait.webp',          title: 'Flow Parfait',         description: 'Tu as fait 21 sorties consécutives !',                    unlocked: false, dateUnlocked: null },
@@ -540,7 +540,7 @@ export class StorageService {
       { id: 'premier_pas',        image: 'assets/icons/achivements/5-Objectifs/5Premierpas.webp',             title: 'Premier pas',          description: 'Tu as fait ton premier objectif !',                       unlocked: false, dateUnlocked: null },
       { id: 'objectif_atteint',   image: 'assets/icons/achivements/5-Objectifs/5ObjectifAtteint.webp',        title: 'Objectif Atteint',     description: 'Tu as terminé 3 objectifs !',                             unlocked: false, dateUnlocked: null },
       { id: 'efficacite_pure',    image: 'assets/icons/achivements/5-Objectifs/5EfficacitéPure.webp',         title: 'Efficacité Pure',      description: 'Tu as terminé 5 objectifs !',                             unlocked: false, dateUnlocked: null },
-      { id: 'determination',      image: 'assets/icons/achivements/5-Objectifs/5Détermination.webp',          title: 'Détermination',        description: 'Tu as terminé 10 objectifs !',                            unlocked: false, dateUnlocked: null },
+      { id: 'determination',      image: 'assets/icons/achivements/5-Objectifs/5Determination.webp',          title: 'Détermination',        description: 'Tu as terminé 10 objectifs !',                            unlocked: false, dateUnlocked: null },
       { id: 'maitrise',           image: 'assets/icons/achivements/5-Objectifs/5Maitrise.webp',               title: 'Maîtrise',             description: 'Tu as terminé 20 objectifs !',                            unlocked: false, dateUnlocked: null },
     ];
   }
