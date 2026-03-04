@@ -20,6 +20,7 @@ export class AchivementsComponent implements OnInit {
 
   // Liste des badges récupérés depuis le StorageService
   badges: Badge[] = [];
+  badgesdebloques = 0;
 
   // Badge actuellement affiché dans la modal
   // null = aucune modal ouverte
@@ -39,6 +40,7 @@ export class AchivementsComponent implements OnInit {
     this.storageService.badges$.subscribe((badges) => {
       this.badges = badges;
     });
+    this.badgesdebloques = this.storageService.getNombreBadgesDebloques();
   }
 
   /*================================*/

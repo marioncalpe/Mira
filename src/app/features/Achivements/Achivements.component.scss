@@ -4,7 +4,15 @@
   display: flex;
   flex-direction: column;
   gap: 0; // le gap est géré par .carte dans styles.scss
-
+  .nbBadges{
+    display: flex;
+    justify-content: end;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-family: $font-main;
+    color: $text-light;
+  }
   .contenair {
     display: grid;
     grid-template-columns: repeat(4, 1fr); // 4 colonnes fixes
@@ -14,7 +22,7 @@
     @include mobile {
       grid-template-columns: repeat(4, 1fr); // reste 4 sur mobile
       gap: 10px;
-      padding: 10px;
+      //padding: 10px;
     }
   }
 

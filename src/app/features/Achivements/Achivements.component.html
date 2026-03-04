@@ -1,11 +1,13 @@
 <div class="content">
   <div class="head">
-    <h1>Succes</h1>
+    <h1>Succès</h1>
     <!-- valeur quote random  -->
     <!-- Composant enfant qui affiche une citation motivante aléatoire -->
     <app-motivation-banner></app-motivation-banner>
   </div>
-
+  <div class="nbBadges">
+     {{ badgesdebloques }}/{{ badges.length }}
+  </div>
   <div class="contenair">
     <!--
       *ngFor : directive Angular qui boucle sur le tableau `badges`
