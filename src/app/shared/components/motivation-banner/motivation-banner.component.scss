@@ -5,7 +5,9 @@
 @use "styles" as *;
 
 div {
+    display: flex;
     font-family: $font-secondary;
     color: white;
     font-style: italic;
+    box-sizing: border-box;
 }
