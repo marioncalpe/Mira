@@ -157,7 +157,7 @@ button {
   color: $text-light;
 }
 
-.close-btn{        // ← renomme ta classe pour éviter le conflit avec .close existant}
+.close-btn{       
     position: absolute;
     top: 10px;
     right: 10px;

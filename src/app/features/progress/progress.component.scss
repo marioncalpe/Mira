@@ -43,7 +43,7 @@
     .lucide-calendar-icon {
       stroke: $icon-sortie;
     }
-    .lucide-goal-icon{
+    .lucide-goal-icon {
       stroke: $icon-objectif;
     }
     .lucide-fire-icon {
@@ -59,8 +59,12 @@
   grid-column: span 2; // 3 éléments sur la seconde ligne
 }
 
-.star-full { color: gold; }
-.star-empty { color: lightgray; }
+.star-full {
+  color: gold;
+}
+.star-empty {
+  color: lightgray;
+}
 
 .chart {
   display: flex;
@@ -144,7 +148,7 @@
   align-items: center;
   gap: 10px;
   overflow: hidden;
-  div{
+  div {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -198,4 +202,25 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .action {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 8px;
+    button {
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+    .save {
+      background: $primary;
+      color: white;
+    }
+    .close {
+      
+    }
+  }
 }

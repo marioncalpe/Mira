@@ -252,13 +252,18 @@
 <!-- ================================ -->
 @if (modalObjectifVisible) {
   <div class="modal-overlay">
-    <input
-      type="text"
-      [(ngModel)]="nouveauTitreObjectif"
-      placeholder="Titre de l'objectif"
-    />
-    <button (click)="creerObjectif()">Créer</button>
-    <button (click)="modalObjectifVisible = false">Annuler</button>
+    <div class="carte">
+      <h3>Créer un nouvel objectif</h3>
+      <input
+        type="text"
+        [(ngModel)]="nouveauTitreObjectif"
+        placeholder="Titre de l'objectif"
+      />
+      <div class="action">
+        <button class="close" (click)="modalObjectifVisible = false">Annuler</button>
+        <button class="save" (click)="creerObjectif()">Créer</button>
+      </div>
+    </div>
   </div>
 }
 
