@@ -5,9 +5,7 @@
     <!-- Composant enfant qui affiche une citation motivante aléatoire -->
     <app-motivation-banner></app-motivation-banner>
   </div>
-  <div class="nbBadges">
-     {{ badgesdebloques }}/{{ badges.length }}
-  </div>
+  <div class="nbBadges">{{ badgesdebloques }}/{{ badges.length }}</div>
   <div class="contenair">
     <!--
       *ngFor : directive Angular qui boucle sur le tableau `badges`
@@ -17,6 +15,7 @@
       *ngFor="let badge of badges"
       class="trophy"
       [class.locked]="!badge.unlocked"
+      [class.newest]="badge.id === dernierBadgeId"
       (click)="openTrophy(badge)"
     >
       <!--
@@ -53,8 +52,13 @@
       stopPropagation() bloque la remontée du clic vers le parent
     -->
     <div class="img-wrapper">
-        <img [src]="selectedTrophy.image" [class.blurred]="!selectedTrophy.unlocked"/>
-        <p class="lock-text" *ngIf="!selectedTrophy.unlocked">🔒 Pas encore débloqué</p>
+      <img
+        [src]="selectedTrophy.image"
+        [class.blurred]="!selectedTrophy.unlocked"
+      />
+      <p class="lock-text" *ngIf="!selectedTrophy.unlocked">
+        🔒 Pas encore débloqué
+      </p>
     </div>
     <h2>{{ selectedTrophy.title }}</h2>
     <!-- {{ }} : interpolation Angular, affiche la valeur de la variable -->
