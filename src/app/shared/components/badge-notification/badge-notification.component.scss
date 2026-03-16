@@ -1,0 +1,99 @@
+@use "styles" as *;
+
+.notification-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &.hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.notification-card {
+  background: white;
+  border-radius: 24px;
+  padding: 30px 24px;
+  width: 75%;
+  max-width: 300px;
+  text-align: center;
+  position: relative;
+  // Animation pop
+  animation: pop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  .close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: $text-secondary;
+  }
+
+  .stars {
+    font-size: 28px;
+    margin-bottom: 8px;
+  }
+
+  .badge-img {
+    display: flex;
+    justify-content: center;
+    margin: 16px;
+
+    img {
+      width: 100px;
+      height: auto;
+      // Petite animation sur l'image
+      animation: float 2s ease-in-out infinite;
+    }
+  }
+
+  .label {
+    font-family: $font-main;
+    font-size: 12px;
+    color: $primary;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 4px 0;
+  }
+
+  h2 {
+    font-family: $font-main;
+    font-size: 20px;
+    margin: 0 0 8px 0;
+    color: $text;
+  }
+
+  .description {
+    font-family: $font-secondary;
+    font-size: 14px;
+    color: $text-secondary;
+    margin: 0;
+  }
+}
+
+// Effet pop à l'apparition
+@keyframes pop {
+  0%   { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1);   opacity: 1; }
+}
+
+// Badge qui flotte doucement
+@keyframes float {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-6px); }
+}

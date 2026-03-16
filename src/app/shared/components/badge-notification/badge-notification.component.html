@@ -1,0 +1,24 @@
+<div
+  class="notification-overlay"
+  *ngIf="badge"
+  [class.visible]="visible"
+  [class.hidden]="!visible"
+>
+  <div class="notification-card">
+    <!-- Bouton fermer -->
+    <button class="close-btn" (click)="fermer()">✕</button>
+    <p class="label">Nouveau badge débloqué !</p>
+    <!-- Étoiles décoratives -->
+    <!-- <div class="stars">✨</div> -->
+
+    <!-- Image du badge -->
+    <div class="badge-img">
+      <img [src]="badge.image" [alt]="badge.title" />
+    </div>
+
+    <!-- Texte -->
+
+    <h2>{{ badge.title }}</h2>
+    <p class="description">{{ badge.description }}</p>
+  </div>
+</div>

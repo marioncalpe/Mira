@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { BadgeNotificationComponent } from './shared/components/badge-notification/badge-notification.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, BadgeNotificationComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
