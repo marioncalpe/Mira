@@ -20,12 +20,14 @@ export class AchivementsComponent implements OnInit {
   // Liste des badges récupérés depuis le StorageService
   badges: Badge[] = [];
   badgesdebloques = 0;
+  nouveauBadge$ = this.storageService.nouveauBadge$;
 
   // Badge actuellement affiché dans la modal
   // null = aucune modal ouverte
   selectedTrophy: Badge | null = null;
 
   dernierBadgeId: string | null = null;
+  dernierBadge: Badge | null = null;
 
   /*================================*/
   /*         CONSTRUCTEUR           */
@@ -40,6 +42,7 @@ export class AchivementsComponent implements OnInit {
   ngOnInit(): void {
     this.storageService.badges$.subscribe((badges) => {
       this.badges = badges;
+
       // On trouve le badge débloqué le plus récemment
       const dernier = [...badges]
         .filter((b) => b.unlocked && b.dateUnlocked)
@@ -50,6 +53,7 @@ export class AchivementsComponent implements OnInit {
         )[0];
 
       this.dernierBadgeId = dernier?.id ?? null;
+      this.dernierBadge = dernier ?? null; // ← ici, APRÈS la déclaration de dernier
     });
 
     this.badgesdebloques = this.storageService.getNombreBadgesDebloques();
