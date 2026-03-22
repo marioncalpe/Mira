@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1772543673602,
+  "timestamp": 1774193149350,
   "index": "/Mira/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/Mira/favicon.ico",
         "/Mira/index.html",
-        "/Mira/main-53SI2QA3.js",
+        "/Mira/main-XJQOSKXV.js",
         "/Mira/manifest.webmanifest",
         "/Mira/polyfills-5CFQRCPP.js",
-        "/Mira/styles-2AEEJ575.css"
+        "/Mira/styles-QHOCWYSC.css"
       ],
       "patterns": []
     },
@@ -136,12 +136,12 @@
     "/Mira/icons/icon-512x512.png": "4f51eafd5a74ec96dd604e005e206d30b9612c16",
     "/Mira/icons/icon-72x72.png": "0fa40ee55f8437db06dc396ea4769eac234b2354",
     "/Mira/icons/icon-96x96.png": "e0772db727a509f09c4e6d08855effd886a55175",
-    "/Mira/index.html": "334c981819fe233d73d60e7aab81255195581cd6",
-    "/Mira/main-53SI2QA3.js": "00eea686e1650e017702c639e4e04a688171779c",
+    "/Mira/index.html": "58782db6cce3d44d94f395d94ac38bf153216df3",
+    "/Mira/main-XJQOSKXV.js": "f5d5c40dc9d5e1d574490e13f3a9c525d00123c6",
     "/Mira/manifest.webmanifest": "a628dd273f6c7e4e6791e538d7bcdda4c73ed37f",
     "/Mira/media/background-NH7P422F.webp": "93ab086ce141adf941661712870288625f29bcae",
     "/Mira/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
-    "/Mira/styles-2AEEJ575.css": "05cefc6a53765fc1cf78e3be0b2630554d82990a"
+    "/Mira/styles-QHOCWYSC.css": "8de514f79b45b562940bbf4db3e98e92e65564c4"
   },
   "navigationUrls": [
     {
