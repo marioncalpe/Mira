@@ -433,17 +433,28 @@ export class StorageService {
     const updated = badges.map((badge) => {
       if (badge.unlocked) return badge;
       if (regles[badge.id]) {
-        const badgeDebloque = {
+        return {
           ...badge,
           unlocked: true,
           dateUnlocked: new Date().toISOString(),
         };
-        // On notifie le composant badge-notification
-        this.nouveauBadgeSubject.next(badgeDebloque);
-        return badgeDebloque;
       }
       return badge;
     });
+
+    // On cherche le DERNIER badge débloqué parmi tous
+    // au lieu d'émettre dans la boucle
+    const dernierDebloque = [...updated]
+      .filter((b) => b.unlocked && b.dateUnlocked)
+      .sort(
+        (a, b) =>
+          new Date(b.dateUnlocked!).getTime() -
+          new Date(a.dateUnlocked!).getTime(),
+      )[0];
+
+    if (dernierDebloque) {
+      this.nouveauBadgeSubject.next(dernierDebloque);
+    }
 
     this.badgesSubject.next(updated);
     this.saveBadges(updated);

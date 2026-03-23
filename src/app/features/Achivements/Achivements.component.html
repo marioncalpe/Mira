@@ -5,25 +5,27 @@
     <!-- Composant enfant qui affiche une citation motivante aléatoire -->
     <app-motivation-banner></app-motivation-banner>
   </div>
-
-  <p class="progress-label">
-    {{ badgesdebloques }}/{{ badges.length }} badges débloqués ({{
-      (badgesdebloques / badges.length) * 100 | number: "1.0-0"
-    }}%)
-  </p>
-  <div class="progress-bar">
-    <div
-      class="progress-fill"
-      [style.width.%]="(badgesdebloques / badges.length) * 100"
-    ></div>
-  </div>
-  <div *ngIf="dernierBadge" class="dernierBadge">
-    <img [src]="dernierBadge.image" />
-    <div>
-      <div class="title">{{ dernierBadge.title }}</div>
-      <div class="descr">{{ dernierBadge.description }}</div>
+  <div class="progress-container">
+    <p class="progress-label">
+      {{ badgesdebloques }}/{{ badges.length }} badges débloqués ({{
+        (badgesdebloques / badges.length) * 100 | number: "1.0-0"
+      }}%)
+    </p>
+    <div class="progress-bar">
+      <div
+        class="progress-fill"
+        [style.width.%]="(badgesdebloques / badges.length) * 100"
+      ></div>
+    </div>
+    <div *ngIf="dernierBadge" class="dernierBadge">
+      <img [src]="dernierBadge.image" />
+      <div>
+        <div class="title">{{ dernierBadge.title }}</div>
+        <div class="descr">{{ dernierBadge.description }}</div>
+      </div>
     </div>
   </div>
+
   <div class="contenair">
     <!--
       *ngFor : directive Angular qui boucle sur le tableau `badges`
@@ -33,7 +35,6 @@
       *ngFor="let badge of badges"
       class="trophy"
       [class.locked]="!badge.unlocked"
-      [class.newest]="badge.id === dernierBadgeId"
       (click)="openTrophy(badge)"
     >
       <!--
