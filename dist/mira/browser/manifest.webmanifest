@@ -4,6 +4,9 @@
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "theme_color": "#ff4d6d",
+  "background_color": "#ff4d6d",
+  "description": "Suis tes sorties et progresse à ton rythme",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
