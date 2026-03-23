@@ -502,6 +502,8 @@ export class StorageService {
         this.saveSorties(data.sorties ?? []);
         this.saveObjectifs(data.objectifs ?? []);
         // this.saveBadges(data.badges ?? this.getDefaultBadges());
+
+        this.verifierBadges(data.sorties ?? []);
       } catch (e) {
         // Si le fichier est invalide ou corrompu
         alert('Fichier invalide !');
