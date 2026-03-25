@@ -1,0 +1,108 @@
+@use "styles" as *;
+
+.coherence-page {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  padding: 1em;
+  min-height: calc(100dvh - 120px); /* leave space for global head and bottom menu */
+}
+
+.visual-area {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative; /* ball is positioned inside */
+  min-height: 240px;
+}
+
+.ball {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: $primary;
+  //box-shadow: 0 12px 36px rgba(0,0,0,0.18);
+  bottom: 0;
+  /* animate bottom so movement is visible inside the .visual-area container */
+  animation-name: coherence;
+  animation-duration: var(--coherence-cycle-duration, 20s);
+  animation-timing-function: linear;
+  animation-iteration-count: var(--coherence-iterations, 5);
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  will-change: bottom, transform;
+}
+
+@keyframes coherence {
+  0% { bottom: 0; transform: translateX(-50%) scale(1); }
+  50% { bottom: calc(100% - 100px); transform: translateX(-50%) scale(1.02); }
+  100% { bottom: 0; transform: translateX(-50%) scale(1); }
+}
+
+.progress-wrap {
+  width: 100%;
+  max-width: 420px;
+  padding: 0 1em;
+}
+
+.progress {
+  width: 100%;
+  height: 10px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: var(--progress-percent, 0%);
+  background: linear-gradient(90deg, $primary, $secondary);
+  animation-name: fill;
+  animation-duration: var(--coherence-total-duration, 100s);
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
+  will-change: width;
+}
+
+@keyframes fill {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.assistive { text-align: center; }
+.instruction { color: $text-secondary; font-size: 0.95rem; }
+
+.phase {
+  text-align: center;
+  font-size: 1.05rem;
+  color: $text;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+/* align title left and keep it between header and menu */
+.coherence-page h2 {
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* Accessibility: respect prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .ball, .progress::after {
+    animation: none !important;
+  }
+}
+
+.sr-status { font-size: 0.85rem; color: $text-secondary; text-align: center; margin-top: 6px; }

@@ -51,6 +51,23 @@ $text-light: #ffffff;
 $radius: 14px;
 
 /*======================*/
+/*  COHERENCE VARIABLES  */
+/*======================*/
+// Durée d'un cycle (inspirer 5s / expirer 5s = 10s)
+$coherence-cycle-duration: 10s;
+// Nombre d'itérations par défaut (6 cycles)
+$coherence-iterations: 6;
+// Durée totale (cycle * iterations)
+$coherence-total-duration: $coherence-cycle-duration * $coherence-iterations;
+
+// Expose en variables CSS pour lecture à l'exécution
+:root {
+  --coherence-cycle-duration: #{$coherence-cycle-duration};
+  --coherence-iterations: #{$coherence-iterations};
+  --coherence-total-duration: #{$coherence-total-duration};
+}
+
+/*======================*/
 /*     TYPOGRAPHIE      */
 /*======================*/
 

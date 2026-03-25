@@ -4,6 +4,7 @@ import { CalendarComponent } from './features/calendar/calendar.component';
 import { AchivementsComponent } from './features/Achivements/Achivements.component';
 import { ProgressComponent } from './features/progress/progress.component';
 import { SettingsComponent } from './features/settings/settings.component';
+import { CoherenceComponent } from './features/coherence/coherence.component';
 
 export const routes: Routes = [
   {
@@ -30,5 +31,10 @@ export const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent
+  }
+  ,
+  {
+    path: 'coherence',
+    component: CoherenceComponent
   }
 ];

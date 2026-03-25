@@ -442,17 +442,19 @@ export class StorageService {
       return badge;
     });
 
-    // On cherche le DERNIER badge débloqué parmi tous
-    // au lieu d'émettre dans la boucle
-    const dernierDebloque = [...updated]
-      .filter((b) => b.unlocked && b.dateUnlocked)
-      .sort(
-        (a, b) =>
-          new Date(b.dateUnlocked!).getTime() -
-          new Date(a.dateUnlocked!).getTime(),
-      )[0];
+    // On cherche les badges NOUVELLEMENT débloqués (qui ne l'étaient pas avant)
+    const badgesNewellementDebloques = updated.filter((newBadge) => {
+      const oldBadge = badges.find((b) => b.id === newBadge.id);
+      return !oldBadge?.unlocked && newBadge.unlocked;
+    });
 
-    if (dernierDebloque) {
+    // On émet seulement le badge le plus récent s'il vient d'être débloqué
+    if (badgesNewellementDebloques.length > 0) {
+      const dernierDebloque = badgesNewellementDebloques.sort(
+        (a, b) =>
+          new Date(b.dateUnlocked ?? 0).getTime() -
+          new Date(a.dateUnlocked ?? 0).getTime(),
+      )[0];
       this.nouveauBadgeSubject.next(dernierDebloque);
     }
 
