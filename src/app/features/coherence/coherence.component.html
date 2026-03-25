@@ -11,11 +11,16 @@
 
   <div class="progress-wrap">
     <div #progress class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
-    <div #statusText class="phase" aria-hidden="true">Inspirez</div>
+    <div #statusText class="phase" aria-live="polite" aria-atomic="true">Inspiration - Cycle 1/6</div>
+    <button 
+      class="control-button" 
+      (click)="isRunning || isFinished ? togglePlayPause() : startExercise()"
+      [disabled]="isFinished"
+      [attr.aria-label]="'Bouton ' + buttonLabel"
+    >
+      {{ buttonLabel }}
+    </button>
   </div>
-
-  <!-- <div class="assistive">
-  </div> -->
 </div>
 
   <!-- menu global en bas -->

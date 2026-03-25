@@ -27,7 +27,6 @@
   height: 100px;
   border-radius: 50%;
   background: $primary;
-  //box-shadow: 0 12px 36px rgba(0,0,0,0.18);
   bottom: 0;
   /* animate bottom so movement is visible inside the .visual-area container */
   animation-name: coherence;
@@ -35,7 +34,7 @@
   animation-timing-function: linear;
   animation-iteration-count: var(--coherence-iterations, 5);
   animation-fill-mode: forwards;
-  animation-play-state: running;
+  animation-play-state: paused;
   will-change: bottom, transform;
 }
 
@@ -72,7 +71,7 @@
   animation-duration: var(--coherence-total-duration, 100s);
   animation-timing-function: linear;
   animation-fill-mode: forwards;
-  animation-play-state: running;
+  animation-play-state: paused;
   will-change: width;
 }
 
@@ -96,6 +95,33 @@
 .coherence-page h2 {
   display: flex;
   justify-content: flex-start;
+}
+
+.control-button {
+  margin-top: 16px;
+  padding: 10px 24px;
+  background: $primary;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+  
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 /* Accessibility: respect prefers-reduced-motion */
