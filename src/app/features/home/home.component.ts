@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
+import { HeadComponent } from '../../shared/components/head/head.component';
 import { StorageService } from '../../core/storage/storage.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { Badge } from '../../core/models/badge.model';
@@ -14,6 +15,7 @@ import { Badge } from '../../core/models/badge.model';
   imports: [
     MenuComponent,
     MotivationBannerComponent,
+    HeadComponent,
     DecimalPipe,
     CommonModule,
   ],

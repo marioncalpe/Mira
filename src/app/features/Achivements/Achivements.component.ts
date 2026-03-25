@@ -4,13 +4,14 @@ import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
 import { StorageService } from '../../core/storage/storage.service';
 import { Badge } from '../../core/models/badge.model';
+import { HeadComponent } from "../../shared/components/head/head.component";
 
 @Component({
   selector: 'app-Achivements',
   standalone: true,
   templateUrl: './Achivements.component.html',
   styleUrls: ['./Achivements.component.scss'],
-  imports: [CommonModule, MenuComponent, MotivationBannerComponent],
+  imports: [CommonModule, MenuComponent, MotivationBannerComponent, HeadComponent],
 })
 export class AchivementsComponent implements OnInit {
   /*================================*/

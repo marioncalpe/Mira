@@ -6,6 +6,7 @@ import { Sortie } from '../../core/models/sortie.model';
 import { StorageService } from '../../core/storage/storage.service';
 import { Objectif } from '../../core/models/objectif.model';
 import { FormsModule } from '@angular/forms';
+import { HeadComponent } from "../../shared/components/head/head.component";
 
 @Component({
   selector: 'app-progress',
@@ -18,7 +19,8 @@ import { FormsModule } from '@angular/forms';
     DecimalPipe,
     CommonModule,
     FormsModule,
-  ],
+    HeadComponent
+],
 })
 export class ProgressComponent implements OnInit {
 

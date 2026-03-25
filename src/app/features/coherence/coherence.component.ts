@@ -2,11 +2,12 @@ import { Component, AfterViewInit, OnDestroy, ViewChild, ElementRef } from '@ang
 import { CommonModule } from '@angular/common';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
+import { HeadComponent } from "../../shared/components/head/head.component";
 
 @Component({
   selector: 'app-coherence',
   standalone: true,
-  imports: [CommonModule, MenuComponent, MotivationBannerComponent],
+  imports: [CommonModule, MenuComponent, MotivationBannerComponent, HeadComponent],
   templateUrl: './coherence.component.html',
   styleUrls: ['./coherence.component.scss'],
 })

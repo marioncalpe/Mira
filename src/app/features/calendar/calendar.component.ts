@@ -20,6 +20,7 @@ import { SortieModalComponent } from '../../shared/components/sortie-modal/sorti
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { CustomDateFormatter } from './custom-date-formatter';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
+import { HeadComponent } from "../../shared/components/head/head.component";
 
 @Component({
   selector: 'app-calendar',
@@ -44,7 +45,8 @@ import { MotivationBannerComponent } from '../../shared/components/motivation-ba
     CalendarNextViewDirective,
     CalendarDatePipe,
     MotivationBannerComponent,
-  ],
+    HeadComponent
+],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
