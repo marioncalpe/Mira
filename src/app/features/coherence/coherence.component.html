@@ -1,22 +1,55 @@
-<app-head [h1]="'Coherence cardiaque'"></app-head>
+<app-head [h1]="'Respiration'"></app-head>
+
 <div class="coherence-page">
   <div class="visual-area">
+    <div class="target-ring" aria-hidden="true"></div>
     <div #ball class="ball" aria-hidden="true"></div>
   </div>
 
-  <div class="progress-wrap">
-    <div #progress class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></div>
-    <div #statusText class="phase" aria-live="polite" aria-atomic="true">Inspiration - Cycle 1/6</div>
-    <button 
-      class="control-button" 
-      (click)="isRunning || isFinished ? togglePlayPause() : startExercise()"
-      [disabled]="isFinished"
-      [attr.aria-label]="'Bouton ' + buttonLabel"
-    >
-      {{ buttonLabel }}
-    </button>
+  <div #statusText class="status-text" aria-live="polite">Prêt</div>
+
+  <ul class="dots" aria-hidden="true">
+    <li
+      class="dot"
+      *ngFor="let _ of cycles; let i = index"
+      [attr.data-index]="i"
+    ></li>
+  </ul>
+
+  <div class="controls">
+    <p class="hint">Choisissez un mode puis démarrez</p>
+
+    <div class="modes">
+      <select
+        id="mode-select"
+        class="mode-select"
+        (change)="onModeChange($event)"
+        aria-label="Mode de cohérence"
+      >
+        <option value="classique">Classique (5s / 5s)</option>
+        <option value="relaxant">Relaxant (4s / 6s)</option>
+        <option value="tonifiant">Tonifiant (4s / 4s)</option>
+      </select>
+    </div>
+
+    <div class="start-wrap">
+      <button
+        class="start-btn"
+        *ngIf="!isRunning"
+        (click)="startExercise()"
+        [disabled]="isFinished && false"
+      >
+        {{ isFinished ? 'Recommencer' : 'Démarrer' }}
+      </button>
+      <button
+        class="start-btn"
+        *ngIf="isRunning"
+        (click)="togglePlayPause()"
+      >
+        Pause
+      </button>
+    </div>
   </div>
 </div>
 
-<!-- menu global en bas -->
 <app-menu></app-menu>
