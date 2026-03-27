@@ -1,37 +1,137 @@
-/*======================*/
-/* IMPORT STYLE GLOBAL  */
-/*======================*/
-
 @use "styles" as *;
-.section {
+
+.settings {
   display: flex;
   flex-direction: column;
-  padding: 20px;
-  align-items: start;
+  gap: 16px;
 
-  h2{
+  h1 {
     color: $text-light;
+    margin-bottom: 8px;
   }
-  .btn-data{
+
+  h2 {
+    font-family: $font-main;
+    font-size: 16px;
+    color: $text-light;
+    margin: 0 0 16px 0;
+    justify-content: start;
+  }
+
+  .section {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    background: rgba(0, 0, 0, 0.15);
+    padding: 1em;
+    border-radius: $radius;
+    gap: 12px;
+  }
 
-    button{
-        display: flex;
-        align-items: center;
-        background: linear-gradient(173deg,rgba(181, 133, 212, 1) 0%, rgba(180, 120, 174, 1) 50%, rgba(255, 77, 109, 1) 100%);
-        border: none;
-        border-radius: 10px;
-        color: white;
-        gap: 1em;
-        padding: 10px 20px;
+  // Boutons
+  button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: $radius;
+    font-family: $font-main;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+  }
 
-        div{
-            font-family: $font-main;
-            font-size: 16px;
-            font-weight: bold;
-        }
+  .btn-save  { background: $primary;   color: white; }
+  .btn-import{ background: $secondary; color: white; }
+  .btn-delete{ background: #ff4444;    color: white; }
+
+  // Notifications
+  .notif-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+
+    .notif-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: $font-main;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    input[type="time"] {
+      padding: 8px;
+      border: 1px solid rgba(0,0,0,0.15);
+      border-radius: 8px;
+      font-family: $font-main;
+      font-size: 14px;
+      width: 100%;
+      box-sizing: border-box;
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
+  }
+
+  .coherence-heures {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    div {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      span {
+        font-size: 13px;
+        color: $text-light;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  // Toggle switch
+  .toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+
+    input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      background: #ccc;
+      border-radius: 24px;
+      transition: 0.3s;
+      cursor: pointer;
+
+      &::before {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        left: 3px;
+        top: 3px;
+        background: white;
+        border-radius: 50%;
+        transition: 0.3s;
+      }
+    }
+
+    input:checked + .slider {
+      background: $primary;
+    }
+
+    input:checked + .slider::before {
+      transform: translateX(20px);
     }
   }
 }

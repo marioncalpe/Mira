@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Sortie } from '../models/sortie.model';
 import { Objectif } from '../models/objectif.model';
 import { Badge } from '../models/badge.model';
+import { NotificationSettings } from '../models/notification.model';
 
 /*==================================================*/
 /*             STORAGE SERVICE                      */
@@ -75,6 +76,17 @@ export class StorageService {
   badges$ = this.badgesSubject.asObservable();
   nouveauBadge$ = this.nouveauBadgeSubject.asObservable();
 
+  private notifSubject = new BehaviorSubject<NotificationSettings>({
+    sortieActive: true,
+    sortieHeure: '18:00',
+    encouragementActif: true,
+    encouragementHeure: '09:00',
+    coherenceActive: true,
+    coherenceHeures: ['08:00', '13:00', '18:00'],
+  });
+
+  notif$ = this.notifSubject.asObservable();
+
   /*================================*/
   /*          CONSTRUCTEUR          */
   /*  S'exécute au démarrage de     */
@@ -84,6 +96,8 @@ export class StorageService {
     const sorties = localStorage.getItem('sorties');
     const objectifs = localStorage.getItem('objectifs');
     const badges = localStorage.getItem('badges');
+    const notif = localStorage.getItem('notif');
+    if (notif) this.notifSubject.next(JSON.parse(notif));
 
     if (sorties) this.sortiesSubject.next(JSON.parse(sorties));
     if (objectifs) this.objectifsSubject.next(JSON.parse(objectifs));
@@ -116,7 +130,9 @@ export class StorageService {
   private saveBadges(badges: Badge[]): void {
     localStorage.setItem('badges', JSON.stringify(badges));
   }
-
+  private saveNotif(notif: NotificationSettings): void {
+    localStorage.setItem('notif', JSON.stringify(notif));
+  }
   /*================================*/
   /*            SORTIES             */
   /*================================*/
@@ -869,5 +885,19 @@ export class StorageService {
         dateUnlocked: null,
       },
     ];
+  }
+
+  //========================//
+  //      NOTIFICATION      //
+  //========================//
+  // Met à jour les préférences de notifications
+  updateNotif(notif: NotificationSettings): void {
+    this.notifSubject.next(notif);
+    this.saveNotif(notif);
+  }
+
+  // Retourne les préférences actuelles
+  getNotif(): NotificationSettings {
+    return this.notifSubject.getValue();
   }
 }

@@ -12,7 +12,7 @@ Mira est une application mobile Angular de suivi de sorties pour les personnes s
 | **Calendrier** | Planification et consultation des sorties par mois |
 | **Succès** | Collection de badges à débloquer selon sa progression |
 | **Progression** | Statistiques détaillées, graphique mensuel et objectifs personnels |
-| **Paramètres** | Sauvegarde, import et suppression des données |
+| **Paramètres** | Sauvegarde, import,suppression des données, notification sortie, encouragement et cohérence cardique |
 
 ---
 
@@ -29,6 +29,7 @@ src/
 │   │   ├── calendar/        # Calendrier des sorties
 │   │   ├── achivements/     # Page des succès/badges
 │   │   ├── progress/        # Page de progression
+│   │   └── coherence/       # Page cohérence cardiaque
 │   │   └── settings/        # Paramètres et gestion des données
 │   └── shared/
 │       └── components/
@@ -94,7 +95,9 @@ Depuis la page **Paramètres** tu peux :
 - **Sauvegarder** → télécharge un fichier `mira-backup-xx-xx-xxxx.json`
 - **Importer** → recharge toutes tes données depuis un fichier de sauvegarde
 - **Effacer** → supprime toutes les données (avec confirmation)
-
+- **Notification** → Activer/Désactiver toutes les notification de sortie, encouragement et cohérence cardiaque
+- **Sauvegarder notifiation** → Enregistrer les modification de notification
+⚠️ **Important** les notification ne peuvent fonctionner que si l'application est ouverte du au fonctionnement PWA
 ---
 
 ## 🚀 Lancer le projet

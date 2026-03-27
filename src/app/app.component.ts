@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { BadgeNotificationComponent } from './shared/components/badge-notification/badge-notification.component';
-
+import { NotificationService } from './core/notification.service';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, BadgeNotificationComponent],
@@ -11,7 +11,9 @@ import { BadgeNotificationComponent } from './shared/components/badge-notificati
 export class AppComponent implements OnInit {
   title = 'Mira';
 
-  constructor() {}
+  constructor(private notificationService: NotificationService) {
+    this.notificationService.programmerTout();
+  }
 
   async ngOnInit() {
     // Supprime les anciennes données corrompues au démarrage
@@ -19,4 +21,5 @@ export class AppComponent implements OnInit {
     // await this.sortieStorageService.deleteAllSorties();
     // console.log('Local storage nettoyé.');
   }
+  
 }
