@@ -12,6 +12,7 @@ Mira est une application mobile Angular de suivi de sorties pour les personnes s
 | **Calendrier** | Planification et consultation des sorties par mois |
 | **Succès** | Collection de badges à débloquer selon sa progression |
 | **Progression** | Statistiques détaillées, graphique mensuel et objectifs personnels |
+| **Cohérence cardiaque** | Visuel pour exercice de cohérence cardiaque |
 | **Paramètres** | Sauvegarde, import,suppression des données, notification sortie, encouragement et cohérence cardique |
 
 ---
