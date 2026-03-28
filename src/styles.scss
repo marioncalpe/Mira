@@ -81,7 +81,7 @@ $font-size-base: 16px;
 $icon-menu: $text-secondary;
 $icon-menu-active: $primary;
 $icon-setting: #ffffff;
-$icon-sortie: $accent;
+$icon-sortie: #6C9FD4;
 $icon-objectif: #79B584;
 $icon-steak: $primary;
 
@@ -132,6 +132,7 @@ body {
 h1 {
   font-family: $font-main;
   margin: 0;
+  font-size: 1.4rem;
 }
 
 h2 {
@@ -163,7 +164,7 @@ app-root {
   -ms-overflow-style: none;
   scrollbar-width: none;
   box-sizing: border-box;
-  margin-top: 3.5em;
+  margin-top: 1.5em;
 }
 
 /* When a view requests no scroll (e.g. coherence), apply this class to body */
@@ -209,12 +210,12 @@ body.no-scroll, html.no-scroll {
 }
 
 .carte {
-  margin: 20px 0 0 0;
+  margin: 15px 0 0 0;
   background: $carte;
-  padding: 0 20px 20px 20px;
+  padding: 0 15px 15px 15px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  // gap: 10px;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   

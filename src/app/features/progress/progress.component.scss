@@ -134,6 +134,7 @@
 .listObjectif {
   display: flex;
   justify-content: space-between;
+  padding: 2px 0;
 }
 
 .suppr {
@@ -149,8 +150,10 @@
   gap: 10px;
   overflow: hidden;
   div {
-    text-overflow: ellipsis;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
   }
 
   button {
@@ -220,7 +223,6 @@ hr {
       color: white;
     }
     .close {
-      
     }
   }
 }

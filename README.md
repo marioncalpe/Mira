@@ -10,10 +10,10 @@ Mira est une application mobile Angular de suivi de sorties pour les personnes s
 |------|-------------|
 | **Home** | Tableau de bord avec résumé des stats, derniers badges et sorties récentes |
 | **Calendrier** | Planification et consultation des sorties par mois |
-| **Succès** | Collection de badges à débloquer selon sa progression |
+| **Cohérence cardiaque** | Exercice de respiration guidé avec animation |
 | **Progression** | Statistiques détaillées, graphique mensuel et objectifs personnels |
-| **Cohérence cardiaque** | Visuel pour exercice de cohérence cardiaque |
-| **Paramètres** | Sauvegarde, import,suppression des données, notification sortie, encouragement et cohérence cardique |
+| **Succès** | Collection de 40 badges à débloquer selon sa progression |
+| **Paramètres** | Sauvegarde, import, suppression des données et gestion des notifications |
 
 ---
 
@@ -23,20 +23,28 @@ Mira est une application mobile Angular de suivi de sorties pour les personnes s
 src/
 ├── app/
 │   ├── core/
-│   │   ├── models/          # Interfaces TypeScript (Sortie, Badge, Objectif)
-│   │   └── storage/         # StorageService — source unique de données
+│   │   ├── models/               # Interfaces TypeScript
+│   │   │   ├── sortie.model.ts
+│   │   │   ├── badge.model.ts
+│   │   │   ├── objectif.model.ts
+│   │   │   └── notification.model.ts
+│   │   ├── storage/
+│   │   │   └── storage.service.ts  # Source unique de données
+│   │   └── notification.service.ts # Gestion des notifications
 │   ├── features/
 │   │   ├── home/            # Page d'accueil
 │   │   ├── calendar/        # Calendrier des sorties
-│   │   ├── achivements/     # Page des succès/badges
+│   │   ├── coherence/       # Exercice cohérence cardiaque
 │   │   ├── progress/        # Page de progression
-│   │   └── coherence/       # Page cohérence cardiaque
+│   │   ├── achivements/     # Page des succès/badges
 │   │   └── settings/        # Paramètres et gestion des données
 │   └── shared/
 │       └── components/
-│           ├── menu/              # Barre de navigation + bouton FAB
-│           ├── sortie-modal/      # Modal création/édition/consultation/suppression
-│           └── motivation-banner/ # Bandeau avec citation motivante
+│           ├── menu/                  # Barre de navigation + bouton FAB
+│           ├── head/                  # En-tête réutilisable (titre + citation)
+│           ├── sortie-modal/          # Modal création/édition/consultation/suppression
+│           ├── motivation-banner/     # Citation motivante aléatoire
+│           └── badge-notification/    # Notification pop-up badge débloqué
 ```
 
 ---
@@ -76,6 +84,11 @@ getRecentesSorties(n)      // n dernières sorties
 getDerniersBadges(n)           // n derniers badges débloqués
 getNombreBadgesDebloques()     // nombre de badges débloqués
 getProchainBadge()             // prochain badge à débloquer
+nouveauBadge$                  // observable — émet quand un badge est débloqué
+
+// Notifications
+getNotif()                 // préférences actuelles
+updateNotif(notif)         // met à jour et sauvegarde
 
 // Import / Export (depuis la page Paramètres)
 exportData()               // télécharge un fichier .json
@@ -86,6 +99,8 @@ clearData()                // efface toutes les données
 sorties$                   // flux de sorties
 objectifs$                 // flux d'objectifs
 badges$                    // flux de badges
+nouveauBadge$              // flux du dernier badge débloqué
+notif$                     // flux des préférences de notifications
 ```
 
 ---
@@ -94,11 +109,33 @@ badges$                    // flux de badges
 
 Depuis la page **Paramètres** tu peux :
 - **Sauvegarder** → télécharge un fichier `mira-backup-xx-xx-xxxx.json`
-- **Importer** → recharge toutes tes données depuis un fichier de sauvegarde
+- **Importer** → recharge toutes tes données depuis un fichier de sauvegarde (les badges sont recalculés automatiquement)
 - **Effacer** → supprime toutes les données (avec confirmation)
-- **Notification** → Activer/Désactiver toutes les notification de sortie, encouragement et cohérence cardiaque
-- **Sauvegarder notifiation** → Enregistrer les modification de notification
-⚠️ **Important** les notification ne peuvent fonctionner que si l'application est ouverte du au fonctionnement PWA
+
+---
+
+## 🔔 Notifications
+
+Depuis la page **Paramètres** tu peux activer/désactiver et configurer l'heure de :
+- **Rappel de sortie** — rappel quotidien d'enregistrer une sortie (défaut : 18h00)
+- **Encouragement** — message motivant quotidien (défaut : 09h00)
+- **Cohérence cardiaque** — 3 rappels par jour (défaut : 08h00, 13h00, 18h00)
+
+> ⚠️ Les notifications ne fonctionnent que lorsque l'application est ouverte dans le navigateur (limitation PWA sans serveur backend).
+
+---
+
+## 🏆 Système de badges
+
+40 badges répartis en 5 catégories :
+- **Nombre de sorties** — de la première sortie à 200 sorties
+- **Humeurs** — selon les catégories très bien, bien, moyen, anxieuse
+- **Progression** — amélioration entre note avant et note après
+- **Répétitions** — jours consécutifs de sorties
+- **Objectifs** — objectifs personnels terminés
+
+Une notification pop-up s'affiche automatiquement quand un badge est débloqué.
+
 ---
 
 ## 🚀 Lancer le projet
@@ -136,3 +173,4 @@ ng build
 - **angular-calendar** — Composant calendrier
 - **LocalStorage** — Persistance des données
 - **SCSS / SASS** — Styles
+- **PWA** — Progressive Web App (manifest + service worker)

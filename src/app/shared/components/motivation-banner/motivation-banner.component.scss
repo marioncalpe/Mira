@@ -5,9 +5,11 @@
 @use "styles" as *;
 
 div {
-    display: flex;
-    font-family: $font-secondary;
-    color: white;
-    font-style: italic;
-    box-sizing: border-box;
+  display: flex;
+  font-family: $font-secondary;
+  color: white;
+  font-style: italic;
+  box-sizing: border-box;
+  max-width: calc(100% - 50px); // ← laisse 50px pour le bouton paramètres
+  font-size: 0.85rem; // ← optionnel, réduit un peu la taille
 }

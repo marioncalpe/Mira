@@ -42,6 +42,58 @@
       }
     }
   }
+  .coherence-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8em; // ← ajoute le gap
+  padding: 0.8em 1em; // ← plus de padding horizontal
+  background-color: $carte;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-left: 5px solid $secondary; // ← accent visuel
+
+  svg {
+    width: 32px;
+    height: 32px;
+    stroke: $secondary;
+    flex-shrink: 0; // ← empêche l'emoji de rétrécir
+  }
+
+  div:nth-child(2) {
+    flex: 1; // ← prend l'espace disponible
+    min-width: 0; // ← évite le débordement
+  }
+
+  h3 {
+    font-family: $font-main;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: $text-secondary;
+  }
+
+  button {
+    background-color: $primary;
+    color: white;
+    border: none;
+    padding: 0.5em 0.8em;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: $font-main;
+    font-size: 0.85rem;
+    flex-shrink: 0; // ← empêche le bouton de rétrécir
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: darken($primary, 10%);
+    }
+  }
+}
   .lastBadges {
     display: flex;
     box-sizing: border-box;

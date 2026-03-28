@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLink, RouterLinkActive, ActivatedRoute, Router  } from '@angular/router';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
@@ -18,6 +19,7 @@ import { Badge } from '../../core/models/badge.model';
     HeadComponent,
     DecimalPipe,
     CommonModule,
+    RouterLink, RouterLinkActive
   ],
 })
 export class HomeComponent implements OnInit {

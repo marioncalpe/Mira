@@ -2,9 +2,8 @@
   position: absolute;
   top: 0px;
   left: 0px;
-  //width: 100%;
-  margin: 1em;
-  padding-bottom: 2em;
+  margin: 0.6em 1em; // ← réduit le margin vertical
+  padding-bottom: 1em; // ← réduit le padding
   color: white;
   overflow: visible;
 }
