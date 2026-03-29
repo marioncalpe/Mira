@@ -1,13 +1,10 @@
-/*======================*/
-/* IMPORT STYLE GLOBAL  */
-/*======================*/
-
 @use "styles" as *;
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 0; // le gap est géré par .carte dans styles.scss
+  gap: 0;
+
   .stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -22,86 +19,98 @@
       gap: 1em;
       margin: 0px;
       padding: 0.8em 0.3em;
+      background: var(--carte-bg); // ← thème
+
       p {
-        font-size: 28px; // réduit un peu pour tenir sur mobile
+        font-size: 28px;
         margin: 0;
         font-family: $font-main;
+        color: var(--text-color); // ← thème
       }
+
       svg {
         width: 28px;
         height: 28px;
       }
+
       .lucide-calendar-fold-icon {
         stroke: $icon-sortie;
       }
+
       .lucide-circle-dot-dashed-icon {
         stroke: $icon-objectif;
       }
+
       .lucide-fire-icon {
         stroke: $icon-steak;
       }
     }
   }
+
   .coherence-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8em; // ← ajoute le gap
-  padding: 0.8em 1em; // ← plus de padding horizontal
-  background-color: $carte;
-  border-radius: 20px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-left: 5px solid $secondary; // ← accent visuel
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8em;
+    padding: 0.8em 1em;
+    background: var(--carte-bg); // ← thème
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid $secondary;
 
-  svg {
-    width: 32px;
-    height: 32px;
-    stroke: $secondary;
-    flex-shrink: 0; // ← empêche l'emoji de rétrécir
-  }
+    svg {
+      width: 32px;
+      height: 32px;
+      stroke: $secondary;
+      flex-shrink: 0;
+    }
 
-  div:nth-child(2) {
-    flex: 1; // ← prend l'espace disponible
-    min-width: 0; // ← évite le débordement
-  }
+    div:nth-child(2) {
+      flex: 1;
+      min-width: 0;
+    }
 
-  h3 {
-    font-family: $font-main;
-    margin: 0;
-    font-size: 0.95rem;
-  }
+    h3 {
+      font-family: $font-main;
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-color); // ← thème
+    }
 
-  p {
-    margin: 0;
-    font-size: 0.8rem;
-    color: $text-secondary;
-  }
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-secondary-color); // ← thème
+    }
 
-  button {
-    background-color: $primary;
-    color: white;
-    border: none;
-    padding: 0.5em 0.8em;
-    border-radius: 10px;
-    cursor: pointer;
-    font-family: $font-main;
-    font-size: 0.85rem;
-    flex-shrink: 0; // ← empêche le bouton de rétrécir
-    transition: background-color 0.3s ease;
-    &:hover {
-      background-color: darken($primary, 10%);
+    button {
+      background-color: $primary;
+      color: white;
+      border: none;
+      padding: 0.5em 0.8em;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: $font-main;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($primary, 10%);
+      }
     }
   }
-}
+
   .lastBadges {
     display: flex;
     box-sizing: border-box;
     gap: 10px;
+
     img {
       width: 100%;
       min-width: 100px;
-      height: auto; // garde les proportions
+      height: auto;
     }
   }
 }

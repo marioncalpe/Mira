@@ -1,6 +1,3 @@
-/*======================*/
-/* IMPORT STYLE GLOBAL  */
-/*======================*/
 @use "styles" as *
 
 .menu-container
@@ -14,9 +11,9 @@
         display: flex
         justify-content: space-around
         align-items: center
-        background-color: $carte
+        background-color: var(--carte-bg) // ← thème
         padding: 1em 0
-        border-top: 1px solid #eee
+        border-top: 1px solid rgba(255, 255, 255, 0.1) // ← thème
         z-index: 1000
         border-start-start-radius: 10px
         border-start-end-radius: 10px
@@ -46,11 +43,11 @@
             display: flex
             align-items: center
             justify-content: center
-            // transform: translateY(-10px)
-            // margin-bottom: -10px
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2)
+
             svg
                 stroke: white !important
+
             &:active
                 transform: translateY(-8px)
 
@@ -60,9 +57,9 @@
     right: 10px
     outline: none
     box-shadow: none
-    background: rgba(255, 255, 255, 0.2) /* fond semi-transparent */
+    background: rgba(255, 255, 255, 0.2)
     backdrop-filter: blur(10px)
-    -webkit-backdrop-filter: blur(10px) /* pour Safari */
+    -webkit-backdrop-filter: blur(10px)
     border-radius: 100%
     border: 1px solid rgba(255, 255, 255, 0.3)
     padding: 0.5em
@@ -70,11 +67,11 @@
     align-items: center
     justify-content: center
 
-    // color: white
     svg
         width: 26px
         height: 26px
         stroke: $icon-setting
+
     button.active
         svg
             stroke: $icon-menu-active

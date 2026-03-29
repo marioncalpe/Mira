@@ -5,6 +5,8 @@ import { StorageService } from '../../core/storage/storage.service';
 import { NotificationService } from '../../core/notification.service';
 import { NotificationSettings } from '../../core/models/notification.model';
 import { HeadComponent } from "../../shared/components/head/head.component";
+import { ThemeService } from '../../core/theme.service';
+import { Theme } from '../../core/theme.service';
 
 @Component({
   selector: 'app-settings',
@@ -14,6 +16,8 @@ import { HeadComponent } from "../../shared/components/head/head.component";
   imports: [CommonModule, MenuComponent, HeadComponent],
 })
 export class SettingsComponent implements OnInit {
+
+  themeActuel: Theme = 'light';
 
   /*================================*/
   /*           VARIABLES            */
@@ -26,6 +30,7 @@ export class SettingsComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private notificationService: NotificationService,
+    private themeService: ThemeService
   ) {}
 
   /*================================*/
@@ -34,6 +39,13 @@ export class SettingsComponent implements OnInit {
   ngOnInit(): void {
     // Charge les préférences de notifications
     this.notif = this.storageService.getNotif();
+    // Charge le thème actuel
+    this.themeActuel = this.themeService.getTheme();
+  }
+
+  basculerTheme(): void {
+    this.themeService.toggleTheme();
+    this.themeActuel = this.themeService.getTheme();
   }
 
   /*================================*/

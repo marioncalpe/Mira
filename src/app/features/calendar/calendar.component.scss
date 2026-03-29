@@ -1,24 +1,16 @@
-/*======================*/
-/* IMPORT STYLE GLOBAL  */
-/*======================*/
-
 @use "styles" as *;
 
 .calendar-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background: white;
+  background: var(--carte-bg); // ← thème
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.10);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
-  box-sizing: border-box; // évite que le padding déborde
+  box-sizing: border-box;
 }
-
-/*======================*/
-/*        CLASS         */
-/*======================*/
 
 .header-calendar {
   display: flex;
@@ -27,6 +19,7 @@
   width: 100%;
   font-size: 16px;
   font-family: $font-main;
+  color: var(--text-color); // ← thème
 }
 
 .bouton-ajout {
@@ -34,7 +27,6 @@
   border: none;
   outline: none;
   box-shadow: none;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,18 +39,19 @@
   height: 1px;
 }
 
-.bouton-nav{
+.bouton-nav {
   background: none;
   border: none;
   outline: none;
   box-shadow: none;
   font-size: 32px;
   font-family: $font-main;
+  color: var(--text-color); // ← thème
 }
 
 .timeline {
   margin: 20px 0;
-  background: #ffffff;
+  background: var(--carte-bg); // ← thème
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -66,7 +59,7 @@
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
-  box-sizing: border-box; // évite le débordement
+  box-sizing: border-box;
 
   &-item {
     display: grid;
@@ -80,7 +73,6 @@
     display: flex;
     flex-direction: column;
     font-weight: 600;
-    color: #4a6fa5; // Remplacez $primary par une couleur
     font-size: 0.95rem;
     text-align: center;
 
@@ -88,7 +80,7 @@
       font-family: $font-main;
       font-size: 1.5rem;
       line-height: 1;
-      color: $text;
+      color: var(--text-color); // ← thème
     }
 
     .month {
@@ -96,7 +88,7 @@
       font-size: 0.8rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      color: $text-secondary;
+      color: var(--text-secondary-color); // ← thème
     }
   }
 
@@ -106,7 +98,7 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: $primary; // Remplacez $primary par une couleur
+    background: $primary;
     z-index: 0;
   }
 
@@ -115,18 +107,17 @@
     left: 64px;
     width: 12px;
     height: 12px;
-    background: $primary; // Remplacez $primary par une couleur
+    background: $primary;
     border-radius: 50%;
     z-index: 1;
   }
 
   &-title {
-    font-family: $font-secondary; // Remplacez $font-secondary par une police
+    font-family: $font-secondary;
     font-size: 0.95rem;
-    color: $text; // Remplacez $text par une couleur
+    color: var(--text-color); // ← thème
     font-weight: 500;
     padding-left: 20px;
-    // border-bottom: 1px solid $secondary;
   }
 }
 
@@ -135,14 +126,17 @@
 /*================================*/
 
 ::ng-deep .cal-month-view .cal-cell,
-::ng-deep .cal-month-view .cal-days .cal-cell-row ,
+::ng-deep .cal-month-view .cal-days .cal-cell-row,
 ::ng-deep .cal-month-view .cal-days,
 ::ng-deep .cal-month-view .cal-day-cell {
   border: none !important;
 }
+
 ::ng-deep .cal-month-view {
-  width: 100%; // prend toute la largeur dispo
+  width: 100%;
+  background: transparent !important; // ← thème
 }
+
 ::ng-deep .cal-month-view .cal-header {
   border-bottom: 1px solid $secondary;
   padding-bottom: 10px;
@@ -153,17 +147,14 @@
   font-family: $font-secondary;
   text-transform: uppercase;
   font-weight: bold;
-  font-size: 13px; // réduit un peu pour mobile
-  color: #3a3a3a;
+  font-size: 13px;
+  color: var(--text-color) !important; // ← thème
 }
 
-::ng-deep .cal-month-view .cal-cell-row{
-  // display: flex;
-  // gap: 0.5em;
-  // margin-bottom: 5px;
+::ng-deep .cal-month-view .cal-cell-row {
   display: grid;
-  grid-template-columns: repeat(7, 1fr); /* 7 colonnes pour les 7 jours de la semaine */
-  gap: 5px; /* Supprime l'espace entre les cellules */
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
   margin-bottom: 5px;
 }
 
@@ -173,14 +164,15 @@
   margin-right: 0 !important;
   margin-bottom: 0 !important;
   font-family: $font-secondary;
-  font-size: 13px; // réduit pour mobile
+  font-size: 13px;
   font-weight: 600;
   padding: 0.3em;
-  color: #4a4a4a !important;
+  color: var(--text-color) !important; // ← thème
 }
 
 ::ng-deep .cal-day-cell {
   min-height: 0 !important;
+  //background: var(--carte-bg) !important; // ← thème
 }
 
 ::ng-deep .cal-day-selected {
@@ -191,40 +183,36 @@
 }
 
 ::ng-deep .cal-day-cell.cal-today {
-    background-color: $secondary !important;
-    border-radius: 100%;   
+  background-color: $secondary !important;
+  border-radius: 100%;
 }
 
 ::ng-deep .cal-events {
   display: none !important;
-  // flex: 0 !important;
 }
 
 ::ng-deep .cal-day-cell.cal-has-events {
-  background: $primary !important; /* couleur du jour avec event */
-  border-radius: 100%;            /* optionnel : arrondi */
+  background: $primary !important;
+  border-radius: 100%;
   color: $text-light !important;
 }
 
 ::ng-deep .cal-day-cell.cal-has-events .cal-day-number {
   color: $text-light !important;
 }
+
 ::ng-deep .cal-day-cell.cal-today .cal-day-number {
   font-size: 20px !important;
   color: $text-light !important;
 }
 
 ::ng-deep .cal-month-view .cal-day-badge {
-    display: none !important;
+  display: none !important;
 }
 
 ::ng-deep .cal-month-view .cal-cell-top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 0;
 }
-
-
-
-

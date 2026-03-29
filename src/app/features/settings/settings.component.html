@@ -1,6 +1,25 @@
-
-<app-head [h1]='"Paramètres"'></app-head>
+<app-head [h1]="'Paramètres'"></app-head>
 <div class="settings">
+  <!-- ================================ -->
+  <!--              THÈME               -->
+  <!-- ================================ -->
+  <div class="section carte">
+    <h2>Apparence</h2>
+
+    <div class="theme-toggle">
+      <span>{{
+        themeActuel === "light" ? "☀️ Thème clair" : "🌙 Thème sombre"
+      }}</span>
+      <label class="toggle">
+        <input
+          type="checkbox"
+          [checked]="themeActuel === 'dark'"
+          (change)="basculerTheme()"
+        />
+        <span class="slider"></span>
+      </label>
+    </div>
+  </div>
   <!-- ================================ -->
   <!--         GESTION DES DONNÉES      -->
   <!-- ================================ -->
@@ -15,7 +34,7 @@
       type="file"
       accept=".json"
       #importInput
-      style="display:none"
+      style="display: none"
       (change)="importer($event)"
     />
     <button class="btn-import" (click)="importInput.click()">
@@ -31,7 +50,6 @@
   <!--          NOTIFICATIONS           -->
   <!-- ================================ -->
   <div class="section" *ngIf="notif">
-
     <h2>Notifications</h2>
 
     <!-- Rappel sortie -->
@@ -39,9 +57,11 @@
       <div class="notif-header">
         <span>🚶 Rappel de sortie</span>
         <label class="toggle">
-          <input type="checkbox"
+          <input
+            type="checkbox"
             [checked]="notif.sortieActive"
-            (change)="toggleSortie()"/>
+            (change)="toggleSortie()"
+          />
           <span class="slider"></span>
         </label>
       </div>
@@ -58,9 +78,11 @@
       <div class="notif-header">
         <span>💪 Encouragement</span>
         <label class="toggle">
-          <input type="checkbox"
+          <input
+            type="checkbox"
             [checked]="notif.encouragementActif"
-            (change)="toggleEncouragement()"/>
+            (change)="toggleEncouragement()"
+          />
           <span class="slider"></span>
         </label>
       </div>
@@ -77,9 +99,11 @@
       <div class="notif-header">
         <span>🫀 Cohérence cardiaque</span>
         <label class="toggle">
-          <input type="checkbox"
+          <input
+            type="checkbox"
             [checked]="notif.coherenceActive"
-            (change)="toggleCoherence()"/>
+            (change)="toggleCoherence()"
+          />
           <span class="slider"></span>
         </label>
       </div>

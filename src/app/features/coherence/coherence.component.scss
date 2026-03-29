@@ -31,7 +31,7 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-  border: 3px dashed rgba(0, 0, 0, 0.25);
+  border: 3px dashed rgba(255, 255, 255, 0.3); // ← thème, visible sur fond sombre et clair
   pointer-events: none;
 }
 
@@ -58,7 +58,7 @@
   100% { transform: translateX(-50%) scale(1);   }
 }
 
-/* Dots */
+// Dots
 .dots {
   display: flex;
   gap: 8px;
@@ -66,22 +66,22 @@
   list-style: none;
   padding: 0;
   margin: 4px 0 0;
-}
 
-.dots .dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(0, 0, 0, 0.15);
-  transition: background 250ms ease, transform 250ms ease;
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25); // ← thème
+    transition: background 250ms ease, transform 250ms ease;
 
-  &.filled {
-    background: $primary;
-    transform: scale(1.15);
+    &.filled {
+      background: $primary;
+      transform: scale(1.15);
+    }
   }
 }
 
-/* Controls */
+// Controls
 .controls {
   width: 100%;
   max-width: 420px;
@@ -90,7 +90,7 @@
 }
 
 .hint {
-  color: $text-secondary;
+  color: var(--text-secondary-color); // ← thème
   margin: 14px 0 12px;
 }
 
@@ -123,11 +123,11 @@
   }
 }
 
-/* Status text */
+// Status text
 .status-text {
   text-align: center;
   font-size: 1.15rem;
-  color: $text;
+  color: var(--text-color); // ← thème
   font-weight: 600;
   min-height: 1.5em;
 }
