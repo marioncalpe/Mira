@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1774691568362,
+  "timestamp": 1774776483252,
   "index": "/Mira/index.html",
   "assetGroups": [
     {
@@ -13,10 +13,10 @@
       "urls": [
         "/Mira/favicon.ico",
         "/Mira/index.html",
-        "/Mira/main-WGOBDRIO.js",
+        "/Mira/main-OVY5RYYV.js",
         "/Mira/manifest.webmanifest",
         "/Mira/polyfills-5CFQRCPP.js",
-        "/Mira/styles-CM5EPRBQ.css"
+        "/Mira/styles-IYPF7AHX.css"
       ],
       "patterns": []
     },
@@ -29,6 +29,7 @@
       },
       "urls": [
         "/Mira/assets/background.webp",
+        "/Mira/assets/background_black.webp",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1Aventurier.webp",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1EnMouvement.webp",
         "/Mira/assets/icons/achivements/1-NombresDeSorties/1Exploratrice.webp",
@@ -77,15 +78,15 @@
         "/Mira/icons/icon-384x384.png",
         "/Mira/icons/icon-512x512.png",
         "/Mira/icons/icon-72x72.png",
-        "/Mira/icons/icon-96x96.png",
-        "/Mira/media/background-NH7P422F.webp"
+        "/Mira/icons/icon-96x96.png"
       ],
       "patterns": []
     }
   ],
   "dataGroups": [],
   "hashTable": {
-    "/Mira/assets/background.webp": "93ab086ce141adf941661712870288625f29bcae",
+    "/Mira/assets/background.webp": "23ac2a0633e6572cb9e776563b04d2b1fdf6982d",
+    "/Mira/assets/background_black.webp": "23ec4af203263bc074f8f392179bf2e46b9c7be9",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Aventurier.webp": "5b700fce5017ae4c4bc8a8a856001a1e9c3e915f",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1EnMouvement.webp": "d883748e1b3e3941aef6d283b30a06bbe790f573",
     "/Mira/assets/icons/achivements/1-NombresDeSorties/1Exploratrice.webp": "0adffc0b430f58ed2c238799cd2fa0eae34acc09",
@@ -136,12 +137,11 @@
     "/Mira/icons/icon-512x512.png": "24cde96aec59fd3acf9b8334e0af1da76256e8ca",
     "/Mira/icons/icon-72x72.png": "6f44c4e93f8ee765076b6aad3fece25cdbac389a",
     "/Mira/icons/icon-96x96.png": "987f74b1b37c9b9545cc68e5f6cd34b6ba2131a5",
-    "/Mira/index.html": "530b8c9cbd27b911e8ee6aff81fe939a9305f286",
-    "/Mira/main-WGOBDRIO.js": "0dacf4a73c918d98d78da45bfe70a88961481bcd",
+    "/Mira/index.html": "2ef9a56935c9e5342a899828031cd5f781126452",
+    "/Mira/main-OVY5RYYV.js": "8f91b635b1b48b29b1920f333f2518cec8ec77c6",
     "/Mira/manifest.webmanifest": "cecad11b32206b5dee60d4aa9c025fe20032bace",
-    "/Mira/media/background-NH7P422F.webp": "93ab086ce141adf941661712870288625f29bcae",
     "/Mira/polyfills-5CFQRCPP.js": "f2241e9a25858f895ce299d15f6f22e849e2fd72",
-    "/Mira/styles-CM5EPRBQ.css": "8b9aa7e95697b70afad102ebe5c4b4f29662b720"
+    "/Mira/styles-IYPF7AHX.css": "d15f85927c6afbb0eac876d8f4f4306f4cfd48e4"
   },
   "navigationUrls": [
     {
