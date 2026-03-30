@@ -1,33 +1,36 @@
 @use "styles" as *;
 
+
+
 .settings {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
-  h1 {
-    color: $text-light;
-    margin-bottom: 8px;
-  }
+  gap: 0;
+  padding: 1em;
+  border-radius: $radius;
+  background-color: var(--carte-bg);
+  // ← supprime background et padding ici, c'est géré par app-settings
 
   h2 {
     font-family: $font-main;
     font-size: 16px;
-    color: $text-light;
-    margin: 0 0 16px 0;
+    color: var(--text-color);
+    margin: 0 0 8px 0;
     justify-content: start;
   }
 
   .section {
     display: flex;
     flex-direction: column;
-    background: rgba(0, 0, 0, 0.15);
-    padding: 1em;
-    border-radius: $radius;
     gap: 12px;
+    padding: 1em 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   }
 
-  // Boutons
+  span {
+    color: var(--text-color);
+  }
+
   button {
     width: 100%;
     padding: 12px;
@@ -39,28 +42,16 @@
     font-weight: 600;
   }
 
-  .btn-save {
-    background: $primary;
-    color: white;
-  }
+  .btn-save   { background: $primary;   color: white; }
+  .btn-import { background: $secondary; color: white; }
+  .btn-delete { background: #ff4444;    color: white; }
 
-  .btn-import {
-    background: $secondary;
-    color: white;
-  }
-
-  .btn-delete {
-    background: #ff4444;
-    color: white;
-  }
-
-  // Notifications
   .notif-item {
     display: flex;
     flex-direction: column;
     gap: 8px;
     padding: 12px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); // ← thème
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 
     .notif-header {
       display: flex;
@@ -69,23 +60,21 @@
       font-family: $font-main;
       font-size: 14px;
       font-weight: 600;
-      color: $text-light; // ← thème
+      color: $text-light;
     }
 
     input[type="time"] {
       padding: 8px;
-      border: 1px solid rgba(255, 255, 255, 0.2); // ← thème
+      border: 1px solid rgba(255, 255, 255, 0.2);
       border-radius: 8px;
       font-family: $font-main;
       font-size: 14px;
       width: 100%;
       box-sizing: border-box;
-      background: rgba(255, 255, 255, 0.1); // ← thème
-      color: $text-light; // ← thème
+      background: rgba(128, 128, 128, 0.15);
+      color: var(--text-color);
 
-      &:disabled {
-        opacity: 0.4;
-      }
+      &:disabled { opacity: 0.4; }
     }
   }
 
@@ -101,13 +90,11 @@
 
       span {
         font-size: 13px;
-        color: $text-light;
         white-space: nowrap;
       }
     }
   }
 
-  // Toggle switch
   .toggle {
     position: relative;
     width: 44px;
@@ -122,7 +109,7 @@
     .slider {
       position: absolute;
       inset: 0;
-      background: rgba(255, 255, 255, 0.3); // ← thème
+      background: rgba(255, 255, 255, 0.3);
       border-radius: 24px;
       transition: 0.3s;
       cursor: pointer;
@@ -140,13 +127,8 @@
       }
     }
 
-    input:checked + .slider {
-      background: $primary;
-    }
-
-    input:checked + .slider::before {
-      transform: translateX(20px);
-    }
+    input:checked + .slider { background: $primary; }
+    input:checked + .slider::before { transform: translateX(20px); }
   }
 
   .theme-toggle {
@@ -156,6 +138,6 @@
     font-family: $font-main;
     font-size: 14px;
     font-weight: 600;
-    color: $text-light; // ← thème
+    color: $text-light;
   }
 }

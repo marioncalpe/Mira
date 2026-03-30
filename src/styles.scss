@@ -199,13 +199,16 @@ app-root {
 /*======================*/
 
 .head {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  margin: 1em;
-  padding-bottom: 2em;
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0.6em 1em;
+  padding-bottom: 1em;
   color: white;
   overflow: visible;
+  z-index: 200; // ← plus élevé que app-settings
+  width: calc(100% - 2em);
+  max-width: calc(430px - 2em);
 }
 
 .mobile-container {
@@ -292,3 +295,20 @@ app-root {
   font-weight: 500;
   padding-left: 20px;
 }
+
+// app-settings {
+//   display: block;
+//   background: var(--carte-bg);
+//   padding: 1em;
+//   position: fixed;
+//   top: 100px;   // ← ajuste selon la hauteur de ton header
+//   left: 0;
+//   right: 0;
+//   bottom: 60px; // ← au dessus du menu
+//   overflow-y: auto;
+//   scrollbar-width: none;
+//   z-index: 50;
+//   .head {
+    
+//   }
+// }

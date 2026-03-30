@@ -1,9 +1,12 @@
 .head {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  margin: 0.6em 1em; // ← réduit le margin vertical
-  padding-bottom: 1em; // ← réduit le padding
+  position: fixed;
+  top: 0;
+  left: 0;
+  margin: 0.6em 1em;
+  padding-bottom: 1em;
   color: white;
   overflow: visible;
+  z-index: 100;
+  width: calc(100% - 2em); // ← compense les marges
+  max-width: calc(430px - 2em); // ← même max-width que le body
 }

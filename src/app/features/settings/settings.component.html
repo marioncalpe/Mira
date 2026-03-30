@@ -1,127 +1,65 @@
 <app-head [h1]="'Paramètres'"></app-head>
 <div class="settings">
-  <!-- ================================ -->
-  <!--              THÈME               -->
-  <!-- ================================ -->
-  <div class="section carte">
+  <div class="section">
     <h2>Apparence</h2>
-
     <div class="theme-toggle">
-      <span>{{
-        themeActuel === "light" ? "☀️ Thème clair" : "🌙 Thème sombre"
-      }}</span>
+      <span>{{themeActuel === "light" ? "☀️ Thème clair" : "🌙 Thème sombre"}}</span>
       <label class="toggle">
-        <input
-          type="checkbox"
-          [checked]="themeActuel === 'dark'"
-          (change)="basculerTheme()"
-        />
+        <input type="checkbox" [checked]="themeActuel === 'dark'" (change)="basculerTheme()"/>
         <span class="slider"></span>
       </label>
     </div>
   </div>
-  <!-- ================================ -->
-  <!--         GESTION DES DONNÉES      -->
-  <!-- ================================ -->
+
   <div class="section">
     <h2>Mes données</h2>
-
-    <button class="btn-save" (click)="exporter()">
-      💾 Sauvegarder mes données
-    </button>
-
-    <input
-      type="file"
-      accept=".json"
-      #importInput
-      style="display: none"
-      (change)="importer($event)"
-    />
-    <button class="btn-import" (click)="importInput.click()">
-      📂 Importer mes données
-    </button>
-
-    <button class="btn-delete" (click)="effacer()">
-      🗑️ Effacer toutes mes données
-    </button>
+    <button class="btn-save" (click)="exporter()">💾 Sauvegarder mes données</button>
+    <input type="file" accept=".json" #importInput style="display: none" (change)="importer($event)"/>
+    <button class="btn-import" (click)="importInput.click()">📂 Importer mes données</button>
+    <button class="btn-delete" (click)="effacer()">🗑️ Effacer toutes mes données</button>
   </div>
 
-  <!-- ================================ -->
-  <!--          NOTIFICATIONS           -->
-  <!-- ================================ -->
   <div class="section" *ngIf="notif">
     <h2>Notifications</h2>
-
-    <!-- Rappel sortie -->
     <div class="notif-item">
       <div class="notif-header">
         <span>🚶 Rappel de sortie</span>
         <label class="toggle">
-          <input
-            type="checkbox"
-            [checked]="notif.sortieActive"
-            (change)="toggleSortie()"
-          />
+          <input type="checkbox" [checked]="notif.sortieActive" (change)="toggleSortie()"/>
           <span class="slider"></span>
         </label>
       </div>
-      <input
-        type="time"
-        [value]="notif.sortieHeure"
-        (change)="changerHeureSortie($event)"
-        [disabled]="!notif.sortieActive"
-      />
+      <input type="time" [value]="notif.sortieHeure" (change)="changerHeureSortie($event)" [disabled]="!notif.sortieActive"/>
     </div>
 
-    <!-- Encouragement -->
     <div class="notif-item">
       <div class="notif-header">
         <span>💪 Encouragement</span>
         <label class="toggle">
-          <input
-            type="checkbox"
-            [checked]="notif.encouragementActif"
-            (change)="toggleEncouragement()"
-          />
+          <input type="checkbox" [checked]="notif.encouragementActif" (change)="toggleEncouragement()"/>
           <span class="slider"></span>
         </label>
       </div>
-      <input
-        type="time"
-        [value]="notif.encouragementHeure"
-        (change)="changerHeureEncouragement($event)"
-        [disabled]="!notif.encouragementActif"
-      />
+      <input type="time" [value]="notif.encouragementHeure" (change)="changerHeureEncouragement($event)" [disabled]="!notif.encouragementActif"/>
     </div>
 
-    <!-- Cohérence cardiaque -->
     <div class="notif-item">
       <div class="notif-header">
         <span>🫀 Cohérence cardiaque</span>
         <label class="toggle">
-          <input
-            type="checkbox"
-            [checked]="notif.coherenceActive"
-            (change)="toggleCoherence()"
-          />
+          <input type="checkbox" [checked]="notif.coherenceActive" (change)="toggleCoherence()"/>
           <span class="slider"></span>
         </label>
       </div>
       <div class="coherence-heures" *ngIf="notif.coherenceActive">
         <div *ngFor="let heure of notif.coherenceHeures; let i = index">
           <span>Séance {{ i + 1 }}</span>
-          <input
-            type="time"
-            [value]="heure"
-            (change)="changerHeureCoherence($event, i)"
-          />
+          <input type="time" [value]="heure" (change)="changerHeureCoherence($event, i)"/>
         </div>
       </div>
     </div>
 
-    <button class="btn-save" (click)="sauvegarderNotifs()">
-      💾 Sauvegarder les notifications
-    </button>
+    <button class="btn-save" (click)="sauvegarderNotifs()">💾 Sauvegarder les notifications</button>
   </div>
 </div>
 <app-menu></app-menu>
