@@ -52,8 +52,8 @@ $radius: 14px;
 /*======================*/
 
 body.light {
-  --bg-image: url('/assets/background.webp');
-  --carte-bg: rgba(255, 254, 255, 0.85);;
+  background-image: url('assets/background.webp'); // ← chemin relatif sans /
+  --carte-bg: rgba(255, 254, 255, 0.705);
   --text-color: #2b2b2b;
   --text-secondary-color: #5c5c5c;
   --border-color: #eeeeee;
@@ -61,7 +61,7 @@ body.light {
 }
 
 body.dark {
-  --bg-image: url('/assets/background_black.webp');
+  background-image: url('assets/background_black.webp'); // ← chemin relatif sans /
   --carte-bg: rgba(30, 20, 40, 0.85);
   --text-color: #f0f0f0;
   --text-secondary-color: #b0b0b0;
@@ -130,7 +130,6 @@ body {
 
 body {
   position: relative;
-  background-image: var(--bg-image);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -162,7 +161,7 @@ h1 {
   font-family: $font-main;
   margin: 0;
   font-size: 1.4rem;
-  color: $text-light; // toujours blanc car sur fond image
+  color: $text-light;
 }
 
 h2 {
@@ -170,16 +169,16 @@ h2 {
   justify-content: center;
   font-family: $font-main;
   text-transform: capitalize;
-  color: var(--text-color); // ← thème
+  color: var(--text-color);
 }
 
 h3 {
-  color: var(--text-color); // ← thème
+  color: var(--text-color);
 }
 
 h4 {
   font-family: $font-secondary;
-  color: var(--text-secondary-color); // ← thème
+  color: var(--text-secondary-color);
   font-style: italic;
   font-size: 0.55em;
   text-align: center;
@@ -210,7 +209,7 @@ app-root {
 }
 
 .mobile-container {
-  background-color: var(--carte-bg); // ← thème
+  background-color: var(--carte-bg);
   height: 100%;
   width: 100%;
   position: relative;
@@ -219,7 +218,6 @@ app-root {
 
 .background {
   position: relative;
-  background-image: var(--bg-image);
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -228,12 +226,12 @@ app-root {
 
 .carte {
   margin: 15px 0 0 0;
-  background: var(--carte-bg); // ← thème
+  background: var(--carte-bg);
   padding: 0 15px 15px 15px;
   display: flex;
   flex-direction: column;
   border-radius: 20px;
-  box-shadow: 0 4px 15px var(--shadow); // ← thème
+  box-shadow: 0 4px 15px var(--shadow);
 }
 
 .timeline-item {
@@ -255,7 +253,7 @@ app-root {
     font-family: $font-main;
     font-size: 1.5rem;
     line-height: 1;
-    color: var(--text-color); // ← thème
+    color: var(--text-color);
   }
 
   .month {
@@ -263,7 +261,7 @@ app-root {
     font-size: 0.8rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--text-secondary-color); // ← thème
+    color: var(--text-secondary-color);
   }
 }
 
@@ -290,7 +288,7 @@ app-root {
 .timeline-title {
   font-family: $font-secondary;
   font-size: 0.95rem;
-  color: var(--text-color); // ← thème
+  color: var(--text-color);
   font-weight: 500;
   padding-left: 20px;
 }
