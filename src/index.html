@@ -1,14 +1,94 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="fr">
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Mira</title>
-    <base href="/"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-    <link rel="manifest" href="manifest.webmanifest">
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <style>
+      /* Style pour la splash screen */
+      #splash-screen {
+        position: fixed;
+
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(
+          180deg,
+          #ff4d6d 0%,
+          rgba(30, 20, 40, 1) 100%
+        );
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        z-index: 9999;
+      }
+
+      .splash-logo {
+        width: 512px;
+        height: 512px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .splash-logo img {
+        width: 60%;
+        height: 60%;
+        object-fit: contain;
+      }
+
+      .splash-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+        color: white;
+        font-family: "Poppins", sans-serif;
+
+        h1{
+          font-size: 2.5em;
+          margin: 0;
+        }
+        p{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+          font-size: 1em;
+          margin: 1em;
+        }
+      }
+    </style>
   </head>
   <body class="background light">
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+      <div class="splash-logo">
+        <img src="icons/icon-512x512.png" alt="Mira Logo" />
+      </div>
+      <div class="splash-text">
+        <h1>Mira</h1>
+        <p>Ne craignez plus les nuages,<br> apprenez à les traverser</p>
+      </div>
+    </div>
+
+    <!-- Contenu de l'app -->
     <app-root></app-root>
+
+    <script>
+      // Masquer la splash screen une fois l'app chargée
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          document.getElementById('splash-screen').style.opacity = '0';
+          setTimeout(() => {
+            document.getElementById('splash-screen').style.display = 'none';
+          }, 500); // Temps pour l'animation de disparition
+        }, 2000); // Temps d'affichage de la splash screen (2 secondes)
+      });
+    </script>
   </body>
 </html>
