@@ -1,6 +1,8 @@
-# 🌸 Mira
+# 🌸 Mira — V1
 
 Mira est une application mobile Angular de suivi de sorties pour les personnes souffrant d'anxiété sociale ou d'agoraphobie. Elle permet de planifier, noter et analyser ses sorties du quotidien, avec un système de succès pour encourager la progression.
+
+🔗 **Application en ligne** : [marioncalpe.github.io/Mira](https://marioncalpe.github.io/Mira)
 
 ---
 
@@ -8,12 +10,12 @@ Mira est une application mobile Angular de suivi de sorties pour les personnes s
 
 | Page | Description |
 |------|-------------|
-| **Home** | Tableau de bord avec résumé des stats, derniers badges et sorties récentes |
+| **Home** | Tableau de bord avec stats, carte cohérence cardiaque, sorties récentes et derniers badges |
 | **Calendrier** | Planification et consultation des sorties par mois |
 | **Cohérence cardiaque** | Exercice de respiration guidé avec animation |
 | **Progression** | Statistiques détaillées, graphique mensuel et objectifs personnels |
 | **Succès** | Collection de 40 badges à débloquer selon sa progression |
-| **Paramètres** | Sauvegarde, import, suppression des données et gestion des notifications |
+| **Paramètres** | Thème, sauvegarde, import, suppression des données et notifications |
 
 ---
 
@@ -30,7 +32,9 @@ src/
 │   │   │   └── notification.model.ts
 │   │   ├── storage/
 │   │   │   └── storage.service.ts  # Source unique de données
-│   │   └── notification.service.ts # Gestion des notifications
+│   │   ├── notification.service.ts # Gestion des notifications
+│   │   ├── theme.service.ts        # Gestion du thème light/dark
+│   │   └── route-animations.ts     # Animations de navigation
 │   ├── features/
 │   │   ├── home/            # Page d'accueil
 │   │   ├── calendar/        # Calendrier des sorties
@@ -90,7 +94,7 @@ nouveauBadge$                  // observable — émet quand un badge est déblo
 getNotif()                 // préférences actuelles
 updateNotif(notif)         // met à jour et sauvegarde
 
-// Import / Export (depuis la page Paramètres)
+// Import / Export
 exportData()               // télécharge un fichier .json
 importData(fichier)        // importe depuis un fichier .json
 clearData()                // efface toutes les données
@@ -102,6 +106,16 @@ badges$                    // flux de badges
 nouveauBadge$              // flux du dernier badge débloqué
 notif$                     // flux des préférences de notifications
 ```
+
+---
+
+## 🎨 Thèmes
+
+L'application supporte deux thèmes persistants :
+- **Light** — fond nuageux rose/mauve, cartes blanches semi-transparentes
+- **Dark** — fond sombre, cartes violet foncé semi-transparentes
+
+Le thème est sauvegardé dans le `localStorage` et appliqué automatiquement au rechargement.
 
 ---
 
@@ -163,6 +177,9 @@ ng generate service core/nom-du-service
 
 # Build de production
 ng build
+
+# Déploiement GitHub Pages
+ng build --base-href /Mira/
 ```
 
 ---
@@ -174,3 +191,4 @@ ng build
 - **LocalStorage** — Persistance des données
 - **SCSS / SASS** — Styles
 - **PWA** — Progressive Web App (manifest + service worker)
+- **GitHub Pages** — Hébergement

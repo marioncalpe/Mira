@@ -179,6 +179,7 @@
     div {
       text-decoration: line-through;
       color: var(--text-secondary-color); // ← thème
+      text-overflow: ellipsis
     }
 
     button {
