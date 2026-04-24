@@ -4,6 +4,7 @@ import { Sortie } from '../models/sortie.model';
 import { Objectif } from '../models/objectif.model';
 import { Badge } from '../models/badge.model';
 import { NotificationSettings } from '../models/notification.model';
+import { Note } from '../models/note.model';
 
 /*==================================================*/
 /*             STORAGE SERVICE                      */
@@ -69,12 +70,14 @@ export class StorageService {
   private objectifsSubject = new BehaviorSubject<Objectif[]>([]);
   private badgesSubject = new BehaviorSubject<Badge[]>([]);
   private nouveauBadgeSubject = new BehaviorSubject<Badge | null>(null);
+  private notesSubject = new BehaviorSubject<Note[]>([]);
 
   // Publics en lecture seule : les composants s'y abonnent
   sorties$ = this.sortiesSubject.asObservable();
   objectifs$ = this.objectifsSubject.asObservable();
   badges$ = this.badgesSubject.asObservable();
   nouveauBadge$ = this.nouveauBadgeSubject.asObservable();
+  notes$ = this.notesSubject.asObservable();
 
   private notifSubject = new BehaviorSubject<NotificationSettings>({
     sortieActive: true,
@@ -97,6 +100,8 @@ export class StorageService {
     const objectifs = localStorage.getItem('objectifs');
     const badges = localStorage.getItem('badges');
     const notif = localStorage.getItem('notif');
+    const notes = localStorage.getItem('notes');
+    if (notes) this.notesSubject.next(JSON.parse(notes));
     if (notif) this.notifSubject.next(JSON.parse(notif));
 
     if (sorties) this.sortiesSubject.next(JSON.parse(sorties));
@@ -490,6 +495,7 @@ export class StorageService {
     const data = {
       sorties: this.sortiesSubject.getValue(),
       objectifs: this.objectifsSubject.getValue(),
+      notes: this.notesSubject.getValue(),
       //badges: this.badgesSubject.getValue(),
     };
 
@@ -525,6 +531,8 @@ export class StorageService {
         // ?? [] = si la donnée est absente, on met un tableau vide par défaut
         this.sortiesSubject.next(data.sorties ?? []);
         this.objectifsSubject.next(data.objectifs ?? []);
+        this.notesSubject.next(data.notes ?? []);
+        this.saveNotes(data.notes ?? []);
         // this.badgesSubject.next(data.badges ?? this.getDefaultBadges());
 
         // 5. On sauvegarde dans le localStorage
@@ -900,4 +908,41 @@ export class StorageService {
   getNotif(): NotificationSettings {
     return this.notifSubject.getValue();
   }
+
+  private saveNotes(notes: Note[]): void {
+  localStorage.setItem('notes', JSON.stringify(notes));
+}
+/*================================*/
+/*             NOTES              */
+/*================================*/
+
+getNotes(): Note[] {
+  return this.notesSubject.getValue();
+}
+
+addNote(titre: string, contenu: string): void {
+  const note: Note = {
+    id: crypto.randomUUID(),
+    titre,
+    contenu,
+    dateCreation: new Date().toISOString(),
+  };
+  const updated = [...this.notesSubject.getValue(), note];
+  this.notesSubject.next(updated);
+  this.saveNotes(updated);
+}
+
+updateNote(id: string, titre: string, contenu: string): void {
+  const updated = this.notesSubject.getValue().map(n =>
+    n.id === id ? { ...n, titre, contenu } : n
+  );
+  this.notesSubject.next(updated);
+  this.saveNotes(updated);
+}
+
+deleteNote(id: string): void {
+  const updated = this.notesSubject.getValue().filter(n => n.id !== id);
+  this.notesSubject.next(updated);
+  this.saveNotes(updated);
+}
 }

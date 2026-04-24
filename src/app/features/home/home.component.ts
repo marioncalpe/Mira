@@ -7,6 +7,8 @@ import { HeadComponent } from '../../shared/components/head/head.component';
 import { StorageService } from '../../core/storage/storage.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { Badge } from '../../core/models/badge.model';
+import { Note } from '../../core/models/note.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +21,7 @@ import { Badge } from '../../core/models/badge.model';
     HeadComponent,
     DecimalPipe,
     CommonModule,
-    RouterLink, RouterLinkActive
+    RouterLink, RouterLinkActive, FormsModule
   ],
 })
 export class HomeComponent implements OnInit {
@@ -36,6 +38,11 @@ export class HomeComponent implements OnInit {
   moyenneApres = 0;
   nbObjectifsEnCours = 0;
   nbBadgesDebloques = 0;
+  notes: Note[] = [];
+  modalNoteVisible = false;
+  noteEnEdition: Note | null = null;
+  nouveauTitreNote = '';
+  nouveauContenuNote = '';
 
   /*================================*/
   /*         CONSTRUCTEUR           */
@@ -58,5 +65,37 @@ export class HomeComponent implements OnInit {
     this.nbBadgesDebloques = this.storageService.getNombreBadgesDebloques();
     this.recentesSorties = this.storageService.getRecentesSorties();
     this.derniersBadges = this.storageService.getDerniersBadges();
+    this.notes = this.storageService.getNotes();
+    this.storageService.notes$.subscribe(notes => this.notes = notes);
+
+  }
+
+// Méthodes
+ajouterNote(): void {
+  this.noteEnEdition = null;
+  this.nouveauTitreNote = '';
+  this.nouveauContenuNote = '';
+  this.modalNoteVisible = true;
+}
+
+editerNote(note: Note): void {
+  this.noteEnEdition = note;
+  this.nouveauTitreNote = note.titre;
+  this.nouveauContenuNote = note.contenu;
+  this.modalNoteVisible = true;
+}
+
+sauvegarderNote(): void {
+  if (!this.nouveauTitreNote.trim()) return;
+  if (this.noteEnEdition) {
+    this.storageService.updateNote(this.noteEnEdition.id, this.nouveauTitreNote, this.nouveauContenuNote);
+  } else {
+    this.storageService.addNote(this.nouveauTitreNote, this.nouveauContenuNote);
+  }
+  this.modalNoteVisible = false;
+}
+
+supprimerNote(id: string): void {
+  this.storageService.deleteNote(id);
   }
 }

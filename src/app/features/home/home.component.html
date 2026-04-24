@@ -140,5 +140,54 @@
       }
     </div>
   </div>
+  <!-- ================================ -->
+<!--             NOTES               -->
+<!-- ================================ -->
+<div class="carte">
+  <div class="notes-header">
+    <h3>📝 Notes psy</h3>
+    <button (click)="ajouterNote()">+</button>
+  </div>
+
+  <!-- Liste des notes -->
+  @if (notes.length === 0) {
+    <p class="notes-empty">Aucune note pour le moment</p>
+  }
+
+  @for (note of notes; track note.id) {
+    <div class="note-item">
+      <div class="note-content" (click)="editerNote(note)">
+        <div class="note-titre">{{ note.titre }}</div>
+        <div class="note-contenu">{{ note.contenu }}</div>
+      </div>
+      <button class="note-suppr" (click)="supprimerNote(note.id)">✕</button>
+    </div>
+  }
+</div>
+
+<!-- ================================ -->
+<!--         MODAL NOTE              -->
+<!-- ================================ -->
+@if (modalNoteVisible) {
+  <div class="modal-overlay" (click)="modalNoteVisible = false">
+    <div class="modal-note carte" (click)="$event.stopPropagation()">
+      <h3>{{ noteEnEdition ? 'Modifier la note' : 'Nouvelle note' }}</h3>
+      <input
+        type="text"
+        [(ngModel)]="nouveauTitreNote"
+        placeholder="Titre"
+      />
+      <textarea
+        [(ngModel)]="nouveauContenuNote"
+        placeholder="Contenu..."
+        rows="5"
+      ></textarea>
+      <div class="modal-actions">
+        <button class="btn-annuler" (click)="modalNoteVisible = false">Annuler</button>
+        <button class="btn-sauvegarder" (click)="sauvegarderNote()">Sauvegarder</button>
+      </div>
+    </div>
+  </div>
+}
 </div>
 <app-menu></app-menu>
