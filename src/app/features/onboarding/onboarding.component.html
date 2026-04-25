@@ -1,0 +1,224 @@
+<div class="onboarding">
+
+  <button class="btn-passer" (click)="passer()" *ngIf="!estDernier">
+    Passer
+  </button>
+
+  <div class="slide">
+    <h1>{{ slides[slideActuel].titre }}</h1>
+    <!-- ================================ -->
+    <!-- SLIDE 0 : HOME                   -->
+    <!-- ================================ -->
+    @if (slideActuel === 0) {
+      <div class="mockup">
+
+        <!-- Stats rapides -->
+        <div class="mockup-row">
+          <div class="mockup-carte mini">📅<br><strong>3</strong></div>
+          <div class="mockup-carte mini">🎯<br><strong>4</strong></div>
+          <div class="mockup-carte mini">🔥<br><strong>2</strong></div>
+        </div>
+
+        <!-- Cohérence cardiaque -->
+        <div class="mockup-carte coherence">
+          <div class="mockup-coherence-icon">🫀</div>
+          <div>
+            <div class="mockup-label">Cohérence cardiaque</div>
+            <div class="mockup-sub">Prochaine séance à 13h00</div>
+          </div>
+          <div class="mockup-btn-small">Go</div>
+        </div>
+
+        <!-- Sorties récentes -->
+        <div class="mockup-carte">
+          <div class="mockup-label">Sorties récentes</div>
+          <div class="mockup-timeline-item">
+            <span class="mockup-date">3<br>AVR</span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-text">Campo, marché...</span>
+          </div>
+          <div class="mockup-timeline-item">
+            <span class="mockup-date">16<br>MARS</span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-text">Balade en ville</span>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="mockup-carte">
+          <div class="mockup-label">📝 Notes psy</div>
+          <div class="mockup-note">Parler de mon anxiété...</div>
+        </div>
+
+      </div>
+    }
+
+    <!-- ================================ -->
+    <!-- SLIDE 1 : CALENDRIER             -->
+    <!-- ================================ -->
+    @if (slideActuel === 1) {
+      <div class="mockup">
+
+        <!-- Calendrier -->
+        <div class="mockup-carte">
+          <div class="mockup-label">Avril 2026</div>
+          <div class="mockup-grid">
+            <span *ngFor="let d of [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21]"
+              [class.has-event]="d === 3"
+              [class.today]="d === 25">
+              {{d}}
+            </span>
+          </div>
+          <!-- <div class="mockup-hint-inline">👆 Clique sur un jour pour ajouter une sortie</div> -->
+        </div>
+
+        <!-- Sorties du mois -->
+        <div class="mockup-carte">
+          <div class="mockup-label">Sorties du mois</div>
+          <div class="mockup-timeline-item">
+            <span class="mockup-date">3<br>AVR</span>
+            <span class="mockup-dot"></span>
+            <span class="mockup-text">Campo, marché...</span>
+          </div>
+        </div>
+
+        <!-- Menu avec FAB -->
+        <div class="mockup-menu">
+          <div class="mockup-icon">🏠</div>
+          <div class="mockup-icon active">📅</div>
+          <div class="mockup-fab pulse">+</div>
+          <div class="mockup-icon">📊</div>
+          <div class="mockup-icon">🏆</div>
+        </div>
+        <!-- <div class="mockup-hint">👆 Depuis le menu + permet d'ajouter une sortie rapidement !</div> -->
+
+      </div>
+    }
+
+    <!-- ================================ -->
+    <!-- SLIDE 2 : PROGRESSION            -->
+    <!-- ================================ -->
+    @if (slideActuel === 2) {
+      <div class="mockup">
+
+        <!-- Notes moyennes -->
+        <div class="mockup-row">
+          <div class="mockup-carte mini-tall">
+            <div class="mockup-stars">⭐⭐⭐⭐</div>
+            <div class="mockup-sub">Moyenne avant</div>
+          </div>
+          <div class="mockup-carte mini-tall">
+            <div class="mockup-stars">⭐⭐⭐</div>
+            <div class="mockup-sub">Moyenne après</div>
+          </div>
+        </div>
+
+        <!-- Stats rapides -->
+        <div class="mockup-row">
+          <div class="mockup-carte mini">📅<br><strong>11</strong></div>
+          <div class="mockup-carte mini">🎯<br><strong>1</strong></div>
+          <div class="mockup-carte mini">🔥<br><strong>2</strong></div>
+        </div>
+
+        <!-- Graphique -->
+        <div class="mockup-carte">
+          <div class="mockup-label">Sorties par mois</div>
+          <div class="mockup-chart">
+            <div class="mockup-bar" style="height: 55px">4</div>
+            <div class="mockup-bar" style="height: 35px">2</div>
+            <div class="mockup-bar" style="height: 20px">1</div>
+            <div class="mockup-bar" style="height: 20px">1</div>
+            <div class="mockup-bar" style="height: 20px">1</div>
+          </div>
+        </div>
+
+        <!-- Objectifs -->
+        <div class="mockup-carte">
+          <div class="mockup-label">Mes objectifs</div>
+          <div class="mockup-objectif">⭕ Aller au marché</div>
+          <div class="mockup-objectif done">✅ Sortie quotidienne</div>
+        </div>
+
+      </div>
+    }
+
+    <!-- ================================ -->
+    <!-- SLIDE 3 : SUCCÈS                 -->
+    <!-- ================================ -->
+    @if (slideActuel === 3) {
+      <div class="mockup">
+
+        <div class="mockup-carte">
+          <div class="mockup-label">8/40 badges débloqués</div>
+          <div class="mockup-progress-bar">
+            <div class="mockup-progress-fill"></div>
+          </div>
+
+          <!-- Dernier badge -->
+          <div class="mockup-last-badge">
+            <div class="mockup-badge-icon">👣</div>
+            <div>
+              <div class="mockup-label">En mouvement</div>
+              <div class="mockup-sub">Tu as fait 5 sorties !</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Grille badges -->
+        <div class="mockup-carte">
+          <div class="mockup-trophies">
+            <div class="mockup-trophy unlocked">👣</div>
+            <div class="mockup-trophy unlocked">📅</div>
+            <div class="mockup-trophy unlocked">😐</div>
+            <div class="mockup-trophy unlocked">🛡️</div>
+            <div class="mockup-trophy locked">🔒</div>
+            <div class="mockup-trophy locked">🔒</div>
+            <div class="mockup-trophy locked">🔒</div>
+            <div class="mockup-trophy locked">🔒</div>
+          </div>
+          <div class="mockup-hint-inline">Sors plus pour débloquer de nouveaux badges ! 🌟</div>
+        </div>
+
+      </div>
+    }
+
+    <!-- ================================ -->
+    <!-- SLIDE 4 : PARAMÈTRES             -->
+    <!-- ================================ -->
+    @if (slideActuel === 4) {
+      <div class="mockup">
+
+        <div class="mockup-carte">
+          <div class="mockup-label">🎨 Apparence</div>
+          <div class="mockup-toggle-row">
+            <span>🌙 Thème sombre</span>
+            <div class="mockup-toggle active"></div>
+          </div>
+        </div>
+
+        <div class="mockup-carte">
+          <div class="mockup-label">💾 Mes données</div>
+          <div class="mockup-btn primary">💾 Sauvegarder mes données</div>
+          <div class="mockup-btn secondary">📂 Importer mes données</div>
+        </div>
+
+      </div>
+    }
+    <p>{{ slides[slideActuel].texte }}</p>
+
+  </div>
+
+  <!-- Points de progression -->
+  <div class="dots">
+    <span
+      *ngFor="let slide of slides; let i = index"
+      class="dot"
+      [class.active]="i === slideActuel"
+    ></span>
+  </div>
+
+  <button class="btn-suivant" (click)="suivant()">
+    {{ estDernier ? '🌸 Commencer' : 'Suivant →' }}
+  </button>
+
+</div>

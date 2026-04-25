@@ -5,6 +5,7 @@ import { AchivementsComponent } from './features/Achivements/Achivements.compone
 import { ProgressComponent } from './features/progress/progress.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { CoherenceComponent } from './features/coherence/coherence.component';
+import { OnboardingComponent } from './features/onboarding/onboarding.component';
 
 export const routes: Routes = [
   {
@@ -36,5 +37,6 @@ export const routes: Routes = [
   {
     path: 'coherence',
     component: CoherenceComponent
-  }
+  },
+  { path: 'onboarding', component: OnboardingComponent },
 ];

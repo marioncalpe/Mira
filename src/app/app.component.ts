@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { BadgeNotificationComponent } from './shared/components/badge-notification/badge-notification.component';
 import { NotificationService } from './core/notification.service';
 import { ThemeService } from './core/theme.service';
@@ -13,10 +13,17 @@ import { ThemeService } from './core/theme.service';
 export class AppComponent implements OnInit {
   title = 'Mira';
 
-  constructor(private notificationService: NotificationService, private themeService: ThemeService ) {
+  constructor(
+    private notificationService: NotificationService,
+    private themeService: ThemeService,
+    private router: Router
+  ) {
     this.notificationService.programmerTout();
-    
   }
 
-  async ngOnInit() {}
+  ngOnInit(): void {
+    if (!localStorage.getItem('onboarding_done')) {
+      this.router.navigate(['/onboarding']);
+    }
+  }
 }

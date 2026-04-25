@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { StorageService } from '../../core/storage/storage.service';
 import { NotificationService } from '../../core/notification.service';
 import { NotificationSettings } from '../../core/models/notification.model';
-import { HeadComponent } from "../../shared/components/head/head.component";
+import { HeadComponent } from '../../shared/components/head/head.component';
 import { ThemeService } from '../../core/theme.service';
 import { Theme } from '../../core/theme.service';
 
@@ -16,7 +17,6 @@ import { Theme } from '../../core/theme.service';
   imports: [CommonModule, MenuComponent, HeadComponent],
 })
 export class SettingsComponent implements OnInit {
-
   themeActuel: Theme = 'light';
 
   /*================================*/
@@ -30,7 +30,8 @@ export class SettingsComponent implements OnInit {
   constructor(
     private storageService: StorageService,
     private notificationService: NotificationService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private router: Router,
   ) {}
 
   /*================================*/
@@ -105,7 +106,9 @@ export class SettingsComponent implements OnInit {
   // Change l'heure d'une séance de cohérence cardiaque
   changerHeureCoherence(event: Event, index: number): void {
     if (!this.notif) return;
-    this.notif.coherenceHeures[index] = (event.target as HTMLInputElement).value;
+    this.notif.coherenceHeures[index] = (
+      event.target as HTMLInputElement
+    ).value;
   }
 
   // Sauvegarde et reprogramme toutes les notifications
@@ -113,5 +116,10 @@ export class SettingsComponent implements OnInit {
     if (!this.notif) return;
     this.storageService.updateNotif(this.notif);
     this.notificationService.programmerTout();
+  }
+
+  revoirOnboarding(): void {
+    localStorage.removeItem('onboarding_done');
+    this.router.navigate(['/onboarding']);
   }
 }

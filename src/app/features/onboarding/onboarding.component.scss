@@ -1,0 +1,424 @@
+@use "styles" as *;
+
+.onboarding {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(160deg, #e8c8d8 0%, #c8b0d8 50%, #b0a0c8 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5em;
+  gap: 1.2em;
+  z-index: 9999;
+  overflow: hidden;
+}
+
+.btn-passer {
+  position: absolute;
+  top: 1.5em;
+  right: 1.5em;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: $font-main;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.8em;
+  width: 100%;
+  animation: fadeSlide 0.4s ease forwards;
+
+  h1 {
+    font-family: $font-main;
+    font-size: 1.3rem;
+    color: white;
+    margin: 0;
+  }
+
+  p {
+    font-family: $font-secondary;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.6;
+    max-width: 300px;
+    margin: 0;
+  }
+}
+
+/*================================*/
+/*           MOCKUP               */
+/*================================*/
+
+.mockup {
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mockup-carte {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  &.coherence {
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &.encouragement {
+    align-items: center;
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+}
+
+.mockup-label {
+  font-family: $font-main;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.mockup-sub {
+  font-size: 0.65rem;
+  color: #888;
+}
+
+.mockup-row {
+  display: flex;
+  gap: 6px;
+
+  .mockup-carte {
+    flex: 1;
+    align-items: center;
+    text-align: center;
+
+    &.mini {
+      font-size: 0.75rem;
+      color: #333;
+      padding: 6px 4px;
+    }
+
+    &.mini-tall {
+      padding: 6px 4px;
+      align-items: center;
+    }
+  }
+}
+
+.mockup-stars {
+  font-size: 10px;
+}
+
+.mockup-coherence-icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.mockup-btn-small {
+  background: $primary;
+  color: white;
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 0.65rem;
+  font-weight: 600;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.mockup-timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.mockup-date {
+  font-size: 0.6rem;
+  font-weight: 600;
+  color: #888;
+  text-align: center;
+  line-height: 1.2;
+  min-width: 24px;
+}
+
+.mockup-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $secondary;
+  flex-shrink: 0;
+}
+
+.mockup-text {
+  font-size: 0.7rem;
+  color: #333;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.mockup-note {
+  font-size: 0.7rem;
+  color: #888;
+  font-style: italic;
+}
+
+.mockup-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  margin-top: 4px;
+
+  span {
+    font-size: 0.6rem;
+    text-align: center;
+    color: #555;
+    padding: 12px;
+    border-radius: 50%;
+
+    &.has-event {
+      background: $primary;
+      color: white;
+    }
+
+    &.today {
+      background: $secondary;
+      color: white;
+    }
+  }
+}
+
+.mockup-hint-inline {
+  font-size: 0.65rem;
+  color: $primary;
+  font-style: italic;
+  text-align: center;
+}
+
+.mockup-menu {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 12px;
+  padding: 6px 10px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.mockup-icon {
+  font-size: 14px;
+  opacity: 0.5;
+
+  &.active {
+    opacity: 1;
+  }
+}
+
+.mockup-fab {
+  background: $primary;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+
+  &.pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}
+
+.mockup-hint {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  font-style: italic;
+}
+
+.mockup-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+  height: 60px;
+}
+
+.mockup-bar {
+  flex: 1;
+  background: $secondary;
+  border-radius: 4px 4px 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 0.6rem;
+  color: white;
+  padding-bottom: 2px;
+}
+
+.mockup-objectif {
+  font-size: 0.7rem;
+  color: #333;
+  padding: 2px 0;
+
+  &.done {
+    text-decoration: line-through;
+    color: #999;
+  }
+}
+
+.mockup-progress-bar {
+  height: 6px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+
+  .mockup-progress-fill {
+    width: 20%;
+    height: 100%;
+    background: linear-gradient(to right, $primary, $secondary);
+    border-radius: 4px;
+  }
+}
+
+.mockup-last-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  padding: 6px 8px;
+}
+
+.mockup-badge-icon {
+  font-size: 24px;
+}
+
+.mockup-trophies {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+}
+
+.mockup-trophy {
+  font-size: 18px;
+  text-align: center;
+
+  &.locked {
+    filter: grayscale(100%) opacity(0.4);
+  }
+}
+
+.mockup-toggle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  color: #333;
+}
+
+.mockup-toggle {
+  width: 28px;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+
+  &.active {
+    background: $primary;
+  }
+}
+
+.mockup-btn {
+  text-align: center;
+  padding: 5px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 600;
+
+  &.primary { background: $primary; color: white; }
+  &.secondary { background: $secondary; color: white; }
+}
+
+.mockup-emoji {
+  font-size: 24px;
+}
+
+.mockup-encouragement-text {
+  font-size: 0.75rem;
+  color: white;
+  font-style: italic;
+  line-height: 1.4;
+}
+
+/*================================*/
+/*           DOTS                 */
+/*================================*/
+
+.dots {
+  display: flex;
+  gap: 8px;
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: all 0.3s ease;
+
+    &.active {
+      background: white;
+      width: 24px;
+      border-radius: 4px;
+    }
+  }
+}
+
+/*================================*/
+/*           BOUTONS              */
+/*================================*/
+
+.btn-suivant {
+  background: white;
+  color: $primary;
+  border: none;
+  padding: 12px 36px;
+  border-radius: 30px;
+  font-family: $font-main;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/*================================*/
+/*         ANIMATIONS             */
+/*================================*/
+
+@keyframes fadeSlide {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 77, 109, 0.4); }
+  50% { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255, 77, 109, 0); }
+}
