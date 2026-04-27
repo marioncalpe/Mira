@@ -20,7 +20,7 @@ import { HeadComponent } from "../../shared/components/head/head.component";
     CommonModule,
     FormsModule,
     HeadComponent
-],
+  ],
 })
 export class ProgressComponent implements OnInit {
 
@@ -35,12 +35,19 @@ export class ProgressComponent implements OnInit {
   maxJoursConsecutifs = 0;
   recentesSorties: Sortie[] = [];
 
+  // Nouvelles stats
+  humeurFrequente = '';
+  tauxAmelioration = 0;
+  sortiesCetteSemaine = 0;
+
   /*================================*/
   /*      VARIABLES - GRAPHIQUE     */
   /*================================*/
   sortieParMois: { label: string; key: string; count: number }[] = [];
   maxSortiesParMois = 0;
   chartHeight = 120;
+  // Offset pour la navigation : 0 = mois actuels, 1 = mois précédents etc.
+  graphiqueOffset = 0;
   formatter = new Intl.DateTimeFormat('fr-FR', {
     month: 'short',
     year: '2-digit',
@@ -87,9 +94,46 @@ export class ProgressComponent implements OnInit {
     this.moyenneApres = this.storageService.getMoyenneApres();
     this.recentesSorties = this.storageService.getRecentesSorties();
     this.maxJoursConsecutifs = this.storageService.getStreak();
+
+    // Humeur la plus fréquente
+    this.humeurFrequente = this.calculerHumeurFrequente();
+
+    // Taux d'amélioration
+    const avecAmelioration = this.sorties.filter(s =>
+      s.extendedProps?.noteApres !== undefined &&
+      s.extendedProps?.noteAvant !== undefined &&
+      s.extendedProps.noteApres > s.extendedProps.noteAvant
+    ).length;
+    this.tauxAmelioration = this.sorties.length > 0
+      ? Math.round((avecAmelioration / this.sorties.length) * 100)
+      : 0;
+
+    // Sorties cette semaine
+    const today = new Date();
+    const lundiDernier = new Date(today);
+    lundiDernier.setDate(today.getDate() - today.getDay() + 1);
+    lundiDernier.setHours(0, 0, 0, 0);
+    this.sortiesCetteSemaine = this.sorties.filter(s =>
+      new Date(s.start) >= lundiDernier
+    ).length;
   }
 
-  private calculerGraphique(): void {
+  private calculerHumeurFrequente(): string {
+    const compteur: { [key: string]: number } = {
+      tresbien: 0, bien: 0, moyen: 0, anxieuse: 0
+    };
+    this.sorties.forEach(s => {
+      const cat = s.extendedProps?.category;
+      if (cat && compteur[cat] !== undefined) compteur[cat]++;
+    });
+    const max = Object.entries(compteur).sort((a, b) => b[1] - a[1])[0];
+    const emojis: { [key: string]: string } = {
+      tresbien: '😊', bien: '🙂', moyen: '😐', anxieuse: '😰'
+    };
+    return max[1] > 0 ? emojis[max[0]] : '—';
+  }
+
+  calculerGraphique(): void {
     const counts = new Map<string, number>();
 
     this.sorties.forEach((sortie) => {
@@ -99,9 +143,11 @@ export class ProgressComponent implements OnInit {
     });
 
     const months: { label: string; key: string; count: number }[] = [];
+
+    // On affiche 5 mois en fonction de l'offset
     for (let i = 4; i >= 0; i--) {
       const date = new Date();
-      date.setMonth(date.getMonth() - i);
+      date.setMonth(date.getMonth() - i - (this.graphiqueOffset * 5));
       const key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
       const label = this.formatter.format(date);
       const count = counts.get(key) ?? 0;
@@ -113,16 +159,36 @@ export class ProgressComponent implements OnInit {
   }
 
   /*================================*/
+  /*     NAVIGATION GRAPHIQUE       */
+  /*================================*/
+
+  // Période précédente (mois plus anciens)
+  periodePrec(): void {
+    this.graphiqueOffset++;
+    this.calculerGraphique();
+  }
+
+  // Période suivante (mois plus récents)
+  periodeSuiv(): void {
+    if (this.graphiqueOffset > 0) {
+      this.graphiqueOffset--;
+      this.calculerGraphique();
+    }
+  }
+
+  get estPeriodeActuelle(): boolean {
+    return this.graphiqueOffset === 0;
+  }
+
+  /*================================*/
   /*        MÉTHODES UTILITAIRES    */
   /*================================*/
 
-  // Retourne un tableau de booléens pour afficher les étoiles
   getStars(note: number): boolean[] {
     const fullStars = Math.round(note);
     return Array(5).fill(false).map((_, i) => i < fullStars);
   }
 
-  // Calcule la hauteur d'une barre du graphique en pixels
   getBarHeight(count: number): number {
     return (count / this.maxSortiesParMois) * this.chartHeight;
   }
