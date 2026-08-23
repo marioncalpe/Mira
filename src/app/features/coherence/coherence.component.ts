@@ -15,6 +15,9 @@ export class CoherenceComponent implements AfterViewInit, OnDestroy {
   @ViewChild('ball') ballEl!: ElementRef<HTMLElement>;
   @ViewChild('statusText') statusEl!: ElementRef<HTMLElement>;
 
+  // ← nouvelle variable pour basculer entre les deux vues
+  vueActuelle: 'conseils' | 'exercice' = 'conseils';
+
   private intervalId: any = null;
   private startTime = 0;
   private pausedElapsed = 0;
@@ -39,21 +42,52 @@ export class CoherenceComponent implements AfterViewInit, OnDestroy {
     const root = document.documentElement;
     root.style.setProperty('--coherence-iterations', String(this.totalCycles));
     this.applyModeSettings(this.selectedMode);
-    try {
-      document.body.classList.add('no-scroll');
-      document.documentElement.classList.add('no-scroll');
-    } catch {}
     this.updateDots(0);
     this.pauseAnimation();
   }
 
   ngOnDestroy(): void {
     if (this.intervalId) clearInterval(this.intervalId);
+    this.retirerNoScroll();
+  }
+
+  /*================================*/
+  /*      NAVIGATION DES VUES       */
+  /*================================*/
+
+  // Ouvre l'exercice de respiration en plein écran
+  ouvrirExercice(): void {
+    this.vueActuelle = 'exercice';
+    this.appliquerNoScroll();
+  }
+
+  // Revient à la liste des conseils
+  retourConseils(): void {
+    // Si l'exercice est en cours, on l'arrête proprement
+    if (this.isRunning) {
+      this.togglePlayPause();
+    }
+    this.vueActuelle = 'conseils';
+    this.retirerNoScroll();
+  }
+
+  private appliquerNoScroll(): void {
+    try {
+      document.body.classList.add('no-scroll');
+      document.documentElement.classList.add('no-scroll');
+    } catch {}
+  }
+
+  private retirerNoScroll(): void {
     try {
       document.body.classList.remove('no-scroll');
       document.documentElement.classList.remove('no-scroll');
     } catch {}
   }
+
+  /*================================*/
+  /*         EXERCICE (inchangé)    */
+  /*================================*/
 
   onModeChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
@@ -95,7 +129,6 @@ export class CoherenceComponent implements AfterViewInit, OnDestroy {
     if (this.isFinished) return;
 
     if (this.isRunning) {
-      // Pause
       this.pausedElapsed = Date.now() - this.startTime;
       this.isRunning = false;
       this.pauseAnimation();
@@ -104,7 +137,6 @@ export class CoherenceComponent implements AfterViewInit, OnDestroy {
         this.intervalId = null;
       }
     } else {
-      // Resume
       this.isRunning = true;
       this.startTime = Date.now() - this.pausedElapsed;
       this.playAnimation();

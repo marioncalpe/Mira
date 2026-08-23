@@ -80,6 +80,7 @@
       <p>{{ streak }}</p>
     </div>
   </div>
+  <!-- APRÈS -->
   <div class="carte coherence-card">
     <div>
       <svg
@@ -92,19 +93,19 @@
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="lucide lucide-heart-pulse-icon lucide-heart-pulse"
       >
+        <path d="M12 9v4" />
+        <path d="M12 17h.01" />
         <path
-          d="M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5"
+          d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
         />
-        <path d="M3.22 13H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27" />
       </svg>
     </div>
     <div>
-      <h3>Cohérence cardique</h3>
-      <p>l'aide pour reguler le stresse quotidien</p>
+      <h3>SOS</h3>
+      <p>Anxiété ou stress ? On t'accompagne</p>
     </div>
-    <button routerLink="/coherence" routerLinkActive="active">Commencer</button>
+    <button routerLink="/coherence" routerLinkActive="active">Ouvrir</button>
   </div>
   <div class="carte">
     <h3>Sortie recentes</h3>
@@ -141,53 +142,53 @@
     </div>
   </div>
   <!-- ================================ -->
-<!--             NOTES               -->
-<!-- ================================ -->
-<div class="carte">
-  <div class="notes-header">
-    <h3>📝 Notes psy</h3>
-    <button (click)="ajouterNote()">+</button>
+  <!--             NOTES               -->
+  <!-- ================================ -->
+  <div class="carte">
+    <div class="notes-header">
+      <h3>📝 Notes psy</h3>
+      <button (click)="ajouterNote()">+</button>
+    </div>
+
+    <!-- Liste des notes -->
+    @if (notes.length === 0) {
+      <p class="notes-empty">Aucune note pour le moment</p>
+    }
+
+    @for (note of notes; track note.id) {
+      <div class="note-item">
+        <div class="note-content" (click)="editerNote(note)">
+          <div class="note-titre">{{ note.titre }}</div>
+          <div class="note-contenu">{{ note.contenu }}</div>
+        </div>
+        <button class="note-suppr" (click)="supprimerNote(note.id)">✕</button>
+      </div>
+    }
   </div>
 
-  <!-- Liste des notes -->
-  @if (notes.length === 0) {
-    <p class="notes-empty">Aucune note pour le moment</p>
-  }
-
-  @for (note of notes; track note.id) {
-    <div class="note-item">
-      <div class="note-content" (click)="editerNote(note)">
-        <div class="note-titre">{{ note.titre }}</div>
-        <div class="note-contenu">{{ note.contenu }}</div>
-      </div>
-      <button class="note-suppr" (click)="supprimerNote(note.id)">✕</button>
-    </div>
-  }
-</div>
-
-<!-- ================================ -->
-<!--         MODAL NOTE              -->
-<!-- ================================ -->
-@if (modalNoteVisible) {
-  <div class="modal-overlay" (click)="modalNoteVisible = false">
-    <div class="modal-note carte" (click)="$event.stopPropagation()">
-      <h3>{{ noteEnEdition ? 'Modifier la note' : 'Nouvelle note' }}</h3>
-      <input
-        type="text"
-        [(ngModel)]="nouveauTitreNote"
-        placeholder="Titre"
-      />
-      <textarea
-        [(ngModel)]="nouveauContenuNote"
-        placeholder="Contenu..."
-        rows="5"
-      ></textarea>
-      <div class="modal-actions">
-        <button class="btn-annuler" (click)="modalNoteVisible = false">Annuler</button>
-        <button class="btn-sauvegarder" (click)="sauvegarderNote()">Sauvegarder</button>
+  <!-- ================================ -->
+  <!--         MODAL NOTE              -->
+  <!-- ================================ -->
+  @if (modalNoteVisible) {
+    <div class="modal-overlay" (click)="modalNoteVisible = false">
+      <div class="modal-note carte" (click)="$event.stopPropagation()">
+        <h3>{{ noteEnEdition ? "Modifier la note" : "Nouvelle note" }}</h3>
+        <input type="text" [(ngModel)]="nouveauTitreNote" placeholder="Titre" />
+        <textarea
+          [(ngModel)]="nouveauContenuNote"
+          placeholder="Contenu..."
+          rows="5"
+        ></textarea>
+        <div class="modal-actions">
+          <button class="btn-annuler" (click)="modalNoteVisible = false">
+            Annuler
+          </button>
+          <button class="btn-sauvegarder" (click)="sauvegarderNote()">
+            Sauvegarder
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-}
+  }
 </div>
 <app-menu></app-menu>

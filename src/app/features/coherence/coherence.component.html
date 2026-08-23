@@ -1,55 +1,102 @@
-<app-head [h1]="'Respiration'"></app-head>
+<app-head [h1]="'SOS'"></app-head>
 
-<div class="coherence-page">
-  <div class="visual-area">
-    <div class="target-ring" aria-hidden="true"></div>
-    <div #ball class="ball" aria-hidden="true"></div>
-  </div>
+<!-- ================================ -->
+<!--      VUE 1 : CONSEILS           -->
+<!-- ================================ -->
+@if (vueActuelle === 'conseils') {
+  <div class="conseils-page">
 
-  <div #statusText class="status-text" aria-live="polite">Prêt</div>
-
-  <ul class="dots" aria-hidden="true">
-    <li
-      class="dot"
-      *ngFor="let _ of cycles; let i = index"
-      [attr.data-index]="i"
-    ></li>
-  </ul>
-
-  <div class="controls">
-    <p class="hint">Choisissez un mode puis démarrez</p>
-
-    <div class="modes">
-      <select
-        id="mode-select"
-        class="mode-select"
-        (change)="onModeChange($event)"
-        aria-label="Mode de cohérence"
-      >
-        <option value="classique">Classique (5s / 5s)</option>
-        <option value="relaxant">Relaxant (4s / 6s)</option>
-        <option value="tonifiant">Tonifiant (4s / 4s)</option>
-      </select>
+    <!-- Carte pour lancer la cohérence cardiaque -->
+    <div class="carte coherence-entry" (click)="ouvrirExercice()">
+      <div class="coherence-entry-icon">🫀</div>
+      <div>
+        <h3>Cohérence cardiaque</h3>
+        <p>Exercice guidé de respiration</p>
+      </div>
+      <button>Commencer</button>
     </div>
 
-    <div class="start-wrap">
-      <button
-        class="start-btn"
-        *ngIf="!isRunning"
-        (click)="startExercise()"
-        [disabled]="isFinished && false"
-      >
-        {{ isFinished ? 'Recommencer' : 'Démarrer' }}
-      </button>
-      <button
-        class="start-btn"
-        *ngIf="isRunning"
-        (click)="togglePlayPause()"
-      >
-        Pause
-      </button>
+    <div class="conseils-section">
+      <h3>💡 En cas de crise d'anxiété</h3>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">🫁</div>
+        <div>
+          <div class="conseil-titre">Respire lentement</div>
+          <div class="conseil-texte">Inspire 4 secondes, retiens 4 secondes, expire 6 secondes.</div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">👀</div>
+        <div>
+          <div class="conseil-titre">Technique 5-4-3-2-1</div>
+          <div class="conseil-texte">Nomme 5 choses que tu vois, 4 que tu entends, 3 que tu touches, 2 que tu sens, 1 que tu goûtes.</div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">🧊</div>
+        <div>
+          <div class="conseil-titre">Ancre-toi dans le présent</div>
+          <div class="conseil-texte">Pose tes pieds bien à plat au sol et sens le contact avec le sol.</div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">📞</div>
+        <div>
+          <div class="conseil-titre">Besoin de parler ?</div>
+          <div class="conseil-texte">
+            <a href="tel:3114">3114</a> — Numéro national de prévention du suicide, gratuit, 24h/24
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+}
+
+<!-- ================================ -->
+<!--      VUE 2 : EXERCICE           -->
+<!-- ================================ -->
+@if (vueActuelle === 'exercice') {
+  <div class="coherence-page">
+
+    <button class="btn-retour" (click)="retourConseils()">← Retour</button>
+
+    <div class="visual-area">
+      <div class="target-ring" aria-hidden="true"></div>
+      <div #ball class="ball" aria-hidden="true"></div>
+    </div>
+
+    <div #statusText class="status-text" aria-live="polite">Prêt</div>
+
+    <ul class="dots" aria-hidden="true">
+      <li class="dot" *ngFor="let _ of cycles; let i = index" [attr.data-index]="i"></li>
+    </ul>
+
+    <div class="controls">
+      <p class="hint">Choisissez un mode puis démarrez</p>
+
+      <div class="modes">
+        <select id="mode-select" class="mode-select" (change)="onModeChange($event)" aria-label="Mode de cohérence">
+          <option value="classique">Classique (5s / 5s)</option>
+          <option value="relaxant">Relaxant (4s / 6s)</option>
+          <option value="tonifiant">Tonifiant (4s / 4s)</option>
+        </select>
+      </div>
+
+      <div class="start-wrap">
+        <button class="start-btn" *ngIf="!isRunning" (click)="startExercise()">
+          {{ isFinished ? 'Recommencer' : 'Démarrer' }}
+        </button>
+        <button class="start-btn" *ngIf="isRunning" (click)="togglePlayPause()">
+          Pause
+        </button>
+      </div>
     </div>
   </div>
-</div>
+}
 
 <app-menu></app-menu>

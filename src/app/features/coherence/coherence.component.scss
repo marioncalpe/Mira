@@ -137,3 +137,105 @@
     animation: none !important;
   }
 }
+.conseils-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding-top: 0.5em;
+}
+
+.coherence-entry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  border-left: 4px solid $secondary;
+
+  .coherence-entry-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    justify-content: flex-start;
+    color: var(--text-color);
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary-color);
+  }
+
+  button {
+    background: $primary;
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    font-family: $font-main;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+}
+
+.btn-retour {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  color: var(--text-color);
+  font-family: $font-main;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-bottom: 1em;
+}
+
+.conseils-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+
+  h3 {
+    font-family: $font-main;
+    color: var(--text-color);
+    margin: 0 0 4px 0;
+    justify-content: flex-start;
+  }
+}
+
+.conseil-item {
+  display: flex;
+  gap: 12px;
+  background: var(--carte-bg);
+  border-radius: 14px;
+  padding: 12px 14px;
+  align-items: flex-start;
+
+  .conseil-icone {
+    font-size: 22px;
+    flex-shrink: 0;
+  }
+
+  .conseil-titre {
+    font-family: $font-main;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-color);
+    margin-bottom: 2px;
+  }
+
+  .conseil-texte {
+    font-size: 0.8rem;
+    color: var(--text-secondary-color);
+    line-height: 1.4;
+
+    a {
+      color: $primary;
+      font-weight: 600;
+    }
+  }
+}
