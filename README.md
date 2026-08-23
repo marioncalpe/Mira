@@ -11,12 +11,13 @@ Mira est une application mobile Angular de suivi de sorties pour les personnes s
 | Page | Description |
 |------|-------------|
 | **Onboarding** | Présentation de l'application au premier lancement (5 slides) |
-| **Home** | Tableau de bord avec stats, carte SOS, sorties récentes, badges et notes |
+| **Home** | Tableau de bord avec salutation personnalisée, stats, carte SOS, sorties récentes, badges et notes |
 | **Calendrier** | Planification et consultation des sorties par mois |
 | **SOS** | Conseils anti-crise d'anxiété + exercice de cohérence cardiaque guidé |
 | **Progression** | Statistiques détaillées, graphique mensuel navigable et objectifs personnels |
 | **Succès** | Collection de 40 badges à débloquer selon sa progression |
-| **Paramètres** | Thème, sauvegarde, import, suppression des données et notifications |
+| **Paramètres** | Prénom, thème, sauvegarde, import, suppression des données et notifications |
+| **À propos** | Présentation des fonctionnalités, confidentialité et accès à l'onboarding |
 
 ---
 
@@ -44,7 +45,8 @@ src/
 │   │   ├── coherence/       # Page SOS (conseils + cohérence cardiaque)
 │   │   ├── progress/        # Page de progression
 │   │   ├── achivements/     # Page des succès/badges
-│   │   └── settings/        # Paramètres et gestion des données
+│   │   ├── settings/        # Paramètres et gestion des données
+│   │   └── apropos/         # Écran "À propos"
 │   └── shared/
 │       └── components/
 │           ├── menu/                  # Barre de navigation + bouton FAB
@@ -80,10 +82,14 @@ getNombreObjectifsEnCours()   // nombre en cours
 getNombreObjectifsTermines()  // nombre terminés
 
 // Notes (sujets à aborder en thérapie)
-getNotes()                 // tableau complet
-addNote(titre, contenu)    // ajoute une note
+getNotes()                     // tableau complet
+addNote(titre, contenu)        // ajoute une note
 updateNote(id, titre, contenu) // modifie une note
-deleteNote(id)              // supprime une note
+deleteNote(id)                 // supprime une note
+
+// Prénom
+getPrenom()                // prénom actuel ('' si non renseigné)
+setPrenom(prenom)          // met à jour et sauvegarde
 
 // Stats (calculées automatiquement)
 getTotalSorties()          // nombre total
@@ -113,9 +119,16 @@ sorties$                   // flux de sorties
 objectifs$                 // flux d'objectifs
 badges$                    // flux de badges
 notes$                     // flux de notes
+prenom$                    // flux du prénom
 nouveauBadge$              // flux du dernier badge débloqué
 notif$                     // flux des préférences de notifications
 ```
+
+---
+
+## 👤 Personnalisation
+
+Depuis les **Paramètres**, l'utilisatrice peut renseigner son prénom (facultatif). S'il est renseigné, la Home affiche "Bonjour [Prénom]", sinon "Bonjour" tout court.
 
 ---
 
@@ -146,13 +159,18 @@ Depuis la Home, une section permet de noter les sujets à aborder avec sa psy (t
 
 ---
 
+## ℹ️ À propos
+
+Écran accessible depuis les Paramètres qui présente les fonctionnalités de l'app, un rappel sur la confidentialité (toutes les données restent sur l'appareil) et un accès pour revoir l'onboarding.
+
+---
+
 ## 💾 Gestion des données
 
 Depuis la page **Paramètres** tu peux :
 - **Sauvegarder** → télécharge un fichier `mira-backup-xx-xx-xxxx.json`
 - **Importer** → recharge toutes tes données depuis un fichier de sauvegarde (les badges sont recalculés automatiquement)
 - **Effacer** → supprime toutes les données (avec confirmation)
-- **Revoir la présentation** → relance l'onboarding
 
 ---
 
@@ -182,7 +200,7 @@ Une notification pop-up s'affiche automatiquement quand un badge est débloqué.
 
 ## 👋 Onboarding
 
-Au premier lancement (ou après clic sur "Revoir la présentation" dans les Paramètres), 5 slides présentent les fonctionnalités clés avec des mockups visuels de l'interface : Home, Calendrier (+ bouton d'ajout rapide), Progression, Succès et Paramètres.
+Au premier lancement (ou depuis "À propos" → "Revoir la présentation"), 5 slides présentent les fonctionnalités clés avec des mockups visuels de l'interface : Home, Calendrier (+ bouton d'ajout rapide), Progression, Succès et Paramètres.
 
 ---
 
