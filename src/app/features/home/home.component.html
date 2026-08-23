@@ -1,4 +1,4 @@
-<app-head [h1]="'Bonjour Marion'"></app-head>
+<app-head [h1]="prenom ? 'Bonjour ' + prenom : 'Bonjour'"></app-head>
 <div class="content">
   <div class="stats">
     <!-- Carte : Total des sorties du mois (icône calendrier) -->

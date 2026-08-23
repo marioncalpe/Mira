@@ -66,6 +66,7 @@ export class StorageService {
   /*================================*/
 
   // Privés : seul ce service peut les modifier directement
+  private prenomSubject = new BehaviorSubject<string>('');
   private sortiesSubject = new BehaviorSubject<Sortie[]>([]);
   private objectifsSubject = new BehaviorSubject<Objectif[]>([]);
   private badgesSubject = new BehaviorSubject<Badge[]>([]);
@@ -73,6 +74,7 @@ export class StorageService {
   private notesSubject = new BehaviorSubject<Note[]>([]);
 
   // Publics en lecture seule : les composants s'y abonnent
+  prenom$ = this.prenomSubject.asObservable();
   sorties$ = this.sortiesSubject.asObservable();
   objectifs$ = this.objectifsSubject.asObservable();
   badges$ = this.badgesSubject.asObservable();
@@ -137,6 +139,18 @@ export class StorageService {
   }
   private saveNotif(notif: NotificationSettings): void {
     localStorage.setItem('notif', JSON.stringify(notif));
+  }
+  /*================================*/
+  /*             PRÉNOM             */
+  /*================================*/
+
+  getPrenom(): string {
+    return this.prenomSubject.getValue();
+  }
+
+  setPrenom(prenom: string): void {
+    this.prenomSubject.next(prenom);
+    localStorage.setItem('prenom', prenom);
   }
   /*================================*/
   /*            SORTIES             */
@@ -910,39 +924,39 @@ export class StorageService {
   }
 
   private saveNotes(notes: Note[]): void {
-  localStorage.setItem('notes', JSON.stringify(notes));
-}
-/*================================*/
-/*             NOTES              */
-/*================================*/
+    localStorage.setItem('notes', JSON.stringify(notes));
+  }
+  /*================================*/
+  /*             NOTES              */
+  /*================================*/
 
-getNotes(): Note[] {
-  return this.notesSubject.getValue();
-}
+  getNotes(): Note[] {
+    return this.notesSubject.getValue();
+  }
 
-addNote(titre: string, contenu: string): void {
-  const note: Note = {
-    id: crypto.randomUUID(),
-    titre,
-    contenu,
-    dateCreation: new Date().toISOString(),
-  };
-  const updated = [...this.notesSubject.getValue(), note];
-  this.notesSubject.next(updated);
-  this.saveNotes(updated);
-}
+  addNote(titre: string, contenu: string): void {
+    const note: Note = {
+      id: crypto.randomUUID(),
+      titre,
+      contenu,
+      dateCreation: new Date().toISOString(),
+    };
+    const updated = [...this.notesSubject.getValue(), note];
+    this.notesSubject.next(updated);
+    this.saveNotes(updated);
+  }
 
-updateNote(id: string, titre: string, contenu: string): void {
-  const updated = this.notesSubject.getValue().map(n =>
-    n.id === id ? { ...n, titre, contenu } : n
-  );
-  this.notesSubject.next(updated);
-  this.saveNotes(updated);
-}
+  updateNote(id: string, titre: string, contenu: string): void {
+    const updated = this.notesSubject
+      .getValue()
+      .map((n) => (n.id === id ? { ...n, titre, contenu } : n));
+    this.notesSubject.next(updated);
+    this.saveNotes(updated);
+  }
 
-deleteNote(id: string): void {
-  const updated = this.notesSubject.getValue().filter(n => n.id !== id);
-  this.notesSubject.next(updated);
-  this.saveNotes(updated);
-}
+  deleteNote(id: string): void {
+    const updated = this.notesSubject.getValue().filter((n) => n.id !== id);
+    this.notesSubject.next(updated);
+    this.saveNotes(updated);
+  }
 }

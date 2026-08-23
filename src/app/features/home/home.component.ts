@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit {
   /*           VARIABLES            */
   /*================================*/
 
+  prenom = '';
   recentesSorties: Sortie[] = [];
   derniersBadges: Badge[] = [];
   totalSorties = 0;
@@ -55,6 +56,7 @@ export class HomeComponent implements OnInit {
   /*================================*/
 
   ngOnInit(): void {
+    this.storageService.prenom$.subscribe(prenom => this.prenom = prenom);
     // NB sortie du mois
     this.sortiesCeMois = this.storageService.getSortiesCeMois();
     // STEAK

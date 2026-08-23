@@ -107,7 +107,18 @@
       💾 Sauvegarder les notifications
     </button>
   </div> -->
-
+  <div class="section">
+    <h2>Profil</h2>
+    <label for="prenom-input" class="sr-only">Ton prénom</label>
+    <input
+      id="prenom-input"
+      type="text"
+      [(ngModel)]="prenom"
+      (blur)="sauvegarderPrenom()"
+      placeholder="Ton prénom (optionnel)"
+      class="input-prenom"
+    />
+  </div>
   <div class="section">
     <h2>Aide</h2>
     <button class="btn-import" (click)="revoirOnboarding()">

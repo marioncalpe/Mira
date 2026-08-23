@@ -8,17 +8,18 @@ import { NotificationSettings } from '../../core/models/notification.model';
 import { HeadComponent } from '../../shared/components/head/head.component';
 import { ThemeService } from '../../core/theme.service';
 import { Theme } from '../../core/theme.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
-  imports: [CommonModule, MenuComponent, HeadComponent],
+  imports: [CommonModule, MenuComponent, HeadComponent, FormsModule],
 })
 export class SettingsComponent implements OnInit {
   themeActuel: Theme = 'light';
-
+  prenom = '';
   /*================================*/
   /*           VARIABLES            */
   /*================================*/
@@ -42,6 +43,7 @@ export class SettingsComponent implements OnInit {
     this.notif = this.storageService.getNotif();
     // Charge le thème actuel
     this.themeActuel = this.themeService.getTheme();
+    this.prenom = this.storageService.getPrenom();
   }
 
   basculerTheme(): void {
@@ -121,5 +123,10 @@ export class SettingsComponent implements OnInit {
   revoirOnboarding(): void {
     localStorage.removeItem('onboarding_done');
     this.router.navigate(['/onboarding']);
+  }
+
+  // Nouvelle méthode
+  sauvegarderPrenom(): void {
+    this.storageService.setPrenom(this.prenom.trim());
   }
 }

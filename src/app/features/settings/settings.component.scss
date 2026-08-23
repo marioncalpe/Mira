@@ -141,3 +141,29 @@
     color: $text-light;
   }
 }
+.input-prenom {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(128, 128, 128, 0.15);
+  color: $text-light;
+  font-family: $font-main;
+  font-size: 14px;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
