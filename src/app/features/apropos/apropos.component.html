@@ -1,38 +1,53 @@
 <app-head [h1]="'À propos'"></app-head>
 
 <div class="apropos">
-
   <div class="carte intro">
     <div class="emoji">🌸</div>
     <h3>Mira</h3>
-    <p>Ton espace personnel pour suivre tes sorties, apaiser ton anxiété et progresser à ton rythme.</p>
+    <p>
+      Ton espace personnel pour suivre tes sorties, apaiser ton anxiété et
+      progresser à ton rythme.
+    </p>
   </div>
 
-  <div class="carte">
+  <div class="carte" style="padding: 1em">
     <h3>✨ Fonctionnalités</h3>
     <ul>
-      <li><strong>Calendrier</strong> — enregistre tes sorties avec humeur et ressenti</li>
-      <li><strong>SOS</strong> — conseils anti-crise et cohérence cardiaque guidée</li>
-      <li><strong>Progression</strong> — statistiques, graphiques et objectifs personnels</li>
-      <li><strong>Succès</strong> — 40 badges à débloquer selon ta progression</li>
-      <li><strong>Notes</strong> — garde une trace des sujets à aborder avec ta psy</li>
+      <li>
+        <strong>Calendrier</strong> — enregistre tes sorties avec humeur et
+        ressenti
+      </li>
+      <li>
+        <strong>SOS</strong> — conseils anti-crise et cohérence cardiaque guidée
+      </li>
+      <li>
+        <strong>Progression</strong> — statistiques, graphiques et objectifs
+        personnels
+      </li>
+      <li>
+        <strong>Succès</strong> — 40 badges à débloquer selon ta progression
+      </li>
+      <li>
+        <strong>Notes</strong> — garde une trace des sujets à aborder avec ta
+        psy
+      </li>
       <li><strong>Thèmes</strong> — clair ou sombre, selon tes préférences</li>
     </ul>
   </div>
 
-  <div class="carte">
+  <div class="carte" style="padding: 1em">
     <h3>🔒 Confidentialité</h3>
-    <p>Toutes tes données restent sur ton appareil. Rien n'est envoyé sur internet. Pense à les sauvegarder régulièrement depuis les Paramètres !</p>
+    <p>
+      Toutes tes données restent sur ton appareil. Rien n'est envoyé sur
+      internet. Pense à les sauvegarder régulièrement depuis les Paramètres !
+    </p>
   </div>
 
-  <div class="carte">
-    <button class="btn-onboarding" (click)="revoirOnboarding()">
-      🌸 Revoir la présentation
-    </button>
-  </div>
+  <button class="btn-onboarding" style="margin: 1em 0 0 0" (click)="revoirOnboarding()">
+    🌸 Revoir la présentation
+  </button>
 
   <p class="version">Mira — v1.0</p>
-
 </div>
 
 <app-menu></app-menu>
