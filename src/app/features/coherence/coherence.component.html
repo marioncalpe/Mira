@@ -3,9 +3,8 @@
 <!-- ================================ -->
 <!--      VUE 1 : CONSEILS           -->
 <!-- ================================ -->
-@if (vueActuelle === 'conseils') {
+@if (vueActuelle === "conseils") {
   <div class="conseils-page">
-
     <!-- Carte pour lancer la cohérence cardiaque -->
     <div class="carte coherence-entry" (click)="ouvrirExercice()">
       <div class="coherence-entry-icon">🫀</div>
@@ -23,7 +22,9 @@
         <div class="conseil-icone">🫁</div>
         <div>
           <div class="conseil-titre">Respire lentement</div>
-          <div class="conseil-texte">Inspire 4 secondes, retiens 4 secondes, expire 6 secondes.</div>
+          <div class="conseil-texte">
+            Inspire 4 secondes, retiens 4 secondes, expire 6 secondes.
+          </div>
         </div>
       </div>
 
@@ -31,15 +32,137 @@
         <div class="conseil-icone">👀</div>
         <div>
           <div class="conseil-titre">Technique 5-4-3-2-1</div>
-          <div class="conseil-texte">Nomme 5 choses que tu vois, 4 que tu entends, 3 que tu touches, 2 que tu sens, 1 que tu goûtes.</div>
+          <div class="conseil-texte">
+            Nomme 5 choses que tu vois, 4 que tu entends, 3 que tu touches, 2
+            que tu sens, 1 que tu goûtes.
+          </div>
+        </div>
+      </div>
+      <div class="conseil-item">
+        <div class="conseil-icone">
+          🍋
+        </div>
+        <div>
+          <div class="conseil-titre">Sucer un citron</div>
+          <div class="conseil-texte">
+            Le goût acide capte immédiatement l'attention et interrompt le flot
+            de pensées anxieuses. C'est une véritable ancre sensorielle dans
+            l'instant présent.
+          </div>
         </div>
       </div>
 
       <div class="conseil-item">
-        <div class="conseil-icone">🧊</div>
+        <div class="conseil-icone">
+          📖
+        </div>
         <div>
-          <div class="conseil-titre">Ancre-toi dans le présent</div>
-          <div class="conseil-texte">Pose tes pieds bien à plat au sol et sens le contact avec le sol.</div>
+          <div class="conseil-titre">Lire un texte à l'envers</div>
+          <div class="conseil-texte">
+            Cela active le cortex préfrontal et coupe la spirale de pensées
+            automatiques. L'anxiété se nourrit souvent de l'anticipation du
+            futur ; cet exercice force le cerveau à se recentrer sur l'instant
+            présent.
+          </div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">
+          🧊
+        </div>
+        <div>
+          <div class="conseil-titre">Plonger les mains dans l'eau froide</div>
+          <div class="conseil-texte">
+            Le froid active le réflexe d'immersion, ce qui peut réduire la
+            tension et envoyer au système nerveux un message de sécurité : « il
+            n'y a pas de danger immédiat
+          </div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">🟦</div>
+        <div>
+          <div class="conseil-titre">Nommer 5 choses bleues</div>
+          <div class="conseil-texte">
+            Cela oblige à observer activement son environnement. L'exercice aide
+            le cerveau à comprendre qu'on est ici et maintenant, et non face à
+            une menace imaginaire.
+          </div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">
+          🥤
+        </div>
+        <div>
+          <div class="conseil-titre">Souffler dans une paille</div>
+          <div class="conseil-texte">
+            Quand l'expiration dure plus longtemps que l'inspiration, le rythme
+            cardiaque ralentit et le système nerveux s'apaise en quelques
+            secondes.
+          </div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">
+          💆‍♀️
+        </div>
+        <div>
+          <div class="conseil-titre">
+            Masser doucement l'espace entre les sourcils
+          </div>
+          <div class="conseil-texte">
+            Cela stimule le nerf trijumeau, ce qui peut aider à relâcher
+            l'expression de vigilance et signaler au cerveau la sécurité et
+            l'apaisement.
+          </div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">👃</div>
+        <div>
+          <div class="conseil-titre">Respirer par la narine gauche</div>
+          <div class="conseil-texte">
+            Fermer la narine droite et inspirer uniquement par la gauche régule
+            le système nerveux par un simple mécanisme physiologique.
+          </div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">
+          🗨️
+        </div>
+        <div>
+          <div class="conseil-titre">
+            Personnaliser son anxiété pour la désamorcer
+          </div>
+          <div class="conseil-texte">
+            Donner un prénom à ses pensées anxieuses et les « engueuler » à voix
+            haute (« Michel, sérieux ? Pas maintenant ! Dégage ! ») : en la
+            ridiculisant, on lui enlève une partie de son pouvoir.
+          </div>
+        </div>
+      </div>
+
+      <div class="conseil-item">
+        <div class="conseil-icone">
+          🎙️
+        </div>
+        <div>
+          <div class="conseil-titre">
+            Devenir le narrateur de sa propre panique
+          </div>
+          <div class="conseil-texte">
+            Imiter une voix de reportage animalier (« Observez ici un humain
+            stressé dans son milieu naturel… ») : le fou rire coupe souvent
+            court à la panique.
+          </div>
         </div>
       </div>
 
@@ -48,23 +171,22 @@
         <div>
           <div class="conseil-titre">Besoin de parler ?</div>
           <div class="conseil-texte">
-            <a href="tel:3114">3114</a> — Numéro national de prévention du suicide, gratuit, 24h/24
+            <a href="tel:3114">3114</a> — Numéro national de prévention du
+            suicide, gratuit, 24h/24
           </div>
         </div>
       </div>
     </div>
-
   </div>
+
+  <i>Contenu inspiré de techniques partagées en ligne, reformulées et validées par un professionnel de santé mentale. Cette liste ne remplace pas un avis médical individualisé.</i>
 }
 
 <!-- ================================ -->
 <!--      VUE 2 : EXERCICE           -->
 <!-- ================================ -->
-@if (vueActuelle === 'exercice') {
+@if (vueActuelle === "exercice") {
   <div class="coherence-page">
-
-    <button class="btn-retour" (click)="retourConseils()">← Retour</button>
-
     <div class="visual-area">
       <div class="target-ring" aria-hidden="true"></div>
       <div #ball class="ball" aria-hidden="true"></div>
@@ -73,14 +195,23 @@
     <div #statusText class="status-text" aria-live="polite">Prêt</div>
 
     <ul class="dots" aria-hidden="true">
-      <li class="dot" *ngFor="let _ of cycles; let i = index" [attr.data-index]="i"></li>
+      <li
+        class="dot"
+        *ngFor="let _ of cycles; let i = index"
+        [attr.data-index]="i"
+      ></li>
     </ul>
 
     <div class="controls">
       <p class="hint">Choisissez un mode puis démarrez</p>
 
       <div class="modes">
-        <select id="mode-select" class="mode-select" (change)="onModeChange($event)" aria-label="Mode de cohérence">
+        <select
+          id="mode-select"
+          class="mode-select"
+          (change)="onModeChange($event)"
+          aria-label="Mode de cohérence"
+        >
           <option value="classique">Classique (5s / 5s)</option>
           <option value="relaxant">Relaxant (4s / 6s)</option>
           <option value="tonifiant">Tonifiant (4s / 4s)</option>
@@ -89,13 +220,14 @@
 
       <div class="start-wrap">
         <button class="start-btn" *ngIf="!isRunning" (click)="startExercise()">
-          {{ isFinished ? 'Recommencer' : 'Démarrer' }}
+          {{ isFinished ? "Recommencer" : "Démarrer" }}
         </button>
         <button class="start-btn" *ngIf="isRunning" (click)="togglePlayPause()">
           Pause
         </button>
       </div>
     </div>
+    <button class="btn-retour" (click)="retourConseils()">← Retour</button>
   </div>
 }
 
