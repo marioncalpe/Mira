@@ -232,14 +232,15 @@
 }
 
 .btn-retour {
-  align-self: flex-start;
-  background: none;
+  background: $text-secondary;
+  color: white;
   border: none;
-  color: var(--text-color);
+  padding: 8px 14px;
+  border-radius: 20px;
   font-family: $font-main;
-  font-size: 0.9rem;
-  cursor: pointer;
-  margin-bottom: 1em;
+  font-weight: 600;
+  font-size: 0.85rem;
+  flex-shrink: 0;
 }
 
 .conseils-section {
@@ -289,7 +290,11 @@
   }
 }
 
-i{
+i {
   font-size: 0.7rem;
   color: var(--text-secondary-color);
+}
+
+.start-wrap{
+  gap: 1em;
 }
