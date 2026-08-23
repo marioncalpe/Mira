@@ -10,7 +10,7 @@ Mira est une application mobile Angular de suivi de sorties pour les personnes s
 
 | Page | Description |
 |------|-------------|
-| **Onboarding** | Présentation de l'application au premier lancement (5 slides) |
+| **Onboarding** | Présentation de l'application au premier lancement (10 slides détaillés) |
 | **Home** | Tableau de bord avec salutation personnalisée, stats, carte SOS, sorties récentes, badges et notes |
 | **Calendrier** | Planification et consultation des sorties par mois |
 | **SOS** | Conseils anti-crise d'anxiété + exercice de cohérence cardiaque guidé |
@@ -200,7 +200,20 @@ Une notification pop-up s'affiche automatiquement quand un badge est débloqué.
 
 ## 👋 Onboarding
 
-Au premier lancement (ou depuis "À propos" → "Revoir la présentation"), 5 slides présentent les fonctionnalités clés avec des mockups visuels de l'interface : Home, Calendrier (+ bouton d'ajout rapide), Progression, Succès et Paramètres.
+Au premier lancement (ou depuis "À propos" → "Revoir la présentation"), 10 slides détaillent chaque fonctionnalité clé avec des mockups visuels fidèles à l'interface réelle :
+
+1. Bienvenue
+2. Stats rapides de la Home (sorties du mois, objectifs en cours, streak)
+3. Bouton SOS
+4. Sorties récentes
+5. Notes psy
+6. Calendrier + bouton d'ajout rapide (FAB)
+7. Progression (moyennes, stats, graphique)
+8. Objectifs
+9. Succès / badges
+10. Paramètres (thème, données, profil, à propos)
+
+Navigation via boutons **Suivant** / **← Retour**, avec possibilité de **Passer** à tout moment.
 
 ---
 
