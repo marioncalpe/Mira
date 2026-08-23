@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { StorageService } from '../../core/storage/storage.service';
 import { NotificationService } from '../../core/notification.service';
@@ -15,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
-  imports: [CommonModule, MenuComponent, HeadComponent, FormsModule],
+  imports: [CommonModule, MenuComponent, HeadComponent, FormsModule, RouterModule],
 })
 export class SettingsComponent implements OnInit {
   themeActuel: Theme = 'light';

@@ -1,0 +1,78 @@
+@use "styles" as *;
+
+.apropos {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .intro {
+    align-items: center;
+    text-align: center;
+
+    .emoji {
+      font-size: 40px;
+    }
+
+    h3 {
+      margin: 4px 0;
+    }
+
+    p {
+      color: var(--text-secondary-color);
+      font-size: 0.85rem;
+      margin: 0;
+    }
+  }
+
+  h3 {
+    font-family: $font-main;
+    color: var(--text-color);
+    margin: 0 0 8px 0;
+    justify-content: flex-start;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    li {
+      font-size: 0.85rem;
+      color: var(--text-secondary-color);
+      line-height: 1.4;
+
+      strong {
+        color: var(--text-color);
+      }
+    }
+  }
+
+  p {
+    font-size: 0.85rem;
+    color: var(--text-secondary-color);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .btn-onboarding {
+    width: 100%;
+    background: $secondary;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: $radius;
+    font-family: $font-main;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .version {
+    text-align: center;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 8px 0 0 0;
+  }
+}
