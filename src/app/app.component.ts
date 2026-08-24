@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
     private themeService: ThemeService,
     private router: Router
   ) {
-    this.notificationService.programmerTout();
+    // this.notificationService.programmerTout();
   }
 
   ngOnInit(): void {
