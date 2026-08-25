@@ -4,7 +4,7 @@
 @if (mode === "view") {
   <div class="view-mode">
     <div class="modal">
-      <button class="close-btn" (click)="onClose()">
+      <button class="close-btn" (click)="onClose()" aria-label="Fermer">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
           <path d="M18 6 6 18" />
           <path d="m6 6 12 12" />
@@ -17,36 +17,36 @@
       </p>
 
       <div class="humeurs">
-        <button [class.active]="sortie?.extendedProps?.category === 'anxieuse'" [class.inactive]="sortie?.extendedProps?.category !== 'anxieuse'">😰</button>
-        <button [class.active]="sortie?.extendedProps?.category === 'moyen'" [class.inactive]="sortie?.extendedProps?.category !== 'moyen'">😐</button>
-        <button [class.active]="sortie?.extendedProps?.category === 'bien'" [class.inactive]="sortie?.extendedProps?.category !== 'bien'">🙂</button>
-        <button [class.active]="sortie?.extendedProps?.category === 'tresbien'" [class.inactive]="sortie?.extendedProps?.category !== 'tresbien'">😊</button>
+        <button aria-label="Anxieuse" [class.active]="sortie?.extendedProps?.category === 'anxieuse'" [class.inactive]="sortie?.extendedProps?.category !== 'anxieuse'">😰</button>
+        <button aria-label="Moyen" [class.active]="sortie?.extendedProps?.category === 'moyen'" [class.inactive]="sortie?.extendedProps?.category !== 'moyen'">😐</button>
+        <button aria-label="Bien" [class.active]="sortie?.extendedProps?.category === 'bien'" [class.inactive]="sortie?.extendedProps?.category !== 'bien'">🙂</button>
+        <button aria-label="Très bien" [class.active]="sortie?.extendedProps?.category === 'tresbien'" [class.inactive]="sortie?.extendedProps?.category !== 'tresbien'">😊</button>
       </div>
 
       <div class="notes">
         <div class="etoiles">
           <div>
-            <button [class.active]="isNoteAvantView(1)">
+            <button aria-label="Note avant 1 étoile" [class.active]="isNoteAvantView(1)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvantView(1) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteAvantView(2)">
+            <button aria-label="Note avant 2 étoiles" [class.active]="isNoteAvantView(2)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvantView(2) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteAvantView(3)">
+            <button aria-label="Note avant 3 étoiles" [class.active]="isNoteAvantView(3)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvantView(3) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteAvantView(4)">
+            <button aria-label="Note avant 4 étoiles" [class.active]="isNoteAvantView(4)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvantView(4) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteAvantView(5)">
+            <button aria-label="Note avant 5 étoiles" [class.active]="isNoteAvantView(5)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvantView(5) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
@@ -57,27 +57,27 @@
 
         <div class="etoiles">
           <div>
-            <button [class.active]="isNoteApresView(1)">
+            <button aria-label="Note après 1 étoile" [class.active]="isNoteApresView(1)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApresView(1) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteApresView(2)">
+            <button aria-label="Note après 2 étoiles" [class.active]="isNoteApresView(2)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApresView(2) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteApresView(3)">
+            <button aria-label="Note après 3 étoiles" [class.active]="isNoteApresView(3)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApresView(3) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteApresView(4)">
+            <button aria-label="Note après 4 étoiles" [class.active]="isNoteApresView(4)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApresView(4) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button [class.active]="isNoteApresView(5)">
+            <button aria-label="Note après 5 étoiles" [class.active]="isNoteApresView(5)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApresView(5) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
@@ -103,7 +103,7 @@
 @if (mode === "edit") {
   <div class="view-mode">
     <div class="modal">
-      <button class="close-btn" (click)="onClose()">
+      <button class="close-btn" (click)="onClose()" aria-label="Fermer">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x-icon lucide-x">
           <path d="M18 6 6 18" />
           <path d="m6 6 12 12" />
@@ -111,40 +111,41 @@
       </button>
 
       <div class="form-group">
-        <input [(ngModel)]="temp.title" required="" type="text" name="text" autocomplete="off" class="input" placeholder="Titre"/>
+        <label for="titre-sortie" class="sr-only">Titre de la sortie</label>
+        <input id="titre-sortie" [(ngModel)]="temp.title" required="" type="text" name="text" autocomplete="off" class="input" placeholder="Titre"/>
       </div>
 
       <div class="humeurs">
-        <button [class.active]="temp.extendedProps.category === 'anxieuse'" [class.inactive]="temp.extendedProps.category !== 'anxieuse'" (click)="temp.extendedProps.category = 'anxieuse'">😰</button>
-        <button [class.active]="temp.extendedProps.category === 'moyen'" [class.inactive]="temp.extendedProps.category !== 'moyen'" (click)="temp.extendedProps.category = 'moyen'">😐</button>
-        <button [class.active]="temp.extendedProps.category === 'bien'" [class.inactive]="temp.extendedProps.category !== 'bien'" (click)="temp.extendedProps.category = 'bien'">🙂</button>
-        <button [class.active]="temp.extendedProps.category === 'tresbien'" [class.inactive]="temp.extendedProps.category !== 'tresbien'" (click)="temp.extendedProps.category = 'tresbien'">😊</button>
+        <button aria-label="Anxieuse" [class.active]="temp.extendedProps.category === 'anxieuse'" [class.inactive]="temp.extendedProps.category !== 'anxieuse'" (click)="temp.extendedProps.category = 'anxieuse'">😰</button>
+        <button aria-label="Moyen" [class.active]="temp.extendedProps.category === 'moyen'" [class.inactive]="temp.extendedProps.category !== 'moyen'" (click)="temp.extendedProps.category = 'moyen'">😐</button>
+        <button aria-label="Bien" [class.active]="temp.extendedProps.category === 'bien'" [class.inactive]="temp.extendedProps.category !== 'bien'" (click)="temp.extendedProps.category = 'bien'">🙂</button>
+        <button aria-label="Très bien" [class.active]="temp.extendedProps.category === 'tresbien'" [class.inactive]="temp.extendedProps.category !== 'tresbien'" (click)="temp.extendedProps.category = 'tresbien'">😊</button>
       </div>
 
       <div class="notes">
         <div class="etoiles">
           <div>
-            <button (click)="temp.extendedProps.noteAvant = 1" [class.active]="isNoteAvant(1)">
+            <button aria-label="Note avant 1 étoile" (click)="temp.extendedProps.noteAvant = 1" [class.active]="isNoteAvant(1)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvant(1) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteAvant = 2" [class.active]="isNoteAvant(2)">
+            <button aria-label="Note avant 2 étoiles" (click)="temp.extendedProps.noteAvant = 2" [class.active]="isNoteAvant(2)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvant(2) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteAvant = 3" [class.active]="isNoteAvant(3)">
+            <button aria-label="Note avant 3 étoiles" (click)="temp.extendedProps.noteAvant = 3" [class.active]="isNoteAvant(3)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvant(3) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteAvant = 4" [class.active]="isNoteAvant(4)">
+            <button aria-label="Note avant 4 étoiles" (click)="temp.extendedProps.noteAvant = 4" [class.active]="isNoteAvant(4)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvant(4) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteAvant = 5" [class.active]="isNoteAvant(5)">
+            <button aria-label="Note avant 5 étoiles" (click)="temp.extendedProps.noteAvant = 5" [class.active]="isNoteAvant(5)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteAvant(5) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
@@ -155,27 +156,27 @@
 
         <div class="etoiles">
           <div>
-            <button (click)="temp.extendedProps.noteApres = 1" [class.active]="isNoteApres(1)">
+            <button aria-label="Note après 1 étoile" (click)="temp.extendedProps.noteApres = 1" [class.active]="isNoteApres(1)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApres(1) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteApres = 2" [class.active]="isNoteApres(2)">
+            <button aria-label="Note après 2 étoiles" (click)="temp.extendedProps.noteApres = 2" [class.active]="isNoteApres(2)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApres(2) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteApres = 3" [class.active]="isNoteApres(3)">
+            <button aria-label="Note après 3 étoiles" (click)="temp.extendedProps.noteApres = 3" [class.active]="isNoteApres(3)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApres(3) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteApres = 4" [class.active]="isNoteApres(4)">
+            <button aria-label="Note après 4 étoiles" (click)="temp.extendedProps.noteApres = 4" [class.active]="isNoteApres(4)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApres(4) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
             </button>
-            <button (click)="temp.extendedProps.noteApres = 5" [class.active]="isNoteApres(5)">
+            <button aria-label="Note après 5 étoiles" (click)="temp.extendedProps.noteApres = 5" [class.active]="isNoteApres(5)">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" [attr.fill]="isNoteApres(5) ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>
               </svg>
@@ -186,6 +187,7 @@
       </div>
 
       <div class="form-group">
+        <label for="textarea" class="sr-only">Description de la sortie</label>
         <textarea [(ngModel)]="temp.extendedProps.sentiment" id="textarea" rows="10" cols="50" placeholder="Description"></textarea>
       </div>
 

@@ -13,7 +13,7 @@
       ></div>
     </div>
     <div *ngIf="dernierBadge" class="dernierBadge">
-      <img [src]="dernierBadge.image" />
+      <img [src]="dernierBadge.image" [alt]="dernierBadge.title" width="64" height="64" />
       <div>
         <div class="title">{{ dernierBadge.title }}</div>
         <div class="descr">{{ dernierBadge.description }}</div>
@@ -38,7 +38,7 @@
         Ce qui va rendre l'image en grisé via le CSS
       -->
       <!-- (click) : au clic sur ce badge, on appelle openTrophy() avec le badge cliqué -->
-      <img [src]="badge.image" />
+      <img [src]="badge.image" [alt]="badge.unlocked ? badge.title : 'Badge verrouillé'" width="80" height="80" />
       <!-- [src] : liaison dynamique, src prend la valeur de badge.image -->
 
       <div class="lock-overlay" *ngIf="!badge.unlocked">🔒</div>
@@ -69,6 +69,9 @@
       <img
         [src]="selectedTrophy.image"
         [class.blurred]="!selectedTrophy.unlocked"
+        [alt]="selectedTrophy.unlocked ? selectedTrophy.title : 'Badge verrouillé'"
+        width="200"
+        height="200"
       />
       <p class="lock-text" *ngIf="!selectedTrophy.unlocked">
         🔒 Pas encore débloqué
