@@ -22,8 +22,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // if (!localStorage.getItem('onboarding_done')) {
-    //   this.router.navigate(['/onboarding']);
-    // }
+    if (!localStorage.getItem('onboarding_done')) {
+      this.router.navigate(['/onboarding']);
+    }
   }
 }
