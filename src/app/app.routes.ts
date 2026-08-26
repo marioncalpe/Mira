@@ -1,5 +1,8 @@
 import { Routes } from '@angular/router';
+import { importProvidersFrom } from '@angular/core';
 import { HomeComponent } from './features/home/home.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 export const routes: Routes = [
   {
@@ -13,7 +16,15 @@ export const routes: Routes = [
   },
   {
     path: 'calendar',
-    loadComponent: () => import('./features/calendar/calendar.component').then(m => m.CalendarComponent)
+    loadComponent: () => import('./features/calendar/calendar.component').then(m => m.CalendarComponent),
+    providers: [
+      importProvidersFrom(
+        CalendarModule.forRoot({
+          provide: DateAdapter,
+          useFactory: adapterFactory,
+        }),
+      ),
+    ],
   },
   {
     path: 'achivements',
