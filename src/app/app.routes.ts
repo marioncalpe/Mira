@@ -1,17 +1,10 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
-import { CalendarComponent } from './features/calendar/calendar.component';
-import { AchivementsComponent } from './features/Achivements/Achivements.component';
-import { ProgressComponent } from './features/progress/progress.component';
-import { SettingsComponent } from './features/settings/settings.component';
-import { CoherenceComponent } from './features/coherence/coherence.component';
-import { OnboardingComponent } from './features/onboarding/onboarding.component';
-import { AproposComponent } from './features/apropos/apropos.component';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home', // Redirige vers la page d'accueil par défaut
+    redirectTo: 'home',
     pathMatch: 'full'
   },
   {
@@ -20,25 +13,30 @@ export const routes: Routes = [
   },
   {
     path: 'calendar',
-    component: CalendarComponent
+    loadComponent: () => import('./features/calendar/calendar.component').then(m => m.CalendarComponent)
   },
   {
     path: 'achivements',
-    component: AchivementsComponent
+    loadComponent: () => import('./features/Achivements/Achivements.component').then(m => m.AchivementsComponent)
   },
   {
     path: 'progress',
-    component: ProgressComponent
+    loadComponent: () => import('./features/progress/progress.component').then(m => m.ProgressComponent)
   },
   {
     path: 'settings',
-    component: SettingsComponent
-  }
-  ,
+    loadComponent: () => import('./features/settings/settings.component').then(m => m.SettingsComponent)
+  },
   {
     path: 'coherence',
-    component: CoherenceComponent
+    loadComponent: () => import('./features/coherence/coherence.component').then(m => m.CoherenceComponent)
   },
-  { path: 'onboarding', component: OnboardingComponent },
-  { path: 'apropos', component: AproposComponent },
+  {
+    path: 'onboarding',
+    loadComponent: () => import('./features/onboarding/onboarding.component').then(m => m.OnboardingComponent)
+  },
+  {
+    path: 'apropos',
+    loadComponent: () => import('./features/apropos/apropos.component').then(m => m.AproposComponent)
+  },
 ];
