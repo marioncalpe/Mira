@@ -3,7 +3,20 @@
   <head>
     <meta charset="utf-8" />
     <title>Mira</title>
-    <meta name="description" content="Mira, ton espace personnel pour suivre tes sorties, apaiser ton anxiété et progresser à ton rythme au quotidien." />
+    <meta
+      name="description"
+      content="Mira, ton espace personnel pour suivre tes sorties, apaiser ton anxiété et progresser à ton rythme au quotidien."
+    />
+    <meta
+      name="theme-color"
+      content="#f9f9f9"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      name="theme-color"
+      content="#121212"
+      media="(prefers-color-scheme: dark)"
+    />
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -50,11 +63,11 @@
         color: white;
         font-family: "Poppins", sans-serif;
 
-        h1{
+        h1 {
           font-size: 2.5em;
           margin: 0;
         }
-        p{
+        p {
           display: flex;
           justify-content: center;
           align-items: center;
@@ -73,7 +86,10 @@
       </div>
       <div class="splash-text">
         <h1>Mira</h1>
-        <p>Ne craignez plus les nuages,<br> apprenez à les traverser</p>
+        <p>
+          Ne craignez plus les nuages,<br />
+          apprenez à les traverser
+        </p>
       </div>
     </div>
 
@@ -82,11 +98,11 @@
 
     <script>
       // Masquer la splash screen une fois l'app chargée
-      window.addEventListener('load', () => {
+      window.addEventListener("load", () => {
         setTimeout(() => {
-          document.getElementById('splash-screen').style.opacity = '0';
+          document.getElementById("splash-screen").style.opacity = "0";
           setTimeout(() => {
-            document.getElementById('splash-screen').style.display = 'none';
+            document.getElementById("splash-screen").style.display = "none";
           }, 500); // Temps pour l'animation de disparition
         }, 2000); // Temps d'affichage de la splash screen (2 secondes)
       });
