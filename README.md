@@ -2,7 +2,7 @@
 
 Mira est une application mobile Angular de suivi de sorties pour les personnes souffrant d'anxiété sociale ou d'agoraphobie. Elle permet de planifier, noter et analyser ses sorties du quotidien, avec un système de succès pour encourager la progression.
 
-🔗 **Application en ligne** : [marioncalpe.github.io/Mira](https://marioncalpe.github.io/Mira)
+🔗 **Application en ligne** : [miranxiete.netlify.app](https://miranxiete.netlify.app/home)
 
 ---
 
@@ -242,10 +242,15 @@ ng generate service core/nom-du-service
 
 # Build de production
 ng build
-
-# Déploiement GitHub Pages
-ng build --base-href /Mira/
 ```
+
+---
+
+## ☁️ Déploiement
+
+L'application est déployée automatiquement sur **Netlify** à chaque push sur la branche principale.
+
+🔗 [miranxiete.netlify.app](https://miranxiete.netlify.app/home)
 
 ---
 
@@ -256,4 +261,4 @@ ng build --base-href /Mira/
 - **LocalStorage** — Persistance des données
 - **SCSS / SASS** — Styles
 - **PWA** — Progressive Web App (manifest + service worker)
-- **GitHub Pages** — Hébergement
+- **Netlify** — Hébergement et déploiement continu
