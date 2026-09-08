@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink, RouterLinkActive, ActivatedRoute, Router  } from '@angular/router';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
 import { HeadComponent } from '../../shared/components/head/head.component';
@@ -24,7 +25,7 @@ import { FormsModule } from '@angular/forms';
     RouterLink, RouterLinkActive, FormsModule
   ],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   /*================================*/
   /*           VARIABLES            */
@@ -45,6 +46,10 @@ export class HomeComponent implements OnInit {
   nouveauTitreNote = '';
   nouveauContenuNote = '';
 
+  // Conteneur qui regroupe tous les abonnements RxJS de ce composant,
+  // pour pouvoir tous les désinscrire d'un coup dans ngOnDestroy
+  private subscriptions = new Subscription();
+
   /*================================*/
   /*         CONSTRUCTEUR           */
   /*================================*/
@@ -56,7 +61,9 @@ export class HomeComponent implements OnInit {
   /*================================*/
 
   ngOnInit(): void {
-    this.storageService.prenom$.subscribe(prenom => this.prenom = prenom);
+    this.subscriptions.add(
+      this.storageService.prenom$.subscribe(prenom => this.prenom = prenom)
+    );
     // NB sortie du mois
     this.sortiesCeMois = this.storageService.getSortiesCeMois();
     // STEAK
@@ -68,8 +75,13 @@ export class HomeComponent implements OnInit {
     this.recentesSorties = this.storageService.getRecentesSorties();
     this.derniersBadges = this.storageService.getDerniersBadges();
     this.notes = this.storageService.getNotes();
-    this.storageService.notes$.subscribe(notes => this.notes = notes);
+    this.subscriptions.add(
+      this.storageService.notes$.subscribe(notes => this.notes = notes)
+    );
+  }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
 // Méthodes

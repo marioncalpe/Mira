@@ -1,7 +1,4 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeadComponent } from './head.component';
 
@@ -9,14 +6,12 @@ describe('HeadComponent', () => {
   let component: HeadComponent;
   let fixture: ComponentFixture<HeadComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ HeadComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HeadComponent]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(HeadComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
+import { Subscription } from 'rxjs';
 import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
 import { Sortie } from '../../core/models/sortie.model';
@@ -22,7 +23,7 @@ import { HeadComponent } from "../../shared/components/head/head.component";
     HeadComponent
   ],
 })
-export class ProgressComponent implements OnInit {
+export class ProgressComponent implements OnInit, OnDestroy {
 
   /*================================*/
   /*       VARIABLES - SORTIES      */
@@ -61,6 +62,10 @@ export class ProgressComponent implements OnInit {
   modalObjectifVisible = false;
   nouveauTitreObjectif = '';
 
+  // Conteneur qui regroupe tous les abonnements RxJS de ce composant,
+  // pour pouvoir tous les désinscrire d'un coup dans ngOnDestroy
+  private subscriptions = new Subscription();
+
   /*================================*/
   /*         CONSTRUCTEUR           */
   /*================================*/
@@ -75,15 +80,21 @@ export class ProgressComponent implements OnInit {
     this.calculerGraphique();
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
   /*================================*/
   /*        CHARGEMENT DONNÉES      */
   /*================================*/
 
   private chargerObjectifs(): void {
-    this.storageService.objectifs$.subscribe(() => {
-      this.objectifsEnCours = this.storageService.getObjectifsEnCours();
-      this.objectifTermines = this.storageService.getObjectifsTermines();
-    });
+    this.subscriptions.add(
+      this.storageService.objectifs$.subscribe(() => {
+        this.objectifsEnCours = this.storageService.getObjectifsEnCours();
+        this.objectifTermines = this.storageService.getObjectifsTermines();
+      })
+    );
   }
 
   private chargerSorties(): void {

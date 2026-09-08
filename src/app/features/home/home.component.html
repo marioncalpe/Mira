@@ -3,80 +3,80 @@
   <div class="stats">
     <!-- Carte : Total des sorties du mois (icône calendrier) -->
     <div class="carte carte-row">
-      <span aria-label="Total sortie du mois">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-calendar-fold-icon lucide-calendar-fold"
-        >
-          <path
-            d="M3 20a2 2 0 0 0 2 2h10a2.4 2.4 0 0 0 1.706-.706l3.588-3.588A2.4 2.4 0 0 0 21 16V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"
-          />
-          <path d="M15 22v-5a1 1 0 0 1 1-1h5" />
-          <path d="M8 2v4" />
-          <path d="M16 2v4" />
-          <path d="M3 10h18" />
-        </svg>
-      </span>
+      <span class="sr-only">Total sorties du mois</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-calendar-fold-icon lucide-calendar-fold"
+        aria-hidden="true"
+      >
+        <path
+          d="M3 20a2 2 0 0 0 2 2h10a2.4 2.4 0 0 0 1.706-.706l3.588-3.588A2.4 2.4 0 0 0 21 16V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z"
+        />
+        <path d="M15 22v-5a1 1 0 0 1 1-1h5" />
+        <path d="M8 2v4" />
+        <path d="M16 2v4" />
+        <path d="M3 10h18" />
+      </svg>
       <p>{{ sortiesCeMois }}</p>
     </div>
 
     <!-- Carte : Objectifs en cours (icône badge) -->
     <div class="carte carte-row">
-      <span aria-label="Objectifs en cours">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-circle-dot-dashed-icon lucide-circle-dot-dashed"
-        >
-          <path d="M10.1 2.18a9.93 9.93 0 0 1 3.8 0" />
-          <path d="M17.6 3.71a9.95 9.95 0 0 1 2.69 2.7" />
-          <path d="M21.82 10.1a9.93 9.93 0 0 1 0 3.8" />
-          <path d="M20.29 17.6a9.95 9.95 0 0 1-2.7 2.69" />
-          <path d="M13.9 21.82a9.94 9.94 0 0 1-3.8 0" />
-          <path d="M6.4 20.29a9.95 9.95 0 0 1-2.69-2.7" />
-          <path d="M2.18 13.9a9.93 9.93 0 0 1 0-3.8" />
-          <path d="M3.71 6.4a9.95 9.95 0 0 1 2.7-2.69" />
-          <circle cx="12" cy="12" r="1" />
-        </svg>
-      </span>
+      <span class="sr-only">Objectifs en cours</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide lucide-circle-dot-dashed-icon lucide-circle-dot-dashed"
+        aria-hidden="true"
+      >
+        <path d="M10.1 2.18a9.93 9.93 0 0 1 3.8 0" />
+        <path d="M17.6 3.71a9.95 9.95 0 0 1 2.69 2.7" />
+        <path d="M21.82 10.1a9.93 9.93 0 0 1 0 3.8" />
+        <path d="M20.29 17.6a9.95 9.95 0 0 1-2.7 2.69" />
+        <path d="M13.9 21.82a9.94 9.94 0 0 1-3.8 0" />
+        <path d="M6.4 20.29a9.95 9.95 0 0 1-2.69-2.7" />
+        <path d="M2.18 13.9a9.93 9.93 0 0 1 0-3.8" />
+        <path d="M3.71 6.4a9.95 9.95 0 0 1 2.7-2.69" />
+        <circle cx="12" cy="12" r="1" />
+      </svg>
       <p>{{ nbObjectifsEnCours }}</p>
     </div>
 
     <!-- Carte : Record jours consécutifs (icône flamme) -->
     <div class="carte carte-row">
-      <span aria-label="Record jours consécutifs">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide-fire-icon"
-        >
-          <path
-            d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"
-          />
-        </svg>
-      </span>
+      <span class="sr-only">Record de jours consécutifs</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        class="lucide-fire-icon"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4"
+        />
+      </svg>
       <p>{{ streak }}</p>
     </div>
   </div>

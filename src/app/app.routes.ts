@@ -28,7 +28,7 @@ export const routes: Routes = [
   },
   {
     path: 'achivements',
-    loadComponent: () => import('./features/Achivements/Achivements.component').then(m => m.AchivementsComponent)
+    loadComponent: () => import('./features/achivements/achivements.component').then(m => m.AchivementsComponent)
   },
   {
     path: 'progress',

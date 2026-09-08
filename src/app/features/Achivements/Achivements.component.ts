@@ -9,8 +9,8 @@ import { HeadComponent } from "../../shared/components/head/head.component";
 @Component({
   selector: 'app-Achivements',
   standalone: true,
-  templateUrl: './Achivements.component.html',
-  styleUrls: ['./Achivements.component.scss'],
+  templateUrl: './achivements.component.html',
+  styleUrls: ['./achivements.component.scss'],
   imports: [CommonModule, MenuComponent, MotivationBannerComponent, HeadComponent],
 })
 export class AchivementsComponent implements OnInit {

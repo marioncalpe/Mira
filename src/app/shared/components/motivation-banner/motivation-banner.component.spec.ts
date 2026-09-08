@@ -1,7 +1,4 @@
-/* tslint:disable:no-unused-variable */
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MotivationBannerComponent } from './motivation-banner.component';
 
@@ -9,14 +6,12 @@ describe('MotivationBannerComponent', () => {
   let component: MotivationBannerComponent;
   let fixture: ComponentFixture<MotivationBannerComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ MotivationBannerComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [MotivationBannerComponent]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(MotivationBannerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
