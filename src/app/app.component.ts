@@ -24,6 +24,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('standalone:', isStandalone(), '| iOS:', isIos(), '| in-app:', isInAppBrowser());
+    // TEST TEMPORAIRE : à supprimer après le test sur iPhone
+    alert(`standalone: ${isStandalone()} | iOS: ${isIos()} | in-app: ${isInAppBrowser()}`);
+    
     if (!localStorage.getItem('onboarding_done')) {
       this.router.navigate(['/onboarding']);
     }
