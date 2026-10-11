@@ -1,28 +1,50 @@
 @use "styles" as *;
 
-.install-hint {
+/*================================*/
+/*   LE VOILE (fond sur toute     */
+/*   la page, avec flou)          */
+/*================================*/
+.install-overlay {
   position: fixed;
-  bottom: 80px; // au-dessus du menu du bas
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 2em);
-  max-width: 398px; // même largeur que le contenu de l'app (430px - marges)
+  inset: 0; // raccourci pour top/right/bottom/left: 0
+  z-index: 10000; // au-dessus du menu, sous l'onboarding et les badges (9999)
+
+  // On centre la boîte avec flex : plus besoin de transform
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
   box-sizing: border-box;
-  padding: 16px;
+
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); // Safari iOS
+  animation: fadeIn 250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/*================================*/
+/*   LA BOÎTE                     */
+/*================================*/
+.install-hint {
+  position: relative; // pour placer la croix dans la boîte
+  width: 100%;
+  max-width: 340px;
+  box-sizing: border-box;
+  padding: 24px 20px 20px 20px;
   padding-right: 40px; // place pour la croix
   border-radius: 20px;
+
+  // Fond presque opaque (thème clair). Le thème sombre est en bas du fichier.
+  background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(128, 128, 128, 0.25);
   border-left: 5px solid $secondary;
-  background: var(--carte-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px); // Safari iOS
-  box-shadow: 0 4px 15px var(--shadow);
-  z-index: 500; // sous l'onboarding et la notification de badge (9999)
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
   animation: slideUp 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 
   h3 {
-    margin: 0 0 8px 0;
+    margin: 0 0 10px 0;
     font-family: $font-main;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--text-color);
   }
 
@@ -31,13 +53,13 @@
     padding-left: 18px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 8px;
   }
 
   li,
   p {
-    font-size: 0.8rem;
-    line-height: 1.4;
+    font-size: 0.85rem;
+    line-height: 1.45;
     color: var(--text-secondary-color);
   }
 
@@ -55,7 +77,7 @@
   }
 
   .astuce {
-    margin-top: 8px;
+    margin-top: 10px;
     font-style: italic;
   }
 
@@ -71,17 +93,46 @@
     padding: 4px 8px;
   }
 
-  .btn-installer {
-    margin-top: 12px;
+  /*================================*/
+  /*   BOUTONS                      */
+  /*================================*/
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .btn-principal,
+  .btn-secondaire {
     width: 100%;
     padding: 10px;
     border: none;
     border-radius: $radius;
-    background: $primary;
-    color: white;
     font-family: $font-main;
     font-weight: 600;
     font-size: 0.9rem;
     cursor: pointer;
   }
+
+  .btn-principal {
+    background: $primary;
+    color: white;
+  }
+
+  .btn-secondaire {
+    background: rgba(128, 128, 128, 0.15);
+    color: var(--text-color);
+  }
+}
+
+/*================================*/
+/*   THÈME SOMBRE                 */
+/*   :host-context(body.dark) =   */
+/*   "si le body a la classe dark"*/
+/*================================*/
+:host-context(body.dark) .install-hint {
+  background: rgba(30, 20, 40, 0.97);
+  border-color: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
 }

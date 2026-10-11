@@ -1,6 +1,4 @@
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
-import { Subscription, filter } from 'rxjs';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { isInAppBrowser, isIos, isStandalone } from '../../../core/pwa-utils';
 
 /*================================*/
@@ -29,7 +27,7 @@ const CLE_FERME = 'install_hint_dismissed';
   templateUrl: './install-hint.component.html',
   styleUrls: ['./install-hint.component.scss'],
 })
-export class InstallHintComponent implements OnInit, OnDestroy {
+export class InstallHintComponent implements OnInit {
   /*================================*/
   /*           VARIABLES            */
   /*================================*/
@@ -39,13 +37,6 @@ export class InstallHintComponent implements OnInit, OnDestroy {
 
   // L'événement du navigateur, gardé de côté pour l'utiliser au clic
   private promptEvent: BeforeInstallPromptEvent | null = null;
-  private subscription = new Subscription();
-
-  /*================================*/
-  /*         CONSTRUCTEUR           */
-  /*================================*/
-
-  constructor(private router: Router) {}
 
   /*================================*/
   /*          CYCLE DE VIE          */
@@ -53,20 +44,7 @@ export class InstallHintComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.mode = this.detecterMode();
-
-    // À chaque changement de page, on recalcule si on doit afficher le message.
-    // Utile car l'onboarding se termine par une navigation vers /home.
-    this.subscription.add(
-      this.router.events
-        .pipe(filter((event) => event instanceof NavigationEnd))
-        .subscribe(() => this.mettreAJourVisibilite()),
-    );
-
     this.mettreAJourVisibilite();
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   /*================================*/
@@ -99,7 +77,8 @@ export class InstallHintComponent implements OnInit, OnDestroy {
     this.visible = false;
   }
 
-  // Clic sur la croix : on retient le choix pour ne plus afficher le message
+  // Clic sur la croix, le voile ou un bouton : on retient le choix
+  // pour ne plus afficher le message
   fermer(): void {
     this.ecrire(CLE_FERME, 'true');
     this.visible = false;
@@ -115,18 +94,11 @@ export class InstallHintComponent implements OnInit, OnDestroy {
     return isInAppBrowser() ? 'ios-in-app' : 'ios';
   }
 
-  // Toutes les conditions pour afficher le message, au même endroit
+  // Les conditions pour afficher le message, au même endroit :
+  // un message à montrer, pas déjà fermé, appli pas déjà installée.
   private mettreAJourVisibilite(): void {
-    const onboardingTermine = this.lire('onboarding_done') === 'true';
     const dejaFerme = this.lire(CLE_FERME) === 'true';
-    const surOnboarding = this.router.url.startsWith('/onboarding');
-
-    this.visible =
-      this.mode !== null &&
-      onboardingTermine &&
-      !dejaFerme &&
-      !surOnboarding &&
-      !isStandalone();
+    this.visible = this.mode !== null && !dejaFerme && !isStandalone();
   }
 
   // localStorage peut lancer une erreur (cookies bloqués) : on protège
