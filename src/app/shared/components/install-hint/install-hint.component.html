@@ -1,0 +1,40 @@
+@if (visible) {
+  <div class="install-hint" role="dialog" aria-label="Installer Mira">
+    <button class="close" (click)="fermer()" aria-label="Fermer">✕</button>
+
+    @switch (mode) {
+      @case ('ios') {
+        <h3>🌸 Installe Mira sur ton iPhone</h3>
+        <ol>
+          <li>
+            Appuie sur le bouton <strong>Partager</strong>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2v13" />
+              <path d="m16 6-4-4-4 4" />
+              <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
+            </svg>
+            en bas de l'écran
+          </li>
+          <li>Choisis <strong>« Sur l'écran d'accueil »</strong> (fais défiler le menu si besoin)</li>
+          <li>Appuie sur <strong>« Ajouter »</strong></li>
+        </ol>
+        <p class="astuce">Tu retrouveras Mira comme une vraie appli, en plein écran.</p>
+      }
+
+      @case ('ios-in-app') {
+        <h3>🌸 Ouvre Mira dans Safari</h3>
+        <p>
+          Ce navigateur ne permet pas d'installer l'application. Ouvre ce lien
+          dans <strong>Safari</strong> (menu ⋯ puis « Ouvrir dans le
+          navigateur »), puis ajoute Mira à ton écran d'accueil.
+        </p>
+      }
+
+      @case ('installable') {
+        <h3>🌸 Installe Mira</h3>
+        <p>Ajoute Mira à ton écran d'accueil pour l'ouvrir comme une vraie appli.</p>
+        <button class="btn-installer" (click)="installer()">Installer</button>
+      }
+    }
+  </div>
+}

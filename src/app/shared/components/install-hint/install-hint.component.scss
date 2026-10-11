@@ -1,0 +1,87 @@
+@use "styles" as *;
+
+.install-hint {
+  position: fixed;
+  bottom: 80px; // au-dessus du menu du bas
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 2em);
+  max-width: 398px; // même largeur que le contenu de l'app (430px - marges)
+  box-sizing: border-box;
+  padding: 16px;
+  padding-right: 40px; // place pour la croix
+  border-radius: 20px;
+  border-left: 5px solid $secondary;
+  background: var(--carte-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); // Safari iOS
+  box-shadow: 0 4px 15px var(--shadow);
+  z-index: 500; // sous l'onboarding et la notification de badge (9999)
+  animation: slideUp 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
+  h3 {
+    margin: 0 0 8px 0;
+    font-family: $font-main;
+    font-size: 0.95rem;
+    color: var(--text-color);
+  }
+
+  ol {
+    margin: 0;
+    padding-left: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  li,
+  p {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    color: var(--text-secondary-color);
+  }
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    color: var(--text-color);
+  }
+
+  svg {
+    vertical-align: middle;
+    color: $primary;
+  }
+
+  .astuce {
+    margin-top: 8px;
+    font-style: italic;
+  }
+
+  .close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: var(--text-secondary-color);
+    padding: 4px 8px;
+  }
+
+  .btn-installer {
+    margin-top: 12px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: $radius;
+    background: $primary;
+    color: white;
+    font-family: $font-main;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+}

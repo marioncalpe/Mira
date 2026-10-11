@@ -3,13 +3,14 @@ import { RouterOutlet, Router } from '@angular/router';
 import { BadgeNotificationComponent } from './shared/components/badge-notification/badge-notification.component';
 import { NotificationService } from './core/notification.service';
 import { ThemeService } from './core/theme.service';
-import { isStandalone, isIos, isInAppBrowser } from  './core/pwa-utils';
+import { isStandalone, isIos, isInAppBrowser } from './core/pwa-utils';
+import { InstallHintComponent } from './shared/components/install-hint/install-hint.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, BadgeNotificationComponent],
+  imports: [RouterOutlet, BadgeNotificationComponent, InstallHintComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss'
+  styleUrl: './app.component.scss',
 })
 export class AppComponent implements OnInit {
   title = 'Mira';
@@ -17,7 +18,7 @@ export class AppComponent implements OnInit {
   constructor(
     private notificationService: NotificationService,
     private themeService: ThemeService,
-    private router: Router
+    private router: Router,
   ) {
     // this.notificationService.programmerTout();
   }
@@ -26,7 +27,7 @@ export class AppComponent implements OnInit {
     //? console.log('standalone:', isStandalone(), '| iOS:', isIos(), '| in-app:', isInAppBrowser());
     // TEST TEMPORAIRE : à supprimer après le test sur iPhone
     //? alert(`standalone: ${isStandalone()} | iOS: ${isIos()} | in-app: ${isInAppBrowser()}`);
-    
+
     if (!localStorage.getItem('onboarding_done')) {
       this.router.navigate(['/onboarding']);
     }
