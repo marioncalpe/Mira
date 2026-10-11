@@ -352,21 +352,34 @@ export class StorageService {
   getMaxJoursConsecutifs(sorties: Sortie[]): number {
     if (sorties.length === 0) return 0;
 
-    // Tri du plus ancien au plus récent
-    const triees = [...sorties].sort(
-      (a, b) => new Date(a.start).getTime() - new Date(b.start).getTime(),
-    );
-
-    let maxConsecutifs = 1;
-    let compteur = 1;
     const UN_JOUR_MS = 86400000; // 24h en millisecondes
 
-    for (let i = 1; i < triees.length; i++) {
-      const dateActuelle = new Date(triees[i].start);
-      const datePrecedente = new Date(triees[i - 1].start);
-      const diff = dateActuelle.getTime() - datePrecedente.getTime();
+    // 1. On transforme chaque sortie en "numéro de jour" (un entier),
+    //    en ignorant l'heure. Un Set ne garde chaque valeur qu'une fois :
+    //    deux sorties le même jour ne comptent que pour un jour.
+    const jours = new Set<number>();
+    for (const sortie of sorties) {
+      const date = new Date(sortie.start);
+      // Date.UTC(année, mois, jour) donne minuit pile pour ce jour du calendrier.
+      // On part de getFullYear/getMonth/getDate (heure locale) : l'heure de la
+      // sortie et le changement d'heure n'ont donc plus aucun effet.
+      const minuit = Date.UTC(
+        date.getFullYear(),
+        date.getMonth(),
+        date.getDate(),
+      );
+      jours.add(Math.round(minuit / UN_JOUR_MS));
+    }
 
-      if (diff === UN_JOUR_MS) {
+    // 2. On trie du plus ancien au plus récent
+    const joursTries = [...jours].sort((a, b) => a - b);
+
+    // 3. On compte : deux jours se suivent si leur numéro diffère de 1
+    let maxConsecutifs = 1;
+    let compteur = 1;
+
+    for (let i = 1; i < joursTries.length; i++) {
+      if (joursTries[i] - joursTries[i - 1] === 1) {
         compteur++;
         maxConsecutifs = Math.max(maxConsecutifs, compteur);
       } else {
