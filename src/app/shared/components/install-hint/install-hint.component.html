@@ -12,7 +12,8 @@
       <button class="close" (click)="fermer()" aria-label="Fermer">✕</button>
 
       @switch (mode) {
-        @case ('ios') {
+        <!-- iPhone / iPad : Safari, Chrome, Firefox, Edge... -->
+        @case ('ios-manuel') {
           <h3>🌸 Installe Mira sur ton iPhone</h3>
           <ol>
             <li>
@@ -22,35 +23,63 @@
                 <path d="m16 6-4-4-4 4" />
                 <path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8" />
               </svg>
-              en bas de l'écran
+              dans la barre de ton navigateur (en bas ou en haut selon le navigateur)
             </li>
             <li>Choisis <strong>« Sur l'écran d'accueil »</strong> (fais défiler le menu si besoin)</li>
             <li>Appuie sur <strong>« Ajouter »</strong></li>
           </ol>
           <p class="astuce">Tu retrouveras Mira comme une vraie appli, en plein écran.</p>
+          <p class="astuce">Tu ne vois pas « Sur l'écran d'accueil » ? Ouvre Mira dans Safari.</p>
           <div class="actions">
             <button class="btn-principal" (click)="fermer()">J'ai compris</button>
           </div>
         }
 
-        @case ('ios-in-app') {
-          <h3>🌸 Ouvre Mira dans Safari</h3>
-          <p>
-            Ce navigateur ne permet pas d'installer l'application. Ouvre ce lien
-            dans <strong>Safari</strong> (menu ⋯ puis « Ouvrir dans le
-            navigateur »), puis ajoute Mira à ton écran d'accueil.
+        <!-- Android sans bouton d'installation (Firefox, ou Chrome si non proposé) -->
+        @case ('android-manuel') {
+          <h3>🌸 Installe Mira sur ton téléphone</h3>
+          <ol>
+            <li>
+              Ouvre le <strong>menu</strong> de ton navigateur (les trois points ⋮
+              ou les trois barres ☰)
+            </li>
+            <li>
+              Choisis <strong>« Installer l'application »</strong> ou
+              <strong>« Ajouter à l'écran d'accueil »</strong>
+            </li>
+            <li>Confirme avec <strong>« Installer »</strong> ou <strong>« Ajouter »</strong></li>
+          </ol>
+          <p class="astuce">
+            Le nom exact change selon ton navigateur (Chrome, Firefox, Samsung
+            Internet…). Tu retrouveras Mira comme une vraie appli.
           </p>
           <div class="actions">
             <button class="btn-principal" (click)="fermer()">J'ai compris</button>
           </div>
         }
 
+        <!-- Le navigateur propose lui-même l'installation -->
         @case ('installable') {
           <h3>🌸 Installe Mira</h3>
           <p>Ajoute Mira à ton écran d'accueil pour l'ouvrir comme une vraie appli.</p>
           <div class="actions">
             <button class="btn-principal" (click)="installer()">Installer</button>
             <button class="btn-secondaire" (click)="fermer()">Non merci</button>
+          </div>
+        }
+
+        <!-- Navigateur intégré à une autre appli (Instagram, Facebook...) -->
+        @case ('in-app') {
+          <h3>🌸 Ouvre Mira dans ton navigateur</h3>
+          <p>
+            Ce navigateur intégré ne permet pas d'installer l'application.
+            Ouvre ce lien dans ton navigateur habituel (<strong>Safari</strong>
+            ou <strong>Chrome</strong>) avec le menu ⋯ ou ⋮, puis
+            « Ouvrir dans le navigateur ». Tu pourras ensuite ajouter Mira à
+            ton écran d'accueil.
+          </p>
+          <div class="actions">
+            <button class="btn-principal" (click)="fermer()">J'ai compris</button>
           </div>
         }
       }

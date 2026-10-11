@@ -36,9 +36,21 @@ export function isIos(): boolean {
   return iosClassique || ipadRecent;
 }
 
+// L'appareil est-il sous Android ? (téléphone ou tablette)
+export function isAndroid(): boolean {
+  return /Android/i.test(navigator.userAgent);
+}
+
+// Téléphone ou tablette (iOS ou Android) ?
+// Sert à ne rien afficher sur ordinateur.
+export function isMobile(): boolean {
+  return isIos() || isAndroid();
+}
+
 // Le site est-il ouvert dans le navigateur intégré d'une autre appli ?
 // (Instagram, Facebook, Messenger, TikTok, Snapchat, LinkedIn...)
+// "; wv)" est la marque des WebView Android (navigateur intégré générique).
 export function isInAppBrowser(): boolean {
   const ua = navigator.userAgent;
-  return /FBAN|FBAV|Instagram|Messenger|TikTok|musical_ly|Snapchat|LinkedInApp/i.test(ua);
+  return /FBAN|FBAV|FB_IAB|Instagram|Messenger|TikTok|musical_ly|Snapchat|LinkedInApp|; wv\)/i.test(ua);
 }

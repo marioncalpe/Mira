@@ -1,5 +1,11 @@
-import { Component, HostListener, OnInit } from '@angular/core';
-import { isInAppBrowser, isIos, isStandalone } from '../../../core/pwa-utils';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import {
+  isAndroid,
+  isInAppBrowser,
+  isIos,
+  isMobile,
+  isStandalone,
+} from '../../../core/pwa-utils';
 
 /*================================*/
 /*            TYPES               */
@@ -12,14 +18,18 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
 }
 
-// Les 3 messages possibles. null = on n'affiche rien.
-//  - 'ios'        : iPhone/iPad dans Safari → explications à la main
-//  - 'ios-in-app' : iPhone dans Instagram, Facebook... → "ouvre dans Safari"
-//  - 'installable': le navigateur propose l'installation → bouton "Installer"
-type ModeAffichage = 'ios' | 'ios-in-app' | 'installable' | null;
+// Les 4 messages possibles. null = on n'affiche rien.
+//  - 'ios-manuel'    : iPhone/iPad (Safari, Chrome, Firefox...) → étapes à la main
+//  - 'android-manuel': Android sans bouton d'installation → étapes à la main
+//  - 'installable'   : le navigateur propose l'installation → bouton "Installer"
+//  - 'in-app'        : navigateur intégré (Instagram...) → "ouvre dans ton navigateur"
+type ModeAffichage = 'ios-manuel' | 'android-manuel' | 'installable' | 'in-app' | null;
 
 // Clé du localStorage : l'utilisatrice a fermé le message
 const CLE_FERME = 'install_hint_dismissed';
+
+// Temps pendant lequel on attend l'événement d'installation sur Android
+const DELAI_ATTENTE_ANDROID_MS = 3000;
 
 @Component({
   selector: 'app-install-hint',
@@ -27,7 +37,7 @@ const CLE_FERME = 'install_hint_dismissed';
   templateUrl: './install-hint.component.html',
   styleUrls: ['./install-hint.component.scss'],
 })
-export class InstallHintComponent implements OnInit {
+export class InstallHintComponent implements OnInit, OnDestroy {
   /*================================*/
   /*           VARIABLES            */
   /*================================*/
@@ -38,6 +48,9 @@ export class InstallHintComponent implements OnInit {
   // L'événement du navigateur, gardé de côté pour l'utiliser au clic
   private promptEvent: BeforeInstallPromptEvent | null = null;
 
+  // Le minuteur d'attente (Android), gardé pour pouvoir l'annuler
+  private minuteur: ReturnType<typeof setTimeout> | null = null;
+
   /*================================*/
   /*          CYCLE DE VIE          */
   /*================================*/
@@ -45,18 +58,38 @@ export class InstallHintComponent implements OnInit {
   ngOnInit(): void {
     this.mode = this.detecterMode();
     this.mettreAJourVisibilite();
+
+    // Android : le navigateur peut envoyer l'événement d'installation
+    // un peu après le chargement. On l'attend quelques secondes ;
+    // s'il n'est pas venu, on affiche les étapes manuelles.
+    if (this.mode === null && isAndroid()) {
+      this.minuteur = setTimeout(() => {
+        if (this.mode === null) {
+          this.mode = 'android-manuel';
+          this.mettreAJourVisibilite();
+        }
+      }, DELAI_ATTENTE_ANDROID_MS);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.annulerAttente();
   }
 
   /*================================*/
   /*     ÉVÉNEMENT DU NAVIGATEUR    */
   /*================================*/
 
-  // Chrome/Edge (Android et ordinateur) préviennent quand l'appli est installable.
+  // Chrome/Edge/Samsung Internet préviennent quand l'appli est installable.
   // @HostListener = "écoute cet événement de la fenêtre" (retiré tout seul à la destruction)
   @HostListener('window:beforeinstallprompt', ['$event'])
   surInstallationDisponible(event: Event): void {
+    // Sur ordinateur, on laisse le navigateur faire : pas de fenêtre chez nous
+    if (!isMobile()) return;
+
     event.preventDefault(); // on bloque la mini-bannière du navigateur
     this.promptEvent = event as BeforeInstallPromptEvent;
+    this.annulerAttente();
     this.mode = 'installable';
     this.mettreAJourVisibilite();
   }
@@ -88,10 +121,13 @@ export class InstallHintComponent implements OnInit {
   /*       MÉTHODES PRIVÉES         */
   /*================================*/
 
-  // Quel message afficher au démarrage ? (Android/ordinateur : on attend l'événement)
+  // Quel message afficher au démarrage ?
+  // (Android : on ne sait pas encore, on attend l'événement → null)
   private detecterMode(): ModeAffichage {
-    if (!isIos()) return null;
-    return isInAppBrowser() ? 'ios-in-app' : 'ios';
+    if (!isMobile()) return null;
+    if (isInAppBrowser()) return 'in-app';
+    if (isIos()) return 'ios-manuel';
+    return null;
   }
 
   // Les conditions pour afficher le message, au même endroit :
@@ -99,6 +135,14 @@ export class InstallHintComponent implements OnInit {
   private mettreAJourVisibilite(): void {
     const dejaFerme = this.lire(CLE_FERME) === 'true';
     this.visible = this.mode !== null && !dejaFerme && !isStandalone();
+  }
+
+  // Arrête le minuteur d'attente s'il tourne
+  private annulerAttente(): void {
+    if (this.minuteur !== null) {
+      clearTimeout(this.minuteur);
+      this.minuteur = null;
+    }
   }
 
   // localStorage peut lancer une erreur (cookies bloqués) : on protège
