@@ -3,23 +3,36 @@
 .calendar-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch; // avant : center → les enfants prenaient la largeur de leur contenu
   background: var(--carte-bg); // ← thème
   border-radius: 20px;
-  padding: 20px;
+  padding: 14px 4px; // peu de marge sur les côtés : plus de place pour les jours
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   width: 100%;
   box-sizing: border-box;
 }
-
+// Le composant du calendrier remplit toute la largeur de la carte
+mwl-calendar-month-view {
+  display: block; // un composant est "inline" par défaut : width serait ignoré
+  width: 100%;
+}
 .header-calendar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  box-sizing: border-box;
+  padding: 0 8px; // compense le padding réduit du conteneur
+  gap: 4px;
   font-size: 16px;
   font-family: $font-main;
   color: var(--text-color); // ← thème
+
+  h2 {
+    margin: 0;
+    text-align: center;
+    font-size: clamp(1rem, 5.5vw, 1.5rem); // suit la largeur de l'écran
+  }
 }
 
 .bouton-ajout {
@@ -39,7 +52,15 @@
   height: 1px;
 }
 
+// Flèches mois précédent / suivant : zone tactile de 44 x 44
 .bouton-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   background: none;
   border: none;
   outline: none;
@@ -47,6 +68,7 @@
   font-size: 32px;
   font-family: $font-main;
   color: var(--text-color); // ← thème
+  -webkit-tap-highlight-color: transparent;
 }
 
 .timeline {
@@ -138,7 +160,7 @@
 }
 
 ::ng-deep .cal-month-view .cal-header {
-  border-bottom: 1px solid $secondary;
+  border-bottom: 1px solid white;
   padding-bottom: 10px;
   margin-bottom: 10px;
 }
@@ -151,68 +173,111 @@
   color: var(--text-color) !important; // ← thème
 }
 
+// Une rangée = 7 colonnes égales qui PEUVENT rétrécir (minmax(0, 1fr)).
+// gap: 0 → aucune zone morte entre deux jours : un toucher tombe toujours sur une case.
+// (et les colonnes sont exactement alignées sous L M M J V S D)
 ::ng-deep .cal-month-view .cal-cell-row {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 5px;
-  margin-bottom: 5px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0;
+  margin-bottom: 0;
 }
 
-::ng-deep .cal-day-number {
+/*================================*/
+/*  LA CASE = la zone tactile     */
+/*  (invisible, grande)           */
+/*================================*/
+::ng-deep .cal-month-view .cal-day-cell {
   display: flex;
-  margin-top: 0 !important;
-  margin-right: 0 !important;
-  margin-bottom: 0 !important;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px !important; // au moins 44px de haut : confortable pour un doigt
+  padding: 0 !important;
+  background: transparent !important; // la couleur est portée par le rond, pas par la case
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent; // pas de flash gris au toucher
+  touch-action: manipulation; // pas de zoom au double-tap
+}
+
+::ng-deep .cal-month-view .cal-day-cell .cal-cell-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 0;
+}
+
+/*================================*/
+/*  LE ROND = le dessin           */
+/*  (ce qu'on voit)               */
+/*================================*/
+::ng-deep .cal-month-view .cal-day-cell .cal-day-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: none;
+  width: 88%; // le rond fait 88% de la colonne : il suit la largeur de l'écran
+  max-width: 46px; // plafond pour les grands écrans
+  aspect-ratio: 1 / 1; // toujours un vrai cercle
+  margin: 0 !important;
+  padding: 0 !important;
+  border-radius: 50%;
   font-family: $font-secondary;
-  font-size: 13px;
+  font-size: clamp(13px, 4.2vw, 18px) !important;
   font-weight: 600;
-  padding: 0.3em;
+  line-height: 1;
   color: var(--text-color) !important; // ← thème
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease;
 }
 
-::ng-deep .cal-day-cell {
-  min-height: 0 !important;
-  //background: var(--carte-bg) !important; // ← thème
+// Aujourd'hui (défini AVANT "a des sorties" : si les deux s'appliquent, le rose gagne)
+::ng-deep .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+  background: $secondary;
+  color: $text-light !important;
+  font-weight: 700;
+  opacity: 1;
 }
 
-::ng-deep .cal-day-selected {
-  background: $primary !important;
-  color: white !important;
-  border-radius: 100%;
-  padding: 4px 0;
+// Jour avec une sortie
+::ng-deep .cal-month-view .cal-day-cell.cal-has-events .cal-day-number {
+  background: $primary;
+  color: $text-light !important;
+  opacity: 1;
 }
 
-::ng-deep .cal-day-cell.cal-today {
-  background-color: $secondary !important;
-  border-radius: 100%;
+// Jour sélectionné (si un jour sélectionné est un jour un jour passé à la vue)
+::ng-deep .cal-month-view .cal-day-cell.cal-day-selected .cal-day-number {
+  background: $primary;
+  color: $text-light !important;
+  opacity: 1;
+}
+
+// Retour visuel au toucher : le rond se rétrécit un peu
+::ng-deep .cal-month-view .cal-day-cell:active .cal-day-number {
+  transform: scale(0.9);
 }
 
 ::ng-deep .cal-events {
   display: none !important;
 }
 
-::ng-deep .cal-day-cell.cal-has-events {
-  background: $primary !important;
-  border-radius: 100%;
-  color: $text-light !important;
-}
-
-::ng-deep .cal-day-cell.cal-has-events .cal-day-number {
-  color: $text-light !important;
-}
-
-::ng-deep .cal-day-cell.cal-today .cal-day-number {
-  font-size: 20px !important;
-  color: $text-light !important;
-}
-
 ::ng-deep .cal-month-view .cal-day-badge {
   display: none !important;
 }
 
-::ng-deep .cal-month-view .cal-cell-top {
+// La librairie glisse un <span> entre .cal-cell-top et .cal-day-number.
+// Il se contente de la largeur de son contenu : le "88%" du rond se calculait
+// donc sur un parent minuscule. On l'étire sur toute la largeur de la case.
+::ng-deep .cal-month-view .cal-day-cell .cal-cell-top > span:not(.cal-day-number) {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 0;
+  width: 100%;
+}
+
+// Jours ordinaires du mois : un peu moins pâles (0.5 → 0.8)
+::ng-deep .cal-month-view .cal-day-cell:not(.cal-has-events):not(.cal-today):not(.cal-out-month) .cal-day-number {
+  opacity: 0.8;
 }

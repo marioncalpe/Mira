@@ -102,14 +102,18 @@
     }
   }
 
-  .lastBadges {
-    display: flex;
+    .lastBadges {
+    display: grid;
+    // 3 colonnes de même largeur. minmax(0, 1fr) = "au minimum 0, au maximum une part" :
+    // les colonnes peuvent rétrécir autant qu'il faut. Avec 1fr tout seul, elles
+    // refuseraient de descendre sous la taille de leur contenu.
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(6px, 2vw, 10px); // l'écart suit la largeur de l'écran, entre 6 et 10px
     box-sizing: border-box;
-    gap: 10px;
 
     img {
-      width: 100%;
-      min-width: 100px;
+      display: block;
+      width: 100%; // plus de min-width: 100px, c'était lui qui bloquait
       height: auto;
     }
   }
@@ -153,6 +157,7 @@
 
   .note-content {
     flex: 1;
+    min-width: 0; // autorise le rétrécissement : sans ça, le texte "nowrap" impose sa largeur
     cursor: pointer;
 
     .note-titre {
@@ -169,7 +174,7 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      max-width: 250px;
+      max-width: 100%; // au lieu de 250px
     }
   }
 
@@ -196,7 +201,11 @@
 }
 
 .modal-note {
-  width: 300px;
+  box-sizing: border-box;
+  width: calc(100% - 2em);
+  max-width: 340px;
+  max-height: calc(100dvh - 2em);
+  overflow-y: auto;
   animation: slideUp 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 
   input {

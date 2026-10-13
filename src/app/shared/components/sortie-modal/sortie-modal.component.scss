@@ -24,7 +24,11 @@
   padding: 20px;
   padding-top: 50px;
   border-radius: 14px;
-  width: 300px;
+  box-sizing: border-box; // le padding est compris dans la largeur
+  width: calc(100% - 2em); // jamais plus large que l'écran (1em de marge de chaque côté)
+  max-width: 340px; // la taille d'origine, sur les écrans plus grands
+  max-height: calc(100dvh - 2em); // jamais plus haut que l'écran visible
+  overflow-y: auto; // si ça ne tient pas, on fait défiler à l'intérieur
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -44,15 +48,16 @@
 
 .humeurs {
   display: flex;
+  flex-wrap: wrap; // si ça ne tient pas, on passe à la ligne
   justify-content: center;
-  gap: 10px;
+  gap: clamp(2px, 1.5vw, 10px); // l'écart suit la largeur de l'écran
 
   button {
     font-size: 24px;
     background: none;
     border: 2px solid transparent;
     border-radius: 50%;
-    padding: 8px;
+    padding: clamp(4px, 1.5vw, 8px);
     cursor: pointer;
 
     &.inactive {
@@ -63,9 +68,9 @@
 
 .notes {
   display: flex;
+  flex-wrap: wrap; // les deux notes passent l'une sous l'autre si besoin
   justify-content: center;
-  flex-direction: row;
-  gap: 2em;
+  gap: 1em 2em; // 1em entre les lignes, 2em entre les colonnes
 }
 
 .etoiles {

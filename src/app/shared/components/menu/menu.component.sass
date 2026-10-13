@@ -76,3 +76,37 @@
     button.active
         svg
             stroke: $icon-menu-active
+
+// ================================
+// ZONES TACTILES (44px minimum)
+// Placé en dernier : à égalité de précision, la dernière règle gagne
+// ================================
+
+// Les 4 icônes se partagent toute la largeur du menu (flex: 1) :
+// plus de trou entre deux boutons où le doigt ne déclenche rien
+.menu-container .menu button:not(.fab)
+    flex: 1
+    min-width: 44px
+    min-height: 44px
+    display: flex
+    align-items: center
+    justify-content: center
+    padding: 0
+    -webkit-tap-highlight-color: transparent
+
+// Le bouton + garde sa forme ronde, mais passe de 30 à 44px
+.menu-container .menu .fab
+    flex: 0 0 auto
+    width: 44px
+    height: 44px
+
+// Le bouton ⚙️ passe de 41 à 44px
+.settings
+    width: 44px
+    height: 44px
+    padding: 0
+    box-sizing: border-box
+
+// Les boutons font déjà 44px : plus besoin de gros padding autour
+.menu-container .menu
+    padding: 0.35em 0

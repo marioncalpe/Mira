@@ -81,6 +81,8 @@ $coherence-total-duration: $coherence-cycle-duration * $coherence-iterations;
   --coherence-cycle-duration: #{$coherence-cycle-duration};
   --coherence-iterations: #{$coherence-iterations};
   --coherence-total-duration: #{$coherence-total-duration};
+  --header-h: 100px; // hauteur réservée à l'en-tête (titre + citation)
+  --menu-h: 56px;    // hauteur réservée au menu du bas
 }
 
 /*======================*/
@@ -116,41 +118,30 @@ $icon-steak: $primary;
 /*        GLOBAL        */
 /*======================*/
 
-html,
-body {
+html {
   margin: 0;
-  padding: 0;
-  background-color: #121212;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
+  height: 100%;
+  background-color: #121212; // bandes sombres autour de la colonne sur grand écran
 }
 
 body {
   position: relative;
+  margin: 0 auto; // centre la colonne de 430px (remplace le flex du html)
+  padding: 0;
+  width: 100%;
+  max-width: 430px;
+  height: 100vh; // secours pour les vieux navigateurs
+  height: 100dvh; // hauteur réellement visible (suit les barres de Safari)
+  overflow: hidden;
+  box-sizing: border-box;
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  height: 100dvh;
-  width: 100vw;
-  max-width: 430px;
-  overflow: hidden;
-  padding: 1em;
   font-family: $font-secondary;
-  box-sizing: border-box;
 }
 
 body.no-scroll app-root {
   overflow: hidden !important;
-  height: 100dvh !important;
-}
-
-body.no-scroll,
-html.no-scroll {
-  overflow: hidden !important;
-  height: 100dvh !important;
 }
 
 /*======================*/
@@ -185,13 +176,23 @@ h4 {
 }
 
 app-root {
+  display: block; // un composant est "inline" par défaut : width et height seraient ignorés
+  position: absolute;
+  top: var(--header-h); // juste sous l'en-tête
+  bottom: var(--menu-h); // juste au-dessus du menu
+  left: 1em;
+  right: 1em;
+  padding-bottom: 1em;
+  box-sizing: border-box;
   z-index: 10;
-  height: calc(100dvh - 190px);
-  overflow-y: scroll;
+  overflow-y: auto;
+  overscroll-behavior: contain; // le défilement ne "déborde" pas sur le reste de la page
   -ms-overflow-style: none;
   scrollbar-width: none;
-  box-sizing: border-box;
-  margin-top: 1.5em;
+}
+
+app-root::-webkit-scrollbar {
+  display: none;
 }
 
 /*======================*/

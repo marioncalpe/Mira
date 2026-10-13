@@ -43,8 +43,10 @@
       }
 
       .splash-logo {
-        width: 512px;
-        height: 512px;
+        /* Carré qui suit l'écran : jamais plus de 512px, 70% de la largeur
+     ou 45% de la hauteur visible (le plus petit des trois) */
+        width: min(512px, 70vw, 45dvh);
+        aspect-ratio: 1; /* la hauteur reste égale à la largeur */
         display: flex;
         justify-content: center;
         align-items: center;

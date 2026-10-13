@@ -72,11 +72,13 @@
   grid-column: span 2;
 }
 .chart {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-around;
-  padding: 16px;
-  gap: 15px;
+  display: grid;
+  // une colonne par barre, toutes de même largeur, qui peuvent rétrécir
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  align-items: end;
+  gap: clamp(4px, 1.6vw, 15px);
+  padding: 16px 8px;
 }
 .chart-header {
   display: flex;
@@ -114,11 +116,11 @@
   justify-content: flex-end;
   align-items: center;
   gap: 10px;
-  flex: 1;
+  min-width: 0;
 }
 
 .bar-fill {
-  width: 100%;
+  width: 100%; // plus de min-width: 40px, c'était lui qui forçait le débordement
   background: $secondary;
   box-shadow: 0 6px 15px rgba(183, 0, 255, 0.363);
   border-radius: 12px 12px 4px 4px;
@@ -128,13 +130,14 @@
   align-items: flex-end;
   color: $text-light;
   padding-bottom: 2px;
-  min-width: 40px;
 }
 
 .label {
-  font-size: 0.65rem;
+  // Le texte s'adapte à la largeur de l'écran :
+  // jamais en dessous de 0.55rem, jamais au-dessus de 0.65rem
+  font-size: clamp(0.55rem, 2.6vw, 0.65rem);
   text-transform: capitalize;
-  color: var(--text-secondary-color); // ← thème
+  color: var(--text-secondary-color);
   text-align: center;
   white-space: nowrap;
 }
@@ -250,6 +253,10 @@ hr {
   align-items: center;
   animation: fadeIn 250ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   .carte {
+    box-sizing: border-box;
+    max-width: calc(100% - 2em); // jamais plus large que l'écran
+    max-height: calc(100dvh - 2em);
+    overflow-y: auto;
     animation: slideUp 300ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
   }
   .action {

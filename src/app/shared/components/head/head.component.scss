@@ -2,11 +2,22 @@
   position: fixed;
   top: 0;
   left: 0;
-  margin: 0.6em 1em;
-  padding-bottom: 1em;
+  right: 0;
+  margin: 0 auto; // centre l'en-tête dans la colonne de 430px
+  width: 100%;
+  max-width: 430px;
+  height: var(--header-h); // hauteur fixe : le contenu commence juste en dessous
+  padding: 0.6em 1em 0;
+  box-sizing: border-box;
+  overflow: hidden;
   color: white;
-  overflow: visible;
   z-index: 100;
-  width: calc(100% - 2em); // ← compense les marges
-  max-width: calc(430px - 2em); // ← même max-width que le body
+
+  h1 {
+    // Un prénom long ne doit ni passer à la ligne, ni passer sous le bouton ⚙️
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-right: 50px;
+  }
 }
