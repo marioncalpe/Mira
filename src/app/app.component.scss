@@ -1,0 +1,55 @@
+/*================================*/
+/*   LA COQUE                     */
+/*   colonne de la hauteur de     */
+/*   l'écran : l'en-tête et le    */
+/*   menu ne défilent pas,        */
+/*   seul le milieu défile        */
+/*================================*/
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%; // = la hauteur du body (100dvh)
+}
+
+// L'en-tête et le menu gardent leur taille : ils ne rétrécissent jamais
+.shell > app-head,
+.shell > app-menu {
+  display: block;
+  flex: none;
+}
+
+.contenu {
+  flex: 1; // prend tout l'espace restant entre l'en-tête et le menu
+  min-height: 0; // INDISPENSABLE : sans ça, un enfant flex refuse de rétrécir
+  // sous la taille de son contenu, et le défilement ne se déclenche jamais
+  overflow-y: auto;
+  overscroll-behavior: contain; // le défilement ne "déborde" pas sur le reste
+  padding: 0 1em 1em;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/*================================*/
+/*   EN-TÊTE ET MENU "EN FLUX"    */
+/*   Les composants head et menu  */
+/*   sont écrits en position      */
+/*   fixed. Ici on les remet dans */
+/*   le flux normal de la coque.  */
+/*================================*/
+.shell > app-head ::ng-deep .head {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+}
+
+.shell > app-menu ::ng-deep .menu-container {
+  position: relative;
+  bottom: auto;
+  left: auto;
+}

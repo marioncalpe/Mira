@@ -4,6 +4,9 @@ import { HomeComponent } from './features/home/home.component';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
+// "data" : des informations attachées à une route, lisibles par la coque.
+//  - titre      : le titre affiché dans l'en-tête (absent = pas d'en-tête ni de menu)
+//  - avecPrenom : ajoute le prénom après le titre (accueil)
 export const routes: Routes = [
   {
     path: '',
@@ -12,7 +15,8 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    data: { titre: 'Bonjour', avecPrenom: true },
   },
   {
     path: 'calendar',
@@ -25,29 +29,36 @@ export const routes: Routes = [
         }),
       ),
     ],
+    data: { titre: 'Calendrier' },
   },
   {
     path: 'achivements',
-    loadComponent: () => import('./features/achivements/achivements.component').then(m => m.AchivementsComponent)
+    loadComponent: () => import('./features/achivements/achivements.component').then(m => m.AchivementsComponent),
+    data: { titre: 'Succès' },
   },
   {
     path: 'progress',
-    loadComponent: () => import('./features/progress/progress.component').then(m => m.ProgressComponent)
+    loadComponent: () => import('./features/progress/progress.component').then(m => m.ProgressComponent),
+    data: { titre: 'Mon progrès' },
   },
   {
     path: 'settings',
-    loadComponent: () => import('./features/settings/settings.component').then(m => m.SettingsComponent)
+    loadComponent: () => import('./features/settings/settings.component').then(m => m.SettingsComponent),
+    data: { titre: 'Paramètres' },
   },
   {
     path: 'coherence',
-    loadComponent: () => import('./features/coherence/coherence.component').then(m => m.CoherenceComponent)
+    loadComponent: () => import('./features/coherence/coherence.component').then(m => m.CoherenceComponent),
+    data: { titre: 'SOS' },
   },
   {
     path: 'onboarding',
     loadComponent: () => import('./features/onboarding/onboarding.component').then(m => m.OnboardingComponent)
+    // pas de "titre" : la coque n'affiche ni en-tête ni menu
   },
   {
     path: 'apropos',
-    loadComponent: () => import('./features/apropos/apropos.component').then(m => m.AproposComponent)
+    loadComponent: () => import('./features/apropos/apropos.component').then(m => m.AproposComponent),
+    data: { titre: 'À propos' },
   },
 ];

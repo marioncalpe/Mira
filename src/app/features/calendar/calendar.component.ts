@@ -17,10 +17,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { StorageService } from '../../core/storage/storage.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { SortieModalComponent } from '../../shared/components/sortie-modal/sortie-modal.component';
-import { MenuComponent } from '../../shared/components/menu/menu.component';
 import { CustomDateFormatter } from './custom-date-formatter';
-import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
-import { HeadComponent } from "../../shared/components/head/head.component";
 
 @Component({
   selector: 'app-calendar',
@@ -39,13 +36,10 @@ import { HeadComponent } from "../../shared/components/head/head.component";
   imports: [
     CommonModule,
     SortieModalComponent,
-    MenuComponent,
     CalendarMonthViewComponent,
     CalendarPreviousViewDirective,
     CalendarNextViewDirective,
     CalendarDatePipe,
-    MotivationBannerComponent,
-    HeadComponent
 ],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],

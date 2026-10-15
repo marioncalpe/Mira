@@ -1,13 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { MenuComponent } from '../../shared/components/menu/menu.component';
-import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
 import { Sortie } from '../../core/models/sortie.model';
 import { StorageService } from '../../core/storage/storage.service';
 import { Objectif } from '../../core/models/objectif.model';
 import { FormsModule } from '@angular/forms';
-import { HeadComponent } from "../../shared/components/head/head.component";
 
 @Component({
   selector: 'app-progress',
@@ -15,12 +12,9 @@ import { HeadComponent } from "../../shared/components/head/head.component";
   templateUrl: './progress.component.html',
   styleUrls: ['./progress.component.scss'],
   imports: [
-    MenuComponent,
-    MotivationBannerComponent,
     DecimalPipe,
     CommonModule,
     FormsModule,
-    HeadComponent
   ],
 })
 export class ProgressComponent implements OnInit, OnDestroy {

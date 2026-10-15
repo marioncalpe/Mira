@@ -2,9 +2,6 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RouterLink, RouterLinkActive, ActivatedRoute, Router  } from '@angular/router';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { Subscription } from 'rxjs';
-import { MenuComponent } from '../../shared/components/menu/menu.component';
-import { MotivationBannerComponent } from '../../shared/components/motivation-banner/motivation-banner.component';
-import { HeadComponent } from '../../shared/components/head/head.component';
 import { StorageService } from '../../core/storage/storage.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { Badge } from '../../core/models/badge.model';
@@ -17,9 +14,6 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   imports: [
-    MenuComponent,
-    MotivationBannerComponent,
-    HeadComponent,
     DecimalPipe,
     CommonModule,
     RouterLink, RouterLinkActive, FormsModule

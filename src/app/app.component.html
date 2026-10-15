@@ -1,5 +1,17 @@
 <app-badge-notification></app-badge-notification>
 <app-install-hint></app-install-hint>
-<main>
-  <router-outlet></router-outlet>
-</main>
+
+<!-- La coque : en-tête (fixe) / contenu (qui défile) / menu (fixe) -->
+<div class="shell">
+  @if (cadreActif) {
+    <app-head [h1]="titre"></app-head>
+  }
+
+  <main class="contenu">
+    <router-outlet></router-outlet>
+  </main>
+
+  @if (cadreActif) {
+    <app-menu></app-menu>
+  }
+</div>

@@ -140,7 +140,7 @@ body {
   font-family: $font-secondary;
 }
 
-body.no-scroll app-root {
+body.no-scroll .contenu {
   overflow: hidden !important;
 }
 
@@ -175,20 +175,11 @@ h4 {
   text-align: center;
 }
 
+// La coque (.shell) est dans le template de AppComponent :
+// app-root n'a plus qu'à remplir le body
 app-root {
-  display: block; // un composant est "inline" par défaut : width et height seraient ignorés
-  position: absolute;
-  top: var(--header-h); // juste sous l'en-tête
-  bottom: var(--menu-h); // juste au-dessus du menu
-  left: 1em;
-  right: 1em;
-  padding-bottom: 1em;
-  box-sizing: border-box;
-  z-index: 10;
-  overflow-y: auto;
-  overscroll-behavior: contain; // le défilement ne "déborde" pas sur le reste de la page
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+  display: block;
+  height: 100%;
 }
 
 app-root::-webkit-scrollbar {

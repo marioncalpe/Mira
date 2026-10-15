@@ -103,6 +103,8 @@ export class StorageService {
     const badges = localStorage.getItem('badges');
     const notif = localStorage.getItem('notif');
     const notes = localStorage.getItem('notes');
+    const prenom = localStorage.getItem('prenom');
+    if (prenom) this.prenomSubject.next(prenom);
     if (notes) this.notesSubject.next(JSON.parse(notes));
     if (notif) this.notifSubject.next(JSON.parse(notif));
 
