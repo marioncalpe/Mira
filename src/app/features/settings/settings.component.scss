@@ -24,7 +24,10 @@
     flex-direction: column;
     gap: 12px;
     padding: 1em 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+   // Trait seulement ENTRE deux sections, jamais après la dernière
+  .section + .section {
+    border-top: 1px solid var(--border-color);
   }
 
   span {

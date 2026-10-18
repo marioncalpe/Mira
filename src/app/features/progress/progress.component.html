@@ -142,7 +142,9 @@
       </div>
     }
 
-    <hr />
+    @if (objectifsEnCours.length > 0 && objectifTermines.length > 0) {
+      <hr />
+    }
 
     @for (objectifs of objectifTermines; track objectifs) {
       <div class="listObjectif">

@@ -102,13 +102,17 @@
     }
   }
 
-    .lastBadges {
+  .lastBadges {
     display: grid;
     // 3 colonnes de même largeur. minmax(0, 1fr) = "au minimum 0, au maximum une part" :
     // les colonnes peuvent rétrécir autant qu'il faut. Avec 1fr tout seul, elles
     // refuseraient de descendre sous la taille de leur contenu.
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: clamp(6px, 2vw, 10px); // l'écart suit la largeur de l'écran, entre 6 et 10px
+    gap: clamp(
+      6px,
+      2vw,
+      10px
+    ); // l'écart suit la largeur de l'écran, entre 6 et 10px
     box-sizing: border-box;
 
     img {
@@ -153,7 +157,6 @@
   justify-content: space-between;
   gap: 8px;
   padding: 8px 0;
-  border-bottom: 1px solid var(--border-color);
 
   .note-content {
     flex: 1;
@@ -186,6 +189,12 @@
     font-size: 0.85rem;
     flex-shrink: 0;
   }
+}
+
+// Trait seulement ENTRE deux notes, jamais après la dernière
+// (hors du bloc .note-item : au même niveau que lui)
+.note-item + .note-item {
+  border-top: 1px solid var(--border-color);
 }
 
 .modal-overlay {
