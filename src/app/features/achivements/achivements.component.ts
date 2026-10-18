@@ -1,27 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { StorageService } from '../../core/storage/storage.service';
 import { Badge } from '../../core/models/badge.model';
+import { GroupeBadges, grouperParCategorie } from '../../core/badges-categories';
+import { ProchainBadge, estObtenable, trouverProchainBadge } from '../../core/badge-regles';
 
 @Component({
   selector: 'app-Achivements',
   standalone: true,
   templateUrl: './achivements.component.html',
   styleUrls: ['./achivements.component.scss'],
-  imports: [CommonModule],
 })
-export class AchivementsComponent implements OnInit {
+export class AchivementsComponent implements OnInit, OnDestroy {
 
   /*================================*/
   /*           VARIABLES            */
   /*================================*/
 
   badges: Badge[] = [];
+  groupes: GroupeBadges[] = [];
   badgesdebloques = 0;
-  nouveauBadge$ = this.storageService.nouveauBadge$;
-  selectedTrophy: Badge | null = null;
-  dernierBadgeId: string | null = null;
+  totalObtenables = 0; // les badges qui ont une règle (hors "Bientôt")
+  pourcentage = 0;
   dernierBadge: Badge | null = null;
+  prochain: ProchainBadge | null = null;
+  selectedTrophy: Badge | null = null;
+
+  private subscription = new Subscription();
 
   /*================================*/
   /*         CONSTRUCTEUR           */
@@ -34,51 +39,72 @@ export class AchivementsComponent implements OnInit {
   /*================================*/
 
   ngOnInit(): void {
-    this.storageService.badges$.subscribe((badges) => {
-      this.badges = badges;
+    this.subscription.add(
+      this.storageService.badges$.subscribe((badges) => {
+        this.badges = badges;
+        this.groupes = grouperParCategorie(badges);
 
-      // Nombre de badges débloqués
-      this.badgesdebloques = badges.filter(b => b.unlocked).length;
+        // Les badges "Bientôt" ne comptent pas : on ne peut pas les obtenir
+        const obtenables = badges.filter((b) => estObtenable(b.id));
+        this.totalObtenables = obtenables.length;
+        this.badgesdebloques = obtenables.filter((b) => b.unlocked).length;
+        this.pourcentage =
+          this.totalObtenables > 0
+            ? (this.badgesdebloques / this.totalObtenables) * 100
+            : 0;
 
-      // Badges débloqués avec une date valide
-      const badgesDebloques = badges.filter(b => b.unlocked && b.dateUnlocked);
+        this.dernierBadge = this.trouverDernierBadge(badges);
+        this.prochain = trouverProchainBadge(
+          badges,
+          this.storageService.getCompteursBadges(),
+        );
+      }),
+    );
+  }
 
-      if (badgesDebloques.length === 0) {
-        this.dernierBadge = null;
-        this.dernierBadgeId = null;
-        return;
-      }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
-      // Tri par date, puis par position dans le tableau si même date
-      const dernier = [...badgesDebloques].sort((a, b) => {
-        const dateA = new Date(a.dateUnlocked!).getTime();
-        const dateB = new Date(b.dateUnlocked!).getTime();
-        if (dateB !== dateA) return dateB - dateA;
-        // Même date → on prend le dernier dans l'ordre du tableau
-        return badgesDebloques.indexOf(b) - badgesDebloques.indexOf(a);
-      })[0];
+  /*================================*/
+  /*     TEXTES POUR LE TEMPLATE    */
+  /*================================*/
 
-      this.dernierBadgeId = dernier?.id ?? null;
-      this.dernierBadge = dernier ?? null;
+  // Phrase du résumé : encourageante, jamais "0/37 (0 %)"
+  get libelleGlobal(): string {
+    if (this.badgesdebloques === 0) return 'Ta collection commence ici 🌸';
+    const s = this.badgesdebloques > 1 ? 's' : '';
+    return `${this.badgesdebloques} badge${s} débloqué${s} sur ${this.totalObtenables}`;
+  }
+
+  estBientot(badge: Badge): boolean {
+    return !estObtenable(badge.id);
+  }
+
+  // Description de l'image pour un lecteur d'écran
+  descriptionImage(badge: Badge): string {
+    if (badge.unlocked) return badge.title;
+    return this.estBientot(badge) ? 'Badge bientôt disponible' : 'Badge verrouillé';
+  }
+
+  /*================================*/
+  /*       MÉTHODES PRIVÉES         */
+  /*================================*/
+
+  // Le badge débloqué le plus récemment
+  private trouverDernierBadge(badges: Badge[]): Badge | null {
+    const debloques = badges.filter((b) => b.unlocked && b.dateUnlocked);
+    if (debloques.length === 0) return null;
+
+    // Tri par date, puis par position dans le tableau si même date
+    const tries = [...debloques].sort((a, b) => {
+      const dateA = new Date(a.dateUnlocked!).getTime();
+      const dateB = new Date(b.dateUnlocked!).getTime();
+      if (dateB !== dateA) return dateB - dateA;
+      return debloques.indexOf(b) - debloques.indexOf(a);
     });
-  }
 
-  ngAfterViewInit(): void {
-    if (this.dernierBadgeId) {
-      const el = document.querySelector('.trophy.newest') as HTMLElement;
-      if (el) this.creerParticules(el);
-    }
-  }
-
-  creerParticules(element: HTMLElement): void {
-    for (let i = 0; i < 8; i++) {
-      const p = document.createElement('span');
-      p.classList.add('particule');
-      p.style.setProperty('--x', `${Math.random() * 60 - 30}px`);
-      p.style.setProperty('--y', `${Math.random() * 60 - 30}px`);
-      p.style.setProperty('--delay', `${Math.random() * 2}s`);
-      element.appendChild(p);
-    }
+    return tries[0];
   }
 
   /*================================*/

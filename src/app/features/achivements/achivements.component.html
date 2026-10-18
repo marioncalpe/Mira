@@ -1,81 +1,127 @@
 <div class="content">
+  <!-- Résumé : message d'encouragement ou progression + dernier badge obtenu -->
   <div class="progress-container">
-    <p class="progress-label">
-      {{ badgesdebloques }}/{{ badges.length }} badges débloqués ({{
-        (badgesdebloques / badges.length) * 100 | number: "1.0-0"
-      }}%)
-    </p>
-    <div class="progress-bar">
+    <p class="progress-label">{{ libelleGlobal }}</p>
+
+    <!-- Pas de barre vide tant qu'aucun badge n'est débloqué -->
+    @if (badgesdebloques > 0) {
       <div
-        class="progress-fill"
-        [style.width.%]="(badgesdebloques / badges.length) * 100"
-      ></div>
-    </div>
-    <div *ngIf="dernierBadge" class="dernierBadge">
-      <img [src]="dernierBadge.image" [alt]="dernierBadge.title" width="64" height="64" />
-      <div>
-        <div class="title">{{ dernierBadge.title }}</div>
-        <div class="descr">{{ dernierBadge.description }}</div>
+        class="progress-bar"
+        role="progressbar"
+        aria-label="Badges débloqués"
+        aria-valuemin="0"
+        [attr.aria-valuenow]="badgesdebloques"
+        [attr.aria-valuemax]="totalObtenables"
+      >
+        <div class="progress-fill" [style.width.%]="pourcentage"></div>
       </div>
-    </div>
+    }
+
+    @if (dernierBadge) {
+      <div class="dernierBadge">
+        <img [src]="dernierBadge.image" [alt]="dernierBadge.title" width="64" height="64" />
+        <div>
+          <div class="title">{{ dernierBadge.title }}</div>
+          <div class="descr">{{ dernierBadge.description }}</div>
+        </div>
+      </div>
+    }
   </div>
 
-  <div class="contenair">
-    <!--
-      *ngFor : directive Angular qui boucle sur le tableau `badges`
-      Pour chaque badge, elle crée une div .trophy
-    -->
-    <div
-      *ngFor="let badge of badges"
-      class="trophy"
-      [class.locked]="!badge.unlocked"
-      (click)="openTrophy(badge)"
-    >
-      <!--
-        [class.locked] : liaison dynamique de classe CSS.
-        Si badge.unlocked est false → la classe "locked" est ajoutée
-        Ce qui va rendre l'image en grisé via le CSS
-      -->
-      <!-- (click) : au clic sur ce badge, on appelle openTrophy() avec le badge cliqué -->
-      <img [src]="badge.image" [alt]="badge.unlocked ? badge.title : 'Badge verrouillé'" width="80" height="80" />
-      <!-- [src] : liaison dynamique, src prend la valeur de badge.image -->
+  <!-- Le badge le plus proche, avec sa progression chiffrée -->
+  @if (prochain) {
+    <section class="carte prochain">
+      <h3>🎯 Ton prochain badge</h3>
+      <div class="prochain-corps">
+        <img
+          class="prochain-image"
+          [src]="prochain.badge.image"
+          [alt]="prochain.badge.title"
+          width="64"
+          height="64"
+        />
+        <div class="prochain-texte">
+          <div class="title">{{ prochain.badge.title }}</div>
+          <div class="descr">{{ prochain.badge.description }}</div>
+          <div
+            class="progress-bar petite"
+            role="progressbar"
+            [attr.aria-label]="'Progression vers ' + prochain.badge.title"
+            aria-valuemin="0"
+            [attr.aria-valuenow]="prochain.valeur"
+            [attr.aria-valuemax]="prochain.cible"
+          >
+            <div
+              class="progress-fill"
+              [style.width.%]="(prochain.valeur / prochain.cible) * 100"
+            ></div>
+          </div>
+          <div class="phrase">{{ prochain.phrase }}</div>
+        </div>
+      </div>
+    </section>
+  }
 
-      <div class="lock-overlay" *ngIf="!badge.unlocked">🔒</div>
-      <!--
-        *ngIf : affiche ce div SEULEMENT si le badge n'est pas débloqué
-        C'est le cadenas qui s'affiche par-dessus l'image
-      -->
-    </div>
-  </div>
+  <!-- Une carte par catégorie.
+       "track groupe.cle" : Angular reconnaît chaque élément d'une mise à jour
+       à l'autre, au lieu de tout recréer. -->
+  @for (groupe of groupes; track groupe.cle) {
+    <section class="carte categorie">
+      <header class="categorie-entete">
+        <h3>{{ groupe.emoji }} {{ groupe.titre }}</h3>
+        <!-- Compteur positif, seulement s'il y en a au moins un -->
+        @if (groupe.debloques > 0) {
+          <span class="compteur">
+            {{ groupe.debloques }} obtenu{{ groupe.debloques > 1 ? "s" : "" }}
+          </span>
+        }
+      </header>
+
+      <div class="contenair">
+        @for (badge of groupe.badges; track badge.id) {
+          <!-- Un <button> plutôt qu'une <div> : il se tape, mais aussi se
+               sélectionne au clavier et se lit avec un lecteur d'écran -->
+          <button
+            type="button"
+            class="trophy"
+            [class.locked]="!badge.unlocked"
+            (click)="openTrophy(badge)"
+          >
+            <img [src]="badge.image" [alt]="descriptionImage(badge)" width="80" height="80" />
+            @if (!badge.unlocked) {
+              <div class="lock-overlay" aria-hidden="true">
+                {{ estBientot(badge) ? "🕒" : "🔒" }}
+              </div>
+            }
+          </button>
+        }
+      </div>
+    </section>
+  }
 </div>
-<!-- Composant enfant : la barre de navigation en bas -->
 
-<!--
-  *ngIf="selectedTrophy" : la modal n'existe dans le DOM que si un trophée est sélectionné
-  (click)="closeModal()" : cliquer sur le fond sombre ferme la modal
--->
-<div class="modal" *ngIf="selectedTrophy" (click)="closeModal()">
-  <div class="modal-content" (click)="$event.stopPropagation()">
-    <!--
-      $event.stopPropagation() : TRÈS IMPORTANT
-      Sans ça, cliquer à l'intérieur de la modal déclencherait aussi
-      le closeModal() du parent → la modal se fermerait immédiatement
-      stopPropagation() bloque la remontée du clic vers le parent
-    -->
-    <div class="img-wrapper">
-      <img
-        [src]="selectedTrophy.image"
-        [class.blurred]="!selectedTrophy.unlocked"
-        [alt]="selectedTrophy.unlocked ? selectedTrophy.title : 'Badge verrouillé'"
-        width="200"
-        height="200"
-      />
-      <p class="lock-text" *ngIf="!selectedTrophy.unlocked">
-        🔒 Pas encore débloqué
-      </p>
+<!-- Fenêtre de détail d'un badge.
+     Un clic sur le fond sombre ferme la fenêtre ; un clic à l'intérieur ne la
+     ferme pas, grâce à stopPropagation() (il bloque la remontée du clic). -->
+@if (selectedTrophy) {
+  <div class="modal" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="img-wrapper">
+        <img
+          [src]="selectedTrophy.image"
+          [class.blurred]="!selectedTrophy.unlocked"
+          [alt]="descriptionImage(selectedTrophy)"
+          width="200"
+          height="200"
+        />
+        @if (!selectedTrophy.unlocked) {
+          <p class="lock-text">
+            {{ estBientot(selectedTrophy) ? "🕒 Bientôt disponible" : "🔒 Pas encore débloqué" }}
+          </p>
+        }
+      </div>
+      <h2>{{ selectedTrophy.title }}</h2>
+      <p>{{ selectedTrophy.description }}</p>
     </div>
-    <h2>{{ selectedTrophy.title }}</h2>
-    <!-- {{ }} : interpolation Angular, affiche la valeur de la variable -->
-    <p>{{ selectedTrophy.description }}</p>
   </div>
-</div>
+}

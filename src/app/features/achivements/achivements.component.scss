@@ -5,58 +5,102 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+}
 
-  .nbBadges {
-    display: flex;
-    justify-content: end;
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 10px;
+/*================================*/
+/*   UNE CATÉGORIE (une carte)    */
+/*================================*/
+
+.categorie-entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+
+  h3 {
+    margin: 1em 0 0.6em;
     font-family: $font-main;
-    color: $text-light;
+    font-size: 1rem;
+    color: var(--text-color);
   }
 
-  .contenair {
-    overflow: visible;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    box-sizing: border-box;
-
-    @include mobile {
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
+  .compteur {
+    flex-shrink: 0;
+    padding: 2px 10px;
+    border-radius: 20px;
+    background: rgba(128, 128, 128, 0.15);
+    font-family: $font-main;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary-color);
   }
+}
 
-  .trophy {
-    overflow: visible;
-    position: relative;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.contenair {
+  overflow: visible;
+  display: grid;
+  // minmax(0, 1fr) : 4 colonnes égales qui PEUVENT rétrécir (piège du "1fr" simple)
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  box-sizing: border-box;
 
+  // Très petits écrans : 3 colonnes, pour que les badges restent assez gros
+  @media (max-width: 340px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/*================================*/
+/*   UN BADGE (un bouton)         */
+/*================================*/
+
+.trophy {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  // Remise à zéro du style d'un <button> par défaut du navigateur
+  padding: 0;
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.2s ease;
+
+  // Le survol n'existe pas au doigt : on ne le prévoit que pour une souris
+  @media (hover: hover) {
     &:hover {
       transform: scale(1.05);
     }
+  }
 
-    &.locked img {
-      filter: grayscale(100%) brightness(0.6);
-    }
+  &:active {
+    transform: scale(0.95);
+  }
 
-    .lock-overlay {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 18px;
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 8px;
-      color: white;
-    }
+  &:focus-visible {
+    outline: 2px solid $primary;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+
+  &.locked img {
+    filter: grayscale(100%) brightness(0.6);
+  }
+
+  .lock-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    color: white;
   }
 }
 
@@ -68,9 +112,13 @@ img {
   margin: 0.2em;
 }
 
+/*================================*/
+/*   RÉSUMÉ EN HAUT DE PAGE       */
+/*================================*/
+
 .progress-container {
   background: var(--carte-bg);
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   border-radius: 8px;
   padding: 0.5em;
 }
@@ -95,6 +143,12 @@ img {
     background: linear-gradient(to right, $primary, $secondary);
     border-radius: 10px;
     transition: width 0.5s ease;
+  }
+
+  // Version fine, pour le bloc "prochain badge"
+  &.petite {
+    height: 8px;
+    margin: 8px 0 4px;
   }
 }
 
@@ -126,6 +180,61 @@ img {
     margin: 0;
   }
 }
+
+/*================================*/
+/*   BLOC "TON PROCHAIN BADGE"    */
+/*================================*/
+
+.prochain {
+  h3 {
+    margin: 1em 0 0.6em;
+    font-family: $font-main;
+    font-size: 1rem;
+    color: var(--text-color);
+  }
+
+  .prochain-corps {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .prochain-image {
+    flex-shrink: 0;
+    width: 64px;
+    margin: 0;
+    filter: grayscale(100%) brightness(0.6); // pas encore obtenu : même style que les verrouillés
+  }
+
+  .prochain-texte {
+    flex: 1;
+    min-width: 0; // autorise le rétrécissement du texte
+  }
+
+  .title {
+    font-family: $font-main;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-color);
+  }
+
+  .descr {
+    font-size: 0.8rem;
+    color: var(--text-secondary-color);
+    line-height: 1.35;
+  }
+
+  .phrase {
+    font-family: $font-main;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: $primary;
+  }
+}
+
+/*================================*/
+/*   FENÊTRE DE DÉTAIL            */
+/*================================*/
 
 .modal {
   position: fixed;

@@ -5,6 +5,7 @@ import { Objectif } from '../models/objectif.model';
 import { Badge } from '../models/badge.model';
 import { NotificationSettings } from '../models/notification.model';
 import { Note } from '../models/note.model';
+import { CompteursBadges, REGLES_BADGES, RegleBadge } from '../badge-regles';
 
 /*==================================================*/
 /*             STORAGE SERVICE                      */
@@ -41,7 +42,9 @@ import { Note } from '../models/note.model';
 /*  badges$                      → observable       */
 /*  getDerniersBadges(n)         → n derniers       */
 /*  getNombreBadgesDebloques()   → nombre débloqués */
-/*  getProchainBadge()           → prochain à déblo.*/
+/*  getCompteursBadges()         → valeurs des      */
+/*                                 règles (voir     */
+/*                                 badge-regles.ts) */
 /*  nouveauBadge$  → émet quand un badge est débloqué  */
 /*                                                  */
 /*  --- IMPORT / EXPORT ---                         */
@@ -104,9 +107,11 @@ export class StorageService {
     const notif = localStorage.getItem('notif');
     const notes = localStorage.getItem('notes');
     const prenom = localStorage.getItem('prenom');
-    if (prenom) this.prenomSubject.next(prenom);
+
     if (notes) this.notesSubject.next(JSON.parse(notes));
     if (notif) this.notifSubject.next(JSON.parse(notif));
+    // Le prénom était enregistré mais jamais relu au démarrage
+    if (prenom) this.prenomSubject.next(prenom);
 
     if (sorties) this.sortiesSubject.next(JSON.parse(sorties));
     if (objectifs) this.objectifsSubject.next(JSON.parse(objectifs));
@@ -139,9 +144,11 @@ export class StorageService {
   private saveBadges(badges: Badge[]): void {
     localStorage.setItem('badges', JSON.stringify(badges));
   }
+
   private saveNotif(notif: NotificationSettings): void {
     localStorage.setItem('notif', JSON.stringify(notif));
   }
+
   /*================================*/
   /*             PRÉNOM             */
   /*================================*/
@@ -154,6 +161,7 @@ export class StorageService {
     this.prenomSubject.next(prenom);
     localStorage.setItem('prenom', prenom);
   }
+
   /*================================*/
   /*            SORTIES             */
   /*================================*/
@@ -172,13 +180,15 @@ export class StorageService {
     this.verifierBadges(updated);
   }
 
-  // Remplace une sortie existante par la version modifiée
+  // Remplace une sortie existante par la version modifiée.
+  // On revérifie les badges : changer l'humeur ou les notes peut en débloquer un.
   updateSortie(sortie: Sortie): void {
     const updated = this.sortiesSubject
       .getValue()
       .map((s) => (s.id === sortie.id ? sortie : s));
     this.sortiesSubject.next(updated);
     this.saveSorties(updated);
+    this.verifierBadges(updated);
   }
 
   // Supprime une sortie par son id
@@ -211,7 +221,8 @@ export class StorageService {
     this.saveObjectifs(updated);
   }
 
-  // Bascule le statut d'un objectif : 'en cours' ↔ 'terminé'
+  // Bascule le statut d'un objectif : 'en cours' ↔ 'terminé'.
+  // On revérifie les badges : terminer un objectif peut en débloquer un.
   updateObjectif(id: string): void {
     const updated = this.objectifsSubject.getValue().map((obj) => {
       if (obj.id !== id) return obj;
@@ -225,6 +236,7 @@ export class StorageService {
     });
     this.objectifsSubject.next(updated);
     this.saveObjectifs(updated);
+    this.verifierBadges(this.sortiesSubject.getValue());
   }
 
   // Supprime un objectif par son id
@@ -340,8 +352,9 @@ export class StorageService {
     return this.badgesSubject.getValue().filter((b) => b.unlocked).length;
   }
 
-  // Retourne le premier badge pas encore débloqué
-  // Utile pour afficher "prochain badge" sur la Home
+  // Retourne le premier badge pas encore débloqué, dans l'ordre de la liste.
+  // Attention : ça peut être un badge "Bientôt" (sans règle). Pour proposer
+  // le badge le plus proche, utiliser trouverProchainBadge() (badge-regles.ts).
   getProchainBadge(): Badge | null {
     return this.badgesSubject.getValue().find((b) => !b.unlocked) ?? null;
   }
@@ -365,11 +378,7 @@ export class StorageService {
       // Date.UTC(année, mois, jour) donne minuit pile pour ce jour du calendrier.
       // On part de getFullYear/getMonth/getDate (heure locale) : l'heure de la
       // sortie et le changement d'heure n'ont donc plus aucun effet.
-      const minuit = Date.UTC(
-        date.getFullYear(),
-        date.getMonth(),
-        date.getDate(),
-      );
+      const minuit = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
       jours.add(Math.round(minuit / UN_JOUR_MS));
     }
 
@@ -393,96 +402,56 @@ export class StorageService {
   }
 
   /*================================*/
+  /*     COMPTEURS DES BADGES       */
+  /*  Les valeurs que comparent les */
+  /*  règles (voir badge-regles.ts) */
+  /*================================*/
+  calculerCompteurs(sorties: Sortie[]): CompteursBadges {
+    const parHumeur = (humeur: string) =>
+      sorties.filter((s) => s.extendedProps?.category === humeur).length;
+
+    return {
+      total: sorties.length,
+      tresbien: parHumeur('tresbien'),
+      bien: parHumeur('bien'),
+      moyen: parHumeur('moyen'),
+      anxieuse: parHumeur('anxieuse'),
+      objectifs: this.objectifsSubject
+        .getValue()
+        .filter((o) => o.statut === 'terminé').length,
+      consecutifs: this.getMaxJoursConsecutifs(sorties),
+      // Sorties où la note après > note avant (amélioration)
+      ameliorations: sorties.filter(
+        (s) =>
+          s.extendedProps?.noteApres !== undefined &&
+          s.extendedProps?.noteAvant !== undefined &&
+          s.extendedProps.noteApres > s.extendedProps.noteAvant,
+      ).length,
+    };
+  }
+
+  // Les compteurs d'aujourd'hui (pour afficher la progression des badges)
+  getCompteursBadges(): CompteursBadges {
+    return this.calculerCompteurs(this.sortiesSubject.getValue());
+  }
+
+  /*================================*/
   /*        LOGIQUE BADGES          */
-  /*  Appelée à chaque ajout de     */
-  /*  sortie et au démarrage        */
+  /*  Appelée à chaque changement   */
+  /*  de sortie ou d'objectif, et   */
+  /*  au démarrage                  */
   /*================================*/
   private verifierBadges(sorties: Sortie[]): void {
-    const total = sorties.length;
     const badges = this.badgesSubject.getValue();
+    const compteurs = this.calculerCompteurs(sorties);
 
-    // Comptage par catégorie d'humeur
-    const tresbien = sorties.filter(
-      (s) => s.extendedProps?.category === 'tresbien',
-    ).length;
-    const bien = sorties.filter(
-      (s) => s.extendedProps?.category === 'bien',
-    ).length;
-    const moyen = sorties.filter(
-      (s) => s.extendedProps?.category === 'moyen',
-    ).length;
-    const anxieuse = sorties.filter(
-      (s) => s.extendedProps?.category === 'anxieuse',
-    ).length;
-
-    // Nombre d'objectifs terminés
-    const objectifsTermines = this.objectifsSubject
-      .getValue()
-      .filter((o) => o.statut === 'terminé').length;
-
-    // Record de jours consécutifs
-    const maxConsecutifs = this.getMaxJoursConsecutifs(sorties);
-
-    // Sorties où la note après > note avant (amélioration)
-    const sortiesAvecAmelioration = sorties.filter(
-      (s) =>
-        s.extendedProps?.noteApres !== undefined &&
-        s.extendedProps?.noteAvant !== undefined &&
-        s.extendedProps.noteApres > s.extendedProps.noteAvant,
-    ).length;
-
-    /*================================*/
-    /*      RÈGLES DE DÉBLOCAGE       */
-    /*================================*/
-    const regles: { [id: string]: boolean } = {
-      // Nombre de sorties
-      premiere_sortie: total >= 1,
-      en_mouvement: total >= 5,
-      mira_active: total >= 10,
-      exploratrice: total >= 20,
-      aventurier: total >= 30,
-      nomade: total >= 50,
-      toujours_dehors: total >= 75,
-      marathonien: total >= 100,
-      inarretable: total >= 150,
-      legende_sortie: total >= 200,
-      // Humeurs
-      rayon_soleil: tresbien >= 5,
-      energie_positive: tresbien >= 15,
-      humeur_or: tresbien >= 30,
-      bonne_vibes: bien >= 5,
-      optimiste: bien >= 10,
-      stable_sereine: bien >= 25,
-      cava_aller: moyen >= 5,
-      tu_tiens_cap: moyen >= 15,
-      ressilient: moyen >= 30,
-      sortie_courageuse: anxieuse >= 1,
-      tu_laches_rien: anxieuse >= 5,
-      courage_quotidien: anxieuse >= 10,
-      // Objectifs
-      premier_pas: objectifsTermines >= 1,
-      objectif_atteint: objectifsTermines >= 3,
-      efficacite_pure: objectifsTermines >= 5,
-      determination: objectifsTermines >= 10,
-      maitrise: objectifsTermines >= 20,
-      // Répétitions (jours consécutifs)
-      jours_affillee: maxConsecutifs >= 2,
-      toujours_present: maxConsecutifs >= 3,
-      rythme_trouve: maxConsecutifs >= 7,
-      routine_solide: maxConsecutifs >= 14,
-      flow_parfait: maxConsecutifs >= 21,
-      constance: maxConsecutifs >= 30,
-      // Amélioration
-      petit_mieux: sortiesAvecAmelioration >= 1,
-      tu_progresses: sortiesAvecAmelioration >= 5,
-      bonne_dynamique: sortiesAvecAmelioration >= 10,
-      ascension_positive: sortiesAvecAmelioration >= 20,
-    };
-
-    // Pour chaque badge non débloqué, on vérifie si la règle est remplie
+    // Pour chaque badge non débloqué, on vérifie si sa règle est remplie
     const updated = badges.map((badge) => {
       if (badge.unlocked) return badge;
-      if (regles[badge.id]) {
+
+      // Un badge sans règle ("Bientôt") ne se débloque jamais
+      const regle: RegleBadge | undefined = REGLES_BADGES[badge.id];
+      if (regle && compteurs[regle.compteur] >= regle.cible) {
         return {
           ...badge,
           unlocked: true,
@@ -586,6 +555,9 @@ export class StorageService {
       localStorage.clear();
       this.sortiesSubject.next([]);
       this.objectifsSubject.next([]);
+      // Les notes et le prénom restaient affichés jusqu'au prochain rechargement
+      this.notesSubject.next([]);
+      this.prenomSubject.next('');
       // On recharge les badges par défaut (tous verrouillés)
       this.badgesSubject.next(this.getDefaultBadges());
     }
@@ -941,6 +913,7 @@ export class StorageService {
   private saveNotes(notes: Note[]): void {
     localStorage.setItem('notes', JSON.stringify(notes));
   }
+
   /*================================*/
   /*             NOTES              */
   /*================================*/
