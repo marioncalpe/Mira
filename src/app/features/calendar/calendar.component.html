@@ -46,11 +46,35 @@
       </svg>
     </button>
   </div>
+
+  <!-- Notre propre case de jour : le numéro, puis un point par sortie.
+       "day" est fourni par la bibliothèque : sa date et la liste de ses événements. -->
+  <ng-template #celluleJour let-day="day">
+    <div class="jour">
+      <span class="jour-numero">
+        {{ day.date | calendarDate: "monthViewDayNumber" : locale }}
+      </span>
+      <!-- Cette ligne existe toujours (même sans point) : les rangées gardent la même hauteur -->
+      <span class="points" aria-hidden="true">
+        @for (point of pointsAffiches(day.events); track $index) {
+          <span class="point"></span>
+        }
+        @if (aPlusDePoints(day.events)) {
+          <span class="point-plus">+</span>
+        }
+      </span>
+      @if (day.events.length > 0) {
+        <span class="sr-only">{{ libelleSorties(day.events) }}</span>
+      }
+    </div>
+  </ng-template>
+
   <mwl-calendar-month-view
     [viewDate]="viewDate"
     (viewDateChange)="onViewDateChange($event)"
     [events]="events"
     [weekStartsOn]="weekStartsOn"
+    [cellTemplate]="celluleJour"
     (dayClicked)="handleDateClick($event.day.date)"
     (eventClicked)="handleEventClick($event.event)"
   >

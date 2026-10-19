@@ -6,6 +6,7 @@ import { Badge } from '../models/badge.model';
 import { NotificationSettings } from '../models/notification.model';
 import { Note } from '../models/note.model';
 import { CompteursBadges, REGLES_BADGES, RegleBadge } from '../badge-regles';
+import { memeJour, numeroDeJour } from '../sorties-utils';
 
 /*==================================================*/
 /*             STORAGE SERVICE                      */
@@ -171,6 +172,11 @@ export class StorageService {
     return this.sortiesSubject.getValue();
   }
 
+  // L'entrée d'un jour donné (aujourd'hui par défaut), ou undefined s'il n'y en a pas
+  getSortieDuJour(date: Date = new Date()): Sortie | undefined {
+    return this.sortiesSubject.getValue().find((s) => memeJour(s.start, date));
+  }
+
   // Ajoute une nouvelle sortie et vérifie les badges
   addSortie(sortie: Sortie): void {
     const current = this.sortiesSubject.getValue();
@@ -282,21 +288,27 @@ export class StorageService {
   /*  utilisables partout           */
   /*================================*/
 
-  // Nombre total de sorties
-  getTotalSorties(): number {
-    return this.sortiesSubject.getValue().length;
+  // Nombre de jours distincts qui comptent au moins une sortie
+  private nombreDeJours(sorties: Sortie[]): number {
+    return new Set(sorties.map((s) => numeroDeJour(s.start))).size;
   }
 
-  // Nombre de sorties du mois en cours
+  // Nombre de jours de sortie
+  getTotalSorties(): number {
+    return this.nombreDeJours(this.sortiesSubject.getValue());
+  }
+
+  // Nombre de jours de sortie du mois en cours
   getSortiesCeMois(): number {
     const now = new Date();
-    return this.sortiesSubject.getValue().filter((s) => {
+    const duMois = this.sortiesSubject.getValue().filter((s) => {
       const date = new Date(s.start);
       return (
         date.getMonth() === now.getMonth() &&
         date.getFullYear() === now.getFullYear()
       );
-    }).length;
+    });
+    return this.nombreDeJours(duMois);
   }
 
   // Moyenne de toutes les notes avant
@@ -367,37 +379,22 @@ export class StorageService {
   getMaxJoursConsecutifs(sorties: Sortie[]): number {
     if (sorties.length === 0) return 0;
 
-    const UN_JOUR_MS = 86400000; // 24h en millisecondes
+    // Les jours distincts, du plus ancien au plus récent
+    const jours = [...new Set(sorties.map((s) => numeroDeJour(s.start)))].sort(
+      (a, b) => a - b,
+    );
 
-    // 1. On transforme chaque sortie en "numéro de jour" (un entier),
-    //    en ignorant l'heure. Un Set ne garde chaque valeur qu'une fois :
-    //    deux sorties le même jour ne comptent que pour un jour.
-    const jours = new Set<number>();
-    for (const sortie of sorties) {
-      const date = new Date(sortie.start);
-      // Date.UTC(année, mois, jour) donne minuit pile pour ce jour du calendrier.
-      // On part de getFullYear/getMonth/getDate (heure locale) : l'heure de la
-      // sortie et le changement d'heure n'ont donc plus aucun effet.
-      const minuit = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-      jours.add(Math.round(minuit / UN_JOUR_MS));
-    }
-
-    // 2. On trie du plus ancien au plus récent
-    const joursTries = [...jours].sort((a, b) => a - b);
-
-    // 3. On compte : deux jours se suivent si leur numéro diffère de 1
+    // Deux jours se suivent si leur numéro diffère de 1
     let maxConsecutifs = 1;
     let compteur = 1;
-
-    for (let i = 1; i < joursTries.length; i++) {
-      if (joursTries[i] - joursTries[i - 1] === 1) {
+    for (let i = 1; i < jours.length; i++) {
+      if (jours[i] - jours[i - 1] === 1) {
         compteur++;
         maxConsecutifs = Math.max(maxConsecutifs, compteur);
       } else {
         compteur = 1;
       }
     }
-
     return maxConsecutifs;
   }
 
@@ -411,7 +408,7 @@ export class StorageService {
       sorties.filter((s) => s.extendedProps?.category === humeur).length;
 
     return {
-      total: sorties.length,
+      total: this.nombreDeJours(sorties), // avant : sorties.length
       tresbien: parHumeur('tresbien'),
       bien: parHumeur('bien'),
       moyen: parHumeur('moyen'),

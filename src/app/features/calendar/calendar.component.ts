@@ -18,6 +18,10 @@ import { StorageService } from '../../core/storage/storage.service';
 import { Sortie } from '../../core/models/sortie.model';
 import { SortieModalComponent } from '../../shared/components/sortie-modal/sortie-modal.component';
 import { CustomDateFormatter } from './custom-date-formatter';
+import { compterSorties, memeJour, titresDeLaSortie } from '../../core/sorties-utils';
+
+// Au-delà de 3 sorties dans une journée, on affiche 3 points puis un "+"
+const MAX_POINTS = 3;
 
 @Component({
   selector: 'app-calendar',
@@ -40,7 +44,7 @@ import { CustomDateFormatter } from './custom-date-formatter';
     CalendarPreviousViewDirective,
     CalendarNextViewDirective,
     CalendarDatePipe,
-],
+  ],
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
 })
@@ -106,7 +110,8 @@ export class CalendarComponent implements OnInit {
       id: sortie.id,
       title: sortie.title,
       start: new Date(sortie.start),
-      meta: { ...sortie.extendedProps },
+      // nbSorties : le nombre de points à dessiner sur ce jour
+      meta: { ...sortie.extendedProps, nbSorties: compterSorties(sortie) },
       color: this.getColorForSortie(sortie),
     }));
 
@@ -140,25 +145,45 @@ export class CalendarComponent implements OnInit {
   }
 
   /*================================*/
+  /*    POINTS SOUS CHAQUE JOUR     */
+  /*  (utilisés par le template     */
+  /*   de case du calendrier)       */
+  /*================================*/
+
+  // Le nombre total de sorties d'un jour (somme sur ses entrées)
+  nombreDeSorties(events: CalendarEvent[]): number {
+    return events.reduce((total, event) => total + (event.meta?.nbSorties ?? 1), 0);
+  }
+
+  // Un tableau de la bonne longueur : une case = un point à dessiner
+  pointsAffiches(events: CalendarEvent[]): number[] {
+    const nombre = Math.min(this.nombreDeSorties(events), MAX_POINTS);
+    return Array.from({ length: nombre }, (_, index) => index);
+  }
+
+  aPlusDePoints(events: CalendarEvent[]): boolean {
+    return this.nombreDeSorties(events) > MAX_POINTS;
+  }
+
+  // Texte caché pour les lecteurs d'écran ("2 sorties")
+  libelleSorties(events: CalendarEvent[]): string {
+    const nombre = this.nombreDeSorties(events);
+    return `${nombre} ${nombre > 1 ? 'sorties' : 'sortie'}`;
+  }
+
+  /*================================*/
   /*         GESTION CLICS          */
   /*================================*/
 
+  // Toucher un jour : s'il y a déjà une entrée, on la consulte ;
+  // sinon on en crée une pour ce jour.
   handleDateClick(date: Date): void {
-    const existingEvent = this.events.find((event) => {
-      const eventDate = new Date(event.start);
-      return (
-        eventDate.getFullYear() === date.getFullYear() &&
-        eventDate.getMonth() === date.getMonth() &&
-        eventDate.getDate() === date.getDate()
-      );
-    });
+    const sortieDuJour = this.allSorties.find((s) => memeJour(s.start, date));
 
-    if (existingEvent) {
+    if (sortieDuJour) {
       this.selectedSortie = {
-        id: existingEvent.id as string,
-        title: existingEvent.title,
-        start: existingEvent.start.toISOString(),
-        extendedProps: { ...(existingEvent.meta ?? {}) },
+        ...sortieDuJour,
+        extendedProps: { ...sortieDuJour.extendedProps },
       };
       this.modalMode = 'view';
     } else {
@@ -173,27 +198,38 @@ export class CalendarComponent implements OnInit {
   }
 
   handleEventClick(event: CalendarEvent): void {
-    this.selectedSortie = {
-      id: event.id as string,
-      title: event.title,
-      start: event.start.toISOString(),
-      extendedProps: { ...(event.meta ?? {}) },
-    };
+    const sortie = this.allSorties.find((s) => s.id === event.id);
+    if (!sortie) return;
+
+    this.selectedSortie = { ...sortie, extendedProps: { ...sortie.extendedProps } };
     this.modalMode = 'view';
     this.modalVisible = true;
   }
 
+  // Bouton + du menu : ajouter une sortie AUJOURD'HUI
   openCreateModal(): void {
-    this.selectedSortie = {
-      title: '',
-      start: new Date().toISOString(),
-      extendedProps: {
-        category: '',
-        noteAvant: 0,
-        noteApres: 0,
-        sentiment: '',
-      },
-    };
+    const existante = this.storageService.getSortieDuJour();
+
+    if (existante) {
+      // Il y a déjà une entrée aujourd'hui : on l'ouvre en modification,
+      // avec une ligne vide en plus (plus de doublon pour le même jour)
+      this.selectedSortie = {
+        ...existante,
+        titres: [...titresDeLaSortie(existante), ''],
+        extendedProps: { ...existante.extendedProps },
+      };
+    } else {
+      this.selectedSortie = {
+        title: '',
+        start: new Date().toISOString(),
+        extendedProps: {
+          category: '',
+          noteAvant: 0,
+          noteApres: 0,
+          sentiment: '',
+        },
+      };
+    }
     this.modalMode = 'edit';
     this.modalVisible = true;
   }

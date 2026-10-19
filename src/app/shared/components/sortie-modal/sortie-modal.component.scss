@@ -2,10 +2,7 @@
 
 .view-mode {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(10px);
   z-index: 9999;
@@ -25,10 +22,10 @@
   padding-top: 50px;
   border-radius: 14px;
   box-sizing: border-box; // le padding est compris dans la largeur
-  width: calc(100% - 2em); // jamais plus large que l'écran (1em de marge de chaque côté)
-  max-width: 340px; // la taille d'origine, sur les écrans plus grands
-  max-height: calc(100dvh - 2em); // jamais plus haut que l'écran visible
-  overflow-y: auto; // si ça ne tient pas, on fait défiler à l'intérieur
+  width: calc(100% - 2em); // jamais plus large que l'écran
+  max-width: 340px;
+  max-height: calc(100dvh - 2em); // jamais plus haute que l'écran visible
+  overflow-y: auto; // trop de sorties : on fait défiler à l'intérieur
   display: flex;
   flex-direction: column;
   gap: 1em;
@@ -46,11 +43,91 @@
   font-family: $font-secondary;
 }
 
+/*================================*/
+/*   CONSULTATION : les sorties   */
+/*================================*/
+
+.titres-liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+
+  li {
+    font-family: $font-main;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    text-transform: capitalize;
+    overflow-wrap: anywhere;
+    color: var(--text-color);
+  }
+}
+
+.date-sortie {
+  margin: 0;
+  text-align: center;
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+/*================================*/
+/*   ÉDITION : lignes de titres   */
+/*================================*/
+
+.lignes-titres {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ligne-titre {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  input {
+    flex: 1;
+    min-width: 0; // autorise le rétrécissement
+  }
+}
+
+// Croix pour retirer une ligne : zone tactile de 44 x 44
+.titre-retirer {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 16px;
+  font-weight: normal;
+  color: var(--text-secondary-color);
+}
+
+.btn-ajouter-sortie {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px dashed var(--text-secondary-color);
+  font-family: $font-main;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+/*================================*/
+/*   HUMEURS ET NOTES             */
+/*================================*/
+
 .humeurs {
   display: flex;
   flex-wrap: wrap; // si ça ne tient pas, on passe à la ligne
   justify-content: center;
-  gap: clamp(2px, 1.5vw, 10px); // l'écart suit la largeur de l'écran
+  gap: clamp(2px, 1.5vw, 10px);
 
   button {
     font-size: 24px;
@@ -70,7 +147,7 @@
   display: flex;
   flex-wrap: wrap; // les deux notes passent l'une sous l'autre si besoin
   justify-content: center;
-  gap: 1em 2em; // 1em entre les lignes, 2em entre les colonnes
+  gap: 1em 2em;
 }
 
 .etoiles {
