@@ -128,7 +128,7 @@ notif$                     // flux des préférences de notifications
 
 ## 👤 Personnalisation
 
-Depuis les **Paramètres**, l'utilisatrice peut renseigner son prénom (facultatif). S'il est renseigné, la Home affiche "Bonjour [Prénom]", sinon "Bonjour" tout court.
+Depuis les **Paramètres**, on peut renseigner son prénom (facultatif). S'il est renseigné, la Home affiche "Bonjour [Prénom]", sinon "Bonjour" tout court.
 
 ---
 
@@ -155,7 +155,7 @@ Cette séparation évite le défilement pendant l'exercice de respiration tout e
 
 ## 📝 Notes
 
-Depuis la Home, une section permet de noter les sujets à aborder avec sa psy (titre + contenu). Les notes sont modifiables, supprimables et incluses dans l'export/import des données.
+Depuis la Home, une section permet de noter les sujets à aborder pendant ses séances (titre + contenu) Les notes sont modifiables, supprimables et incluses dans l'export/import des données.
 
 ---
 

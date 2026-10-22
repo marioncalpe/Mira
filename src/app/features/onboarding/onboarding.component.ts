@@ -39,7 +39,7 @@ export class OnboardingComponent {
     },
     {
       titre: 'Note ce qui compte 📝',
-      texte: 'Garde une trace des sujets à aborder avec ta psy, à ton rythme.',
+      texte: 'Garde une trace des sujets à aborder pendant tes séances, à ton rythme.',
     },
     {
       titre: 'Ton calendrier de sorties 📅',
@@ -62,7 +62,7 @@ export class OnboardingComponent {
         'Plus tu sors, plus tu débloques de badges. Chaque effort est récompensé.',
     },
     {
-      titre: 'Tu es prête ! 🌸',
+      titre: 'Tout est prêt ! 🌸',
       texte:
         'Renseigne ton prénom si tu veux, personnalise ton thème, sauvegarde tes données et retrouve toutes les infos dans "À propos".',
     },

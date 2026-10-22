@@ -25,7 +25,7 @@ interface BeforeInstallPromptEvent extends Event {
 //  - 'in-app'        : navigateur intégré (Instagram...) → "ouvre dans ton navigateur"
 type ModeAffichage = 'ios-manuel' | 'android-manuel' | 'installable' | 'in-app' | null;
 
-// Clé du localStorage : l'utilisatrice a fermé le message
+// Clé du localStorage : l'utilisateur a fermé le message
 const CLE_FERME = 'install_hint_dismissed';
 
 // Temps pendant lequel on attend l'événement d'installation sur Android

@@ -26,6 +26,10 @@ export class MotivationBannerComponent implements OnInit {
 
   /*================================*/
   /*           CITATIONS            */
+  /*  Règle : aucune phrase qui     */
+  /*  demande un accord avec la     */
+  /*  personne (prête, forte...).   */
+  /*  Préférer un verbe ou un nom.  */
   /*================================*/
 
   quotes: string[] = [
@@ -35,11 +39,11 @@ export class MotivationBannerComponent implements OnInit {
     "Continue, même quand c'est difficile — surtout quand c'est difficile.",
     "Tu mérites le meilleur, n'en doute jamais.",
     'Respire, recentre-toi, avance.',
-    'Les progrès prennent du temps — sois fière de chaque étape.',
-    "Tu n'es pas seule, tu es entourée et soutenue.",
+    'Les progrès prennent du temps — chaque étape mérite d\'être célébrée.',
+    'Tu as le droit de demander du soutien.',
     'Le changement commence par un simple geste.',
     "Tu as déjà surmonté tellement d'épreuves.",
-    'Tu es forte, même dans le doute.',
+    'Tu avances, même dans le doute.',
     'Prends soin de toi — tu en vaux chaque instant.',
     "Avance à ton rythme, c'est le seul qui compte.",
     'Chaque effort compte, même les plus discrets.',
@@ -54,7 +58,7 @@ export class MotivationBannerComponent implements OnInit {
     'Chaque journée traversée est une victoire.',
     'Tu peux transformer ta vie, un geste à la fois.',
     "Tu es capable de choses bien plus grandes que tu ne l'imagines.",
-    'Sois douce avec toi-même — tu fais de ton mieux.',
+    'Un peu de douceur envers toi-même — tu fais de ton mieux.',
     'Rappelle-toi pourquoi tu as commencé.',
     "Le courage, c'est continuer malgré les doutes.",
     "Tout ce qu'il te faut est déjà en toi.",

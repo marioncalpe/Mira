@@ -41,7 +41,6 @@ export class AppComponent implements OnInit, OnDestroy {
   /*================================*/
 
   constructor(
-    private notificationService: NotificationService,
     private themeService: ThemeService,
     private storageService: StorageService,
     private router: Router

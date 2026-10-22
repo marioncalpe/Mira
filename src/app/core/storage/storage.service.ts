@@ -6,6 +6,7 @@ import { Badge } from '../models/badge.model';
 import { NotificationSettings } from '../models/notification.model';
 import { Note } from '../models/note.model';
 import { CompteursBadges, REGLES_BADGES, RegleBadge } from '../badge-regles';
+import { fusionnerBadges } from '../badges-fusion';
 import { memeJour, numeroDeJour } from '../sorties-utils';
 
 /*==================================================*/
@@ -15,8 +16,9 @@ import { memeJour, numeroDeJour } from '../sorties-utils';
 /*                                                  */
 /*  MÉTHODES DISPONIBLES DEPUIS N'IMPORTE OÙ :      */
 /*                                                  */
-/*  --- SORTIES ---                                 */
+/*  --- SORTIES (une entrée = une journée) ---      */
 /*  getSorties()             → tableau complet      */
+/*  getSortieDuJour(date?)   → l'entrée d'un jour   */
 /*  addSortie(sortie)        → ajoute une sortie    */
 /*  updateSortie(sortie)     → modifie une sortie   */
 /*  deleteSortie(id)         → supprime une sortie  */
@@ -32,8 +34,9 @@ import { memeJour, numeroDeJour } from '../sorties-utils';
 /*  getNombreObjectifsTermines() → nombre terminés  */
 /*                                                  */
 /*  --- STATS ---                                   */
-/*  getTotalSorties()        → nombre total         */
-/*  getSortiesCeMois()       → sorties ce mois      */
+/*  getTotalSorties()        → jours de sortie      */
+/*  getSortiesCeMois()       → jours de sortie ce   */
+/*                             mois                 */
 /*  getMoyenneAvant()        → moyenne note avant   */
 /*  getMoyenneApres()        → moyenne note après   */
 /*  getStreak()              → jours consécutifs    */
@@ -116,15 +119,28 @@ export class StorageService {
 
     if (sorties) this.sortiesSubject.next(JSON.parse(sorties));
     if (objectifs) this.objectifsSubject.next(JSON.parse(objectifs));
-    if (badges) {
-      this.badgesSubject.next(JSON.parse(badges));
-    } else {
-      // Premier lancement : on charge les badges par défaut
-      this.badgesSubject.next(this.getDefaultBadges());
-    }
+
+    // On fusionne ce qui est enregistré avec la liste actuelle du code
+    // (voir badges-fusion.ts). Au premier lancement, rien n'est enregistré :
+    // on obtient simplement les badges par défaut.
+    this.badgesSubject.next(
+      fusionnerBadges(this.lireBadgesEnregistres(badges), this.getDefaultBadges()),
+    );
 
     // Vérification des badges au démarrage
     this.verifierBadges(this.sortiesSubject.getValue());
+  }
+
+  // Lit les badges enregistrés. Un contenu absent ou illisible donne une liste
+  // vide : on repart des badges par défaut au lieu de faire planter l'appli.
+  private lireBadgesEnregistres(texte: string | null): Badge[] {
+    if (!texte) return [];
+    try {
+      const donnees: unknown = JSON.parse(texte);
+      return Array.isArray(donnees) ? (donnees as Badge[]) : [];
+    } catch {
+      return [];
+    }
   }
 
   /*================================*/
@@ -408,7 +424,7 @@ export class StorageService {
       sorties.filter((s) => s.extendedProps?.category === humeur).length;
 
     return {
-      total: this.nombreDeJours(sorties), // avant : sorties.length
+      total: this.nombreDeJours(sorties),
       tresbien: parHumeur('tresbien'),
       bien: parHumeur('bien'),
       moyen: parHumeur('moyen'),
@@ -562,16 +578,22 @@ export class StorageService {
 
   /*================================*/
   /*        BADGES PAR DÉFAUT       */
-  /*  Chargés au premier lancement  */
-  /*  ou après un effacement        */
+  /*  La LISTE DE RÉFÉRENCE : titre,*/
+  /*  texte et image viennent d'ici */
+  /*  (voir badges-fusion.ts).      */
+  /*  Corriger un texte ici suffit :*/
+  /*  il est mis à jour chez tout   */
+  /*  le monde au démarrage.        */
+  /*  Ne JAMAIS changer un "id".    */
   /*================================*/
   private getDefaultBadges(): Badge[] {
     return [
+      /* ---------- Nombre de sorties (jours de sortie) ---------- */
       {
         id: 'premiere_sortie',
         image:
           'assets/icons/achivements/1-NombresDeSorties/1PremiereSortie.webp',
-        title: 'Première Sortie',
+        title: 'Première sortie',
         description: 'Tu viens de commencer ton aventure !',
         unlocked: false,
         dateUnlocked: null,
@@ -580,23 +602,23 @@ export class StorageService {
         id: 'en_mouvement',
         image: 'assets/icons/achivements/1-NombresDeSorties/1EnMouvement.webp',
         title: 'En mouvement',
-        description: 'Tu as fait 5 sorties !',
+        description: '5 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'mira_active',
         image: 'assets/icons/achivements/1-NombresDeSorties/1MiraActive.webp',
-        title: 'Mira Active',
-        description: 'Tu as fait 10 sorties !',
+        title: 'Mira active',
+        description: '10 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'exploratrice',
         image: 'assets/icons/achivements/1-NombresDeSorties/1Exploratrice.webp',
-        title: 'Exploratrice',
-        description: 'Tu as fait 20 sorties !',
+        title: 'Explorateur',
+        description: '20 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
@@ -604,7 +626,7 @@ export class StorageService {
         id: 'aventurier',
         image: 'assets/icons/achivements/1-NombresDeSorties/1Aventurier.webp',
         title: 'Aventurier',
-        description: 'Tu as fait 30 sorties !',
+        description: '30 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
@@ -612,7 +634,7 @@ export class StorageService {
         id: 'nomade',
         image: 'assets/icons/achivements/1-NombresDeSorties/1Nomade.webp',
         title: 'Nomade',
-        description: 'Tu as fait 50 sorties !',
+        description: '50 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
@@ -621,15 +643,15 @@ export class StorageService {
         image:
           'assets/icons/achivements/1-NombresDeSorties/1ToujoursDehors.webp',
         title: 'Toujours dehors',
-        description: 'Tu as fait 75 sorties !',
+        description: '75 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'marathonien',
         image: 'assets/icons/achivements/1-NombresDeSorties/1Maratonien.webp',
-        title: 'Maratonien',
-        description: 'Tu as fait 100 sorties !',
+        title: 'Marathonien',
+        description: '100 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
@@ -637,7 +659,7 @@ export class StorageService {
         id: 'inarretable',
         image: 'assets/icons/achivements/1-NombresDeSorties/1Inarretable.webp',
         title: 'Inarrêtable',
-        description: 'Tu as fait 150 sorties !',
+        description: '150 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
@@ -645,40 +667,42 @@ export class StorageService {
         id: 'legende_sortie',
         image:
           'assets/icons/achivements/1-NombresDeSorties/1LegendesSortie.webp',
-        title: 'Légende de la Sortie',
-        description: 'Tu as fait 200 sorties !',
+        title: 'Légende des sorties',
+        description: '200 jours de sortie !',
         unlocked: false,
         dateUnlocked: null,
       },
+
+      /* ---------- Humeurs ---------- */
       {
         id: 'rayon_soleil',
         image: 'assets/icons/achivements/2-Humeurs/2RayonDeSoleil.webp',
-        title: 'Rayon de Soleil',
-        description: 'Tu as fait 5 sorties notées "Tres bien" !',
+        title: 'Rayon de soleil',
+        description: "5 jours de sortie avec l'humeur « Très bien » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'energie_positive',
         image: 'assets/icons/achivements/2-Humeurs/2EnergiePositive.webp',
-        title: 'Energie Positive',
-        description: 'Tu as fait 15 sorties notées "Tres bien" !',
+        title: 'Énergie positive',
+        description: "15 jours de sortie avec l'humeur « Très bien » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'humeur_or',
         image: 'assets/icons/achivements/2-Humeurs/2HumeurEnOr.webp',
-        title: 'Humeur en Or',
-        description: 'Tu as fait 30 sorties notées "Tres bien" !',
+        title: 'Humeur en or',
+        description: "30 jours de sortie avec l'humeur « Très bien » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'bonne_vibes',
         image: 'assets/icons/achivements/2-Humeurs/2BonneVibes.webp',
-        title: 'Bonne Vibes',
-        description: 'Tu as fait 5 sorties notées "Bien" !',
+        title: 'Bonne vibe',
+        description: "5 jours de sortie avec l'humeur « Bien » !",
         unlocked: false,
         dateUnlocked: null,
       },
@@ -686,47 +710,47 @@ export class StorageService {
         id: 'optimiste',
         image: 'assets/icons/achivements/2-Humeurs/2Optimiste.webp',
         title: 'Optimiste',
-        description: 'Tu as fait 10 sorties notées "Bien" !',
+        description: "10 jours de sortie avec l'humeur « Bien » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'stable_sereine',
         image: 'assets/icons/achivements/2-Humeurs/2StableEtSereine.webp',
-        title: 'Stable et Sereine',
-        description: 'Tu as fait 25 sorties notées "Bien" !',
+        title: 'Stable et serein',
+        description: "25 jours de sortie avec l'humeur « Bien » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'cava_aller',
         image: 'assets/icons/achivements/2-Humeurs/2CavaAller.webp',
-        title: 'Ca va Aller',
-        description: 'Tu as fait 5 sorties notées "Moyen" !',
+        title: 'Ça va aller',
+        description: "5 jours de sortie avec l'humeur « Moyen » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'tu_tiens_cap',
         image: 'assets/icons/achivements/2-Humeurs/2TuTiensLeCap.webp',
-        title: 'Tu tiens le Cap',
-        description: 'Tu as fait 15 sorties notées "Moyen" !',
+        title: 'Tu tiens le cap',
+        description: "15 jours de sortie avec l'humeur « Moyen » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'ressilient',
         image: 'assets/icons/achivements/2-Humeurs/2Ressilient.webp',
-        title: 'Ressilient',
-        description: 'Tu as fait 30 sorties notées "Moyen" !',
+        title: 'Résilient',
+        description: "30 jours de sortie avec l'humeur « Moyen » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'sortie_courageuse',
         image: 'assets/icons/achivements/2-Humeurs/2SortieCourageuse.webp',
-        title: 'Sortie Courageuse',
-        description: 'Tu as fait 1 sortie notée "Anxieux" !',
+        title: 'Sortie courageuse',
+        description: "1 jour de sortie avec l'humeur « Anxieuse » !",
         unlocked: false,
         dateUnlocked: null,
       },
@@ -734,23 +758,25 @@ export class StorageService {
         id: 'tu_laches_rien',
         image: 'assets/icons/achivements/2-Humeurs/2TuNeLachesRien.webp',
         title: 'Tu ne lâches rien',
-        description: 'Tu as fait 5 sorties notées "Anxieux" !',
+        description: "5 jours de sortie avec l'humeur « Anxieuse » !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'courage_quotidien',
         image: 'assets/icons/achivements/2-Humeurs/2courageQuotidien.webp',
-        title: 'Courage Quotidien',
-        description: 'Tu as fait 10 sorties notées "Anxieux" !',
+        title: 'Courage quotidien',
+        description: "10 jours de sortie avec l'humeur « Anxieuse » !",
         unlocked: false,
         dateUnlocked: null,
       },
+
+      /* ---------- Progression ---------- */
       {
         id: 'petit_mieux',
         image: 'assets/icons/achivements/3-Progression/3PetitMieux.webp',
-        title: 'Petit Mieux',
-        description: 'Une sortie avec une humeur meilleure que la précédente',
+        title: 'Petit mieux',
+        description: "Un jour de sortie où tu te sens mieux après qu'avant !",
         unlocked: false,
         dateUnlocked: null,
       },
@@ -758,31 +784,33 @@ export class StorageService {
         id: 'tu_progresses',
         image: 'assets/icons/achivements/3-Progression/3Tuprograsse.webp',
         title: 'Tu progresses',
-        description: "Tu as fait 5 sorties avec une amélioration d'humeur !",
+        description: "5 jours de sortie où tu te sens mieux après qu'avant !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'bonne_dynamique',
         image: 'assets/icons/achivements/3-Progression/3BonneDynamique.webp',
-        title: 'Bonne Dynamique',
-        description: "Tu as fait 10 sorties avec une amélioration d'humeur !",
+        title: 'Bonne dynamique',
+        description: "10 jours de sortie où tu te sens mieux après qu'avant !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'ascension_positive',
         image: 'assets/icons/achivements/3-Progression/3AscensionPositive.webp',
-        title: 'Ascension Positive',
-        description: "Tu as fait 20 sorties avec une amélioration d'humeur !",
+        title: 'Ascension positive',
+        description: "20 jours de sortie où tu te sens mieux après qu'avant !",
         unlocked: false,
         dateUnlocked: null,
       },
+      // Les trois suivants n'ont pas encore de règle (voir badge-regles.ts) :
+      // ils s'affichent en "Bientôt". Leur texte est provisoire.
       {
         id: 'revenir_plus_fort',
         image: 'assets/icons/achivements/3-Progression/3RevenirplusFort.webp',
-        title: 'Revenir plus Fort',
-        description: 'Tu as fait 1 sortie améliorée après un jour difficile !',
+        title: 'Revenir plus fort',
+        description: 'Une sortie qui se passe mieux, après un jour difficile !',
         unlocked: false,
         dateUnlocked: null,
       },
@@ -790,7 +818,7 @@ export class StorageService {
         id: 'resilience',
         image: 'assets/icons/achivements/3-Progression/3Resilience.webp',
         title: 'Résilience',
-        description: '3 sorties consécutives après une période Anxieux',
+        description: "3 jours de sortie d'affilée après une période anxieuse !",
         unlocked: false,
         dateUnlocked: null,
       },
@@ -798,15 +826,17 @@ export class StorageService {
         id: 'transformation',
         image: 'assets/icons/achivements/3-Progression/3Transformation.webp',
         title: 'Transformation',
-        description: 'Amélioration visible sur un mois',
+        description: 'Une amélioration visible sur un mois !',
         unlocked: false,
         dateUnlocked: null,
       },
+
+      /* ---------- Régularité (jours consécutifs) ---------- */
       {
         id: 'jours_affillee',
         image: 'assets/icons/achivements/4-Repetitions/4JoursDaffilee.webp',
-        title: "2 Jours d'affilée",
-        description: 'Tu as fait 2 sorties consécutives !',
+        title: "2 jours d'affilée",
+        description: "2 jours de sortie d'affilée !",
         unlocked: false,
         dateUnlocked: null,
       },
@@ -814,31 +844,31 @@ export class StorageService {
         id: 'toujours_present',
         image: 'assets/icons/achivements/4-Repetitions/4ToujoursPresent.webp',
         title: 'Toujours présent',
-        description: 'Tu as fait 3 sorties consécutives !',
+        description: "3 jours de sortie d'affilée !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'rythme_trouve',
         image: 'assets/icons/achivements/4-Repetitions/4RythmeTrouve.webp',
-        title: 'Rythme Trouvé',
-        description: 'Tu as fait 7 sorties consécutives !',
+        title: 'Rythme trouvé',
+        description: "7 jours de sortie d'affilée !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'routine_solide',
         image: 'assets/icons/achivements/4-Repetitions/4RoutineSolide.webp',
-        title: 'Routine Solide',
-        description: 'Tu as fait 14 sorties consécutives !',
+        title: 'Routine solide',
+        description: "14 jours de sortie d'affilée !",
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'flow_parfait',
         image: 'assets/icons/achivements/4-Repetitions/4FlowParfait.webp',
-        title: 'Flow Parfait',
-        description: 'Tu as fait 21 sorties consécutives !',
+        title: 'Flow parfait',
+        description: "21 jours de sortie d'affilée !",
         unlocked: false,
         dateUnlocked: null,
       },
@@ -846,22 +876,24 @@ export class StorageService {
         id: 'constance',
         image: 'assets/icons/achivements/4-Repetitions/4Constance.webp',
         title: 'Constance',
-        description: 'Tu as fait 30 sorties consécutives !',
+        description: "30 jours de sortie d'affilée !",
         unlocked: false,
         dateUnlocked: null,
       },
+
+      /* ---------- Objectifs ---------- */
       {
         id: 'premier_pas',
         image: 'assets/icons/achivements/5-Objectifs/5Premierpas.webp',
         title: 'Premier pas',
-        description: 'Tu as fait ton premier objectif !',
+        description: 'Tu as terminé ton premier objectif !',
         unlocked: false,
         dateUnlocked: null,
       },
       {
         id: 'objectif_atteint',
         image: 'assets/icons/achivements/5-Objectifs/5ObjectifAtteint.webp',
-        title: 'Objectif Atteint',
+        title: 'Objectif atteint',
         description: 'Tu as terminé 3 objectifs !',
         unlocked: false,
         dateUnlocked: null,
@@ -869,7 +901,7 @@ export class StorageService {
       {
         id: 'efficacite_pure',
         image: 'assets/icons/achivements/5-Objectifs/5EfficacitéPure.webp',
-        title: 'Efficacité Pure',
+        title: 'Efficacité pure',
         description: 'Tu as terminé 5 objectifs !',
         unlocked: false,
         dateUnlocked: null,

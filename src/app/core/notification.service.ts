@@ -104,7 +104,7 @@ export class NotificationService {
     if (notif.encouragementActif) {
       this.programmerNotification(
         '💪 Message du jour',
-        'Chaque petit pas compte. Tu es plus forte que tu ne le crois !',
+        'Chaque petit pas compte. Tu es plus fort que tu ne le crois !',
         notif.encouragementHeure,
       );
     }

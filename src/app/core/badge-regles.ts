@@ -75,16 +75,31 @@ export const REGLES_BADGES: Record<string, RegleBadge> = {
   ascension_positive: { compteur: 'ameliorations', cible: 20 },
 };
 
-// Pour écrire "Encore 3 sorties" / "Encore 1 sortie"
+// Pour écrire "Encore 3 jours de sortie" / "Encore 1 jour de sortie"
 const LIBELLES: Record<Compteur, { un: string; plusieurs: string }> = {
-  total: { un: 'sortie', plusieurs: 'sorties' },
-  tresbien: { un: 'sortie « Très bien »', plusieurs: 'sorties « Très bien »' },
-  bien: { un: 'sortie « Bien »', plusieurs: 'sorties « Bien »' },
-  moyen: { un: 'sortie « Moyen »', plusieurs: 'sorties « Moyen »' },
-  anxieuse: { un: 'sortie « Anxieuse »', plusieurs: 'sorties « Anxieuse »' },
+  total: { un: 'jour de sortie', plusieurs: 'jours de sortie' },
+  tresbien: {
+    un: 'jour de sortie « Très bien »',
+    plusieurs: 'jours de sortie « Très bien »',
+  },
+  bien: {
+    un: 'jour de sortie « Bien »',
+    plusieurs: 'jours de sortie « Bien »',
+  },
+  moyen: {
+    un: 'jour de sortie « Moyen »',
+    plusieurs: 'jours de sortie « Moyen »',
+  },
+  anxieuse: {
+    un: 'jour de sortie « Anxieuse »',
+    plusieurs: 'jours de sortie « Anxieuse »',
+  },
   objectifs: { un: 'objectif terminé', plusieurs: 'objectifs terminés' },
   consecutifs: { un: "jour d'affilée", plusieurs: "jours d'affilée" },
-  ameliorations: { un: 'sortie avec amélioration', plusieurs: 'sorties avec amélioration' },
+  ameliorations: {
+    un: 'jour de sortie avec une amélioration',
+    plusieurs: 'jours de sortie avec une amélioration',
+  },
 };
 
 // Ce badge peut-il être débloqué ? (faux = "Bientôt")
